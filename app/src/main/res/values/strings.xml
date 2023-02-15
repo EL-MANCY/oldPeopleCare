@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Old People Care App</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="medicines">
+        <item>pills</item>
+        <item>injection</item>
+        <item>drink</item>
+        <item>other</item>
+
+    </string-array>
+
+    <string-array name="Repeat">
+        <item>Hours:Mins</item>
+        <item>Day</item>
+        <item>Week</item>
+    </string-array>
+</resources>

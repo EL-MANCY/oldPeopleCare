@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/registration">
+
+    <fragment
+        android:id="@+id/registration"
+        android:name="com.example.oldpeoplecareapp.ui.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registration_to_logIn"
+            app:destination="@id/logIn"
+            app:popUpTo="@id/registration"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/logIn"
+        android:name="com.example.oldpeoplecareapp.ui.login.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logIn_to_registration"
+            app:destination="@id/registration"
+            app:popUpTo="@id/logIn"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_logIn_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment"
+            app:popUpTo="@id/logIn"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="com.example.oldpeoplecareapp.ui.patientHome.PatientHomeFragment"
+        android:label="PatientHomeFragment" >
+        <action
+            android:id="@+id/action_patientHomeFragment_to_addNewMedicineFragment"
+            app:destination="@id/addNewMedicineFragment"
+            app:popUpTo="@id/patientHomeFragment" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="regist"
+            app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_editMedicineFragment"
+            app:destination="@id/editMedicineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewMedicineFragment"
+        android:name="com.example.oldpeoplecareapp.ui.AddNewMedicine.AddNewMedicineFragment"
+        android:label="AddNewMedicineFragment" >
+        <action
+            android:id="@+id/action_addNewMedicineFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/editMedicineFragment"
+        android:name="com.example.oldpeoplecareapp.ui.editMedicine.EditMedicineFragment"
+        android:label="EditMedicineFragment" >
+        <action
+            android:id="@+id/action_editMedicineFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <argument
+            android:name="medId"
+            app:argType="string" />
+        <argument android:name="userId" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+    </fragment>
+</navigation>
