@@ -45,14 +45,16 @@
         <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/search_editbox.xml" value="0.1765" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/text_bold.xml" value="0.1765" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_main.xml" value="0.186328125" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_item.xml" value="0.72" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_item.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_add_new_medicine.xml" value="0.186328125" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_basic_information.xml" value="0.2" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregivers_patient.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_log_in.xml" value="0.186328125" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_newcaregiver_patient.xml" value="0.2" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_patient_home.xml" value="0.186328125" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/loading_item.xml" value="0.186328125" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/medicine_list_item.xml" value="0.186328125" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/spinner_item.xml" value="0.186328125" />
       </map>
     </option>
   </component>
