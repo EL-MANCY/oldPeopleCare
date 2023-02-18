@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_patientHomeFragment_to_editMedicineFragment"
             app:destination="@id/editMedicineFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_newcaregiverPatientFragment"
+            app:destination="@id/newcaregiverPatientFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewMedicineFragment"
@@ -76,5 +79,13 @@
         <argument
             android:name="token"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/newcaregiverPatientFragment"
+        android:name="com.example.oldpeoplecareapp.ui.NewcaregiverPatientFragment"
+        android:label="NewcaregiverPatientFragment" >
+        <action
+            android:id="@+id/action_newcaregiverPatientFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
     </fragment>
 </navigation>

@@ -69,6 +69,14 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
+                R.id.caregiver_icon->{
+                    if (
+                        findNavController(R.id.fragmentContainerView).currentDestination?.label == "PatientHomeFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToNewcaregiverPatientFragment())
+                    }
+                    true
+                }
                 else -> {
                     false
                 }
