@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="352dp"
-            android:layout_height="255dp"
+            android:layout_width="369dp"
+            android:layout_height="289dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
@@ -62,19 +62,26 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="633dp" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.826" />
 
         <EditText
             android:id="@+id/editTextTextEmailAddress"
             android:layout_width="322dp"
             android:layout_height="48dp"
             android:layout_marginTop="55dp"
-            android:background="#C8C6C6"
+            android:background="#F1EAEA"
             android:ems="10"
-            android:hint="     Enter Caregiver Email"
+            android:hint=" Enter Caregiver Email"
             android:inputType="textEmailAddress"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:textColorHint="#8A8585"
+            android:textSize="17sp"
             app:layout_constraintBottom_toTopOf="@+id/LogIn_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,15 +93,31 @@
             android:layout_width="322dp"
             android:layout_height="48dp"
             android:layout_marginTop="21dp"
-            android:layout_marginBottom="130dp"
+            android:backgroundTintMode="src_in"
+
             android:entries="@array/caregivers"
             android:outlineProvider="none"
-            android:prompt="Select caregiver role "
-            app:layout_constraintBottom_toTopOf="@+id/LogIn_btn"
+            android:paddingLeft="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.061" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="22dp"
+            android:layout_height="13dp"
+            android:layout_marginStart="223dp"
+            android:layout_marginEnd="17dp"
+            android:src="@drawable/dropicon"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner2"
+            app:layout_constraintEnd_toEndOf="@+id/spinner2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/spinner2"
+            app:layout_constraintTop_toTopOf="@+id/spinner2"
+            app:layout_constraintVertical_bias="0.531" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

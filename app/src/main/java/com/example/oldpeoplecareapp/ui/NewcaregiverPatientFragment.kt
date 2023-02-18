@@ -49,7 +49,7 @@ class NewcaregiverPatientFragment : Fragment() {
 
             }
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinner2.setBackgroundColor(Color.GRAY)
+        binding.spinner2.setBackgroundColor(getResources().getColor(R.color.grey))
 
         binding.spinner2.adapter = spinnerAdapter
 

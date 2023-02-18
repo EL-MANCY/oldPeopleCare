@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_addNewMedicineFragment_to_patientHomeFragment"
             app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_addNewMedicineFragment_to_newcaregiverPatientFragment"
+            app:destination="@id/newcaregiverPatientFragment" />
 
     </fragment>
     <fragment
@@ -87,5 +90,8 @@
         <action
             android:id="@+id/action_newcaregiverPatientFragment_to_patientHomeFragment"
             app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_newcaregiverPatientFragment_to_addNewMedicineFragment"
+            app:destination="@id/addNewMedicineFragment" />
     </fragment>
 </navigation>
