@@ -12,14 +12,14 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.oldpeoplecareapp.R
-import com.example.oldpeoplecareapp.databinding.FragmentNewcaregiverPatientBinding
+import com.example.oldpeoplecareapp.databinding.FragmentAddNewcaregiverPatientBinding
 import com.example.oldpeoplecareapp.databinding.FragmentRegistrationBinding
 
-class NewcaregiverPatientFragment : Fragment() {
-    lateinit var binding: FragmentNewcaregiverPatientBinding
+class AddNewcaregiverPatientFragment : Fragment() {
+    lateinit var binding: FragmentAddNewcaregiverPatientBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentNewcaregiverPatientBinding.inflate(inflater, container, false)
+        binding = FragmentAddNewcaregiverPatientBinding.inflate(inflater, container, false)
         return binding.root
     }
 

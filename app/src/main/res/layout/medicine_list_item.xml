@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/medicine_pic" />
 
     <TextView
-        android:id="@+id/medicineNameTxtView"
+        android:id="@+id/fullname_txtfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="82dp"
@@ -62,7 +62,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/mark_icon"
         app:layout_constraintStart_toEndOf="@+id/medicineImage"
-        app:layout_constraintTop_toBottomOf="@+id/medicineNameTxtView" />
+        app:layout_constraintTop_toBottomOf="@+id/fullname_txtfield" />
 
     <ImageView
         android:id="@+id/mark_icon"

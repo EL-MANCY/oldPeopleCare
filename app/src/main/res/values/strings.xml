@@ -19,7 +19,7 @@
 
     <string-array name="caregivers">
         <item>   Select caregiver role</item>
-        <item>   Editor</item>
-        <item>   Viewer</item>
+        <item>   editor</item>
+        <item>   viewer</item>
     </string-array>
 </resources>

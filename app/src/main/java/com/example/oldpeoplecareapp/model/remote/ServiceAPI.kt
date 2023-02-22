@@ -62,6 +62,9 @@ interface ServiceAPI {
     suspend fun DeleteMedicine(@Path("medId") medId: String,
                                @Path("userId") userId:String,
                                @Header("token") token:String ):Response<Any>
+
+    @GET("/user/user/circles")
+    suspend fun getPatientCircle(@Header("token") token:String):Response<List<Circles>?>
 }
 
 

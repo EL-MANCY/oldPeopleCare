@@ -55,6 +55,9 @@ interface RemoteRepository {
                                 userId:String,
                                 token:String ):Response<Any>
 
+    suspend fun getPatientCircle(token:String):Response<List<Circles>?>
+
+
 }
 
 

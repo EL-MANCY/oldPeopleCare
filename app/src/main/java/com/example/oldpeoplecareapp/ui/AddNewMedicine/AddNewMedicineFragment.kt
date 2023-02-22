@@ -32,6 +32,7 @@ import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.example.oldpeoplecareapp.ui.login.LogInFragmentDirections
 import com.example.oldpeoplecareapp.ui.login.LogInViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
@@ -76,6 +77,9 @@ class AddNewMedicineFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentAddNewMedicineBinding.inflate(inflater, container, false)
+        val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        navBar.visibility = View.VISIBLE
+        navBar?.selectedItemId =R.id.add
         return binding.root   }
 
     @RequiresApi(Build.VERSION_CODES.S)

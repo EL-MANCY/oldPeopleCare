@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.CaregiversPatientFragment">
+        tools:context=".ui.CaregiversPatient.CaregiversPatientFragment">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchIconX"
@@ -76,7 +76,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/medicineRecyclerView"
+            android:id="@+id/circlesRecyclerView"
             android:layout_width="405dp"
             android:layout_height="650dp"
             android:layout_marginStart="4dp"

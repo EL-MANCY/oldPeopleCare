@@ -114,6 +114,12 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
+    override suspend fun getPatientCircle(token: String):Response<List<Circles>?> {
+        return withContext((Dispatchers.IO)) {
+            api.getPatientCircle(token)
+        }
+    }
+
 }
 
 

@@ -35,6 +35,8 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         binding = FragmentPatientHomeBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.visibility = View.VISIBLE
+        navBar?.selectedItemId =R.id.home_icon
+
         return binding.root
     }
 
