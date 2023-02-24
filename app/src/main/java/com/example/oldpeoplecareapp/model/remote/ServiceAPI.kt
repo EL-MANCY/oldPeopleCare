@@ -24,13 +24,13 @@ interface ServiceAPI {
         @Field("emailOrPhone") emailOrPhone: String,
         @Field("email") email: String,
         @Field("password") password: String
-    ):Response<UserLogInInfo>
+    ): Response<UserLogInInfo>
 
     @FormUrlEncoded
     @POST("/medicine/{id}")
     suspend fun postMedicine(
         @Path("id") id: String,
-        @Header("token") token:String,
+        @Header("token") token: String,
         @Field("name") name: String,
         @Field("imgUrl") imgUrl: String,
         @Field("recordUrl") recordUrl: String,
@@ -39,32 +39,47 @@ interface ServiceAPI {
         @Field("time") time: String,
         @Field("repeatDays") repeatDays: Int,
         @Field("description") description: String
-    ):Response<MedicineResponse>
+    ): Response<MedicineResponse>
 
     @GET("/medicine/{id}")
-    suspend fun getAllMedicine(@Path("id") id: String,
-                               @Header("token") token:String):Response<List<AllMedicineRespone>>
+    suspend fun getAllMedicine(
+        @Path("id") id: String,
+        @Header("token") token: String
+    ): Response<List<AllMedicineRespone>>
+
     @FormUrlEncoded
     @PUT("/medicine/{medId}/{userId}")
-    suspend fun updateMedicine(@Path("medId") medId: String,
-                               @Path("userId") userId:String,
-                               @Header("token") token:String,
-                               @Field("name") name: String,
-                               @Field("imgUrl") imgUrl: String,
-                               @Field("recordUrl") recordUrl: String,
-                               @Field("type") type: String,
-                               @Field("date") date: String,
-                               @Field("time") time: String,
-                               @Field("repeatDays") repeatDays: Int,
-                               @Field("description") description: String):Response<AllMedicineRespone>
+    suspend fun updateMedicine(
+        @Path("medId") medId: String,
+        @Path("userId") userId: String,
+        @Header("token") token: String,
+        @Field("name") name: String,
+        @Field("imgUrl") imgUrl: String,
+        @Field("recordUrl") recordUrl: String,
+        @Field("type") type: String,
+        @Field("date") date: String,
+        @Field("time") time: String,
+        @Field("repeatDays") repeatDays: Int,
+        @Field("description") description: String
+    ): Response<AllMedicineRespone>
 
     @DELETE("/medicine/{medId}/{userId}")
-    suspend fun DeleteMedicine(@Path("medId") medId: String,
-                               @Path("userId") userId:String,
-                               @Header("token") token:String ):Response<Any>
+    suspend fun DeleteMedicine(
+        @Path("medId") medId: String,
+        @Path("userId") userId: String,
+        @Header("token") token: String
+    ): Response<Any>
 
     @GET("/user/user/circles")
-    suspend fun getPatientCircle(@Header("token") token:String):Response<List<Circles>?>
+    suspend fun getPatientCircle(@Header("token") token: String): Response<List<Circles>?>
+
+    @FormUrlEncoded
+    @POST("/notification/request")
+    suspend fun sendRequest(
+        @Header("token") token: String,
+        @Path("email") email: String,
+        @Path("role") role: String
+    ):Response<Any>
 }
 
 

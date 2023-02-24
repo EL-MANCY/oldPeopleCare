@@ -99,7 +99,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
-        android:name="com.example.oldpeoplecareapp.ui.AddNewcaregiverPatientFragment"
+        android:name="com.example.oldpeoplecareapp.ui.AddNewcaregiverPatient.AddNewcaregiverPatientFragment"
         android:label="AddNewcaregiverPatientFragment" >
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_caregiversPatientFragment"

@@ -1,14 +1,10 @@
 package com.example.oldpeoplecareapp.model.remote
 
-import android.provider.ContactsContract
 import android.util.Log
 import com.example.oldpeoplecareapp.model.entity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.Header
-import retrofit2.http.Path
 
 class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     override suspend fun addNewUser(
@@ -114,9 +110,15 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
-    override suspend fun getPatientCircle(token: String):Response<List<Circles>?> {
+    override suspend fun getPatientCircle(token: String): Response<List<Circles>?> {
         return withContext((Dispatchers.IO)) {
             api.getPatientCircle(token)
+        }
+    }
+
+    override suspend fun sendRequest(token: String, email: String, role: String): Response<Any> {
+        return withContext((Dispatchers.IO)) {
+            api.sendRequest(token, email, role)
         }
     }
 

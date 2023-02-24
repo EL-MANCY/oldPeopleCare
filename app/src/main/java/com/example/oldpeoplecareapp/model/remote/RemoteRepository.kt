@@ -19,11 +19,11 @@ interface RemoteRepository {
         emailOrPhone: String,
         email: String,
         password: String
-    ):Response<UserLogInInfo>
+    ): Response<UserLogInInfo>
 
     suspend fun postMedicine(
         id: String,
-        token:String,
+        token: String,
         name: String,
         imgUrl: String,
         recordUrl: String,
@@ -32,30 +32,40 @@ interface RemoteRepository {
         time: String,
         repeatDays: Int,
         description: String,
-        ):Response<MedicineResponse>
+    ): Response<MedicineResponse>
 
     suspend fun getAllMedicine(
-       id: String,
-       token:String
-        ):Response<List<AllMedicineRespone>>
+        id: String,
+        token: String
+    ): Response<List<AllMedicineRespone>>
 
-    suspend fun updateMedicine( medId: String,
-                                userId:String,
-                                token:String,
-                                name: String,
-                                imgUrl: String,
-                                recordUrl: String,
-                                type: String,
-                                date: String,
-                                time: String,
-                                repeatDays: Int,
-                                description: String):Response<AllMedicineRespone>
+    suspend fun updateMedicine(
+        medId: String,
+        userId: String,
+        token: String,
+        name: String,
+        imgUrl: String,
+        recordUrl: String,
+        type: String,
+        date: String,
+        time: String,
+        repeatDays: Int,
+        description: String
+    ): Response<AllMedicineRespone>
 
-    suspend fun DeleteMedicine( medId: String,
-                                userId:String,
-                                token:String ):Response<Any>
+    suspend fun DeleteMedicine(
+        medId: String,
+        userId: String,
+        token: String
+    ): Response<Any>
 
-    suspend fun getPatientCircle(token:String):Response<List<Circles>?>
+    suspend fun getPatientCircle(token: String): Response<List<Circles>?>
+
+    suspend fun sendRequest(
+        token: String,
+        email: String,
+        role: String
+    ): Response<Any>
 
 
 }

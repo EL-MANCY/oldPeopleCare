@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewcaregiverPatientBinding
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiversPatientBinding
@@ -19,11 +20,10 @@ import com.example.oldpeoplecareapp.ui.patientHome.PatientHomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CaregiversPatientFragment : Fragment() {
-    lateinit var binding: FragmentCaregiversPatientBinding
 
     val TAG: String = "CaregiversFragment"
+    lateinit var binding: FragmentCaregiversPatientBinding
     lateinit var caregiversPatientViewModel: CaregiversPatientViewModel
-
     lateinit var  retrivedToken:String
     val circleRecyclerView by lazy { CircleRecyclerView() }
 
@@ -44,11 +44,12 @@ class CaregiversPatientFragment : Fragment() {
 
         caregiversPatientViewModel =
             ViewModelProvider(requireActivity()).get(CaregiversPatientViewModel::class.java)
-
         caregiversPatientViewModel.getCircles("barier " + retrivedToken)
 
-
         binding.circlesRecyclerView.adapter = circleRecyclerView
+        binding.addCaregiverBtn.setOnClickListener {
+            findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToAddNewcaregiverPatientFragment())
+        }
 
         caregiversPatientViewModel.CircleLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
