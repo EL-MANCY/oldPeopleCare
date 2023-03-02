@@ -18,7 +18,7 @@ object RetroBuilder {
          .readTimeout(30, TimeUnit.MINUTES) // read timeout
          .build()
 
-
+//json
     var gson = GsonBuilder()
         .setLenient()
         .create()

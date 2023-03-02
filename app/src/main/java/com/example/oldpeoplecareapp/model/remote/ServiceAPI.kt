@@ -77,8 +77,8 @@ interface ServiceAPI {
     @POST("/notification/request")
     suspend fun sendRequest(
         @Header("token") token: String,
-        @Path("email") email: String,
-        @Path("role") role: String
+        @Field("email") email: String,
+        @Field("role") role: String
     ):Response<Any>
 }
 

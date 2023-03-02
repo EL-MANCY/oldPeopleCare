@@ -139,14 +139,14 @@
             app:hintTextColor="#00BCD4"
             app:layout_constraintBottom_toTopOf="@+id/Date"
             app:layout_constraintEnd_toStartOf="@+id/spinner"
-            app:layout_constraintHorizontal_bias="0.689"
+            app:layout_constraintHorizontal_bias="0.784"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recordX"
             app:layout_constraintVertical_bias="0.0"
             app:startIconDrawable="@drawable/medicine_type">
 
             <AutoCompleteTextView
-                android:layout_width="286dp"
+                android:layout_width="293dp"
                 android:layout_height="52dp"
                 android:layout_marginTop="31dp"
                 android:editable="false"
@@ -181,11 +181,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.036" />
 
+
         <TextView
             android:id="@+id/Date"
             android:layout_width="150dp"
             android:layout_height="46dp"
-            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/et_style"
             android:drawableLeft="@drawable/date"
             android:hint="   Date "
@@ -196,10 +197,7 @@
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/Time"
-            app:layout_constraintEnd_toStartOf="@+id/Time"
-            app:layout_constraintHorizontal_bias="0.016"
-            app:layout_constraintStart_toStartOf="parent" />
-
+            app:layout_constraintEnd_toStartOf="@+id/Time" />
 
         <TextView
             android:id="@+id/Time"
@@ -217,7 +215,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.892"
+            app:layout_constraintHorizontal_bias="0.842"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/medicineType"
             app:layout_constraintVertical_bias="0.0" />
