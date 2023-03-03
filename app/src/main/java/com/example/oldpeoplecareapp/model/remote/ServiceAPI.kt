@@ -80,6 +80,11 @@ interface ServiceAPI {
         @Field("email") email: String,
         @Field("role") role: String
     ):Response<Any>
+
+    @GET("/notification")
+    suspend fun getAllNotification(
+        @Header("token") token: String,
+        ):Response<List<notificationData>>
 }
 
 

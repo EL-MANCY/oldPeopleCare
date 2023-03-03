@@ -67,6 +67,9 @@ interface RemoteRepository {
         role: String
     ): Response<Any>
 
+    suspend fun getAllNotification(
+        token: String,
+    ):Response<List<notificationData>>
 
 }
 
