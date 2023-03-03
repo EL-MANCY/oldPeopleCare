@@ -28,9 +28,7 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
     val medicineRecyclerView by lazy { MedicineRecyclerView() }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = FragmentPatientHomeBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)

@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_patientHomeFragment_to_caregiversPatientFragment"
             app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_patientNotificationFragment"
+            app:destination="@id/patientNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewMedicineFragment"
@@ -66,6 +69,9 @@
         <action
             android:id="@+id/action_addNewMedicineFragment_to_caregiversPatientFragment"
             app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_addNewMedicineFragment_to_patientNotificationFragment"
+            app:destination="@id/patientNotificationFragment" />
 
     </fragment>
     <fragment
@@ -96,6 +102,9 @@
         <action
             android:id="@+id/action_caregiversPatientFragment_to_addNewcaregiverPatientFragment"
             app:destination="@id/addNewcaregiverPatientFragment" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_patientNotificationFragment"
+            app:destination="@id/patientNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
@@ -104,5 +113,25 @@
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_caregiversPatientFragment"
             app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_addNewcaregiverPatientFragment_to_patientNotificationFragment"
+            app:destination="@id/patientNotificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/patientNotificationFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientNotification.PatientNotificationFragment"
+        android:label="PatientNotificationFragment" >
+        <action
+            android:id="@+id/action_patientNotificationFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_patientNotificationFragment_to_addNewMedicineFragment"
+            app:destination="@id/addNewMedicineFragment" />
+        <action
+            android:id="@+id/action_patientNotificationFragment_to_caregiversPatientFragment"
+            app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_patientNotificationFragment_to_addNewcaregiverPatientFragment"
+            app:destination="@id/addNewcaregiverPatientFragment" />
     </fragment>
 </navigation>

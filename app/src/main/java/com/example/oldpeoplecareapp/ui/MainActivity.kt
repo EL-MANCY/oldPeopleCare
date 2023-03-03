@@ -15,6 +15,7 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.ActivityMainBinding
 import com.example.oldpeoplecareapp.ui.AddNewMedicine.AddNewMedicineFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiversPatient.CaregiversPatientFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientNotification.PatientNotificationFragmentDirections
 import com.example.oldpeoplecareapp.ui.patientHome.PatientHomeFragmentDirections
 
 
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             || navController.currentDestination?.label == "fragment_log_in"
             || navController.currentDestination?.label == "EditMedicineFragment"
             || navController.currentDestination?.label == "AddNewcaregiverPatientFragment"
+            || navController.currentDestination?.label == "PatientNotificationFragment"
 
         ) {
             binding.bottomNavigation.visibility = View.GONE
@@ -60,6 +62,9 @@ class MainActivity : AppCompatActivity() {
                     } else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "CaregiversPatientFragment") {
                         Navigation.findNavController(this, R.id.fragmentContainerView)
                             .navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToAddNewMedicineFragment())
+                    }else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "PatientNotificationFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(PatientNotificationFragmentDirections.actionPatientNotificationFragmentToAddNewMedicineFragment())
                     }
                     true
                 }
@@ -82,6 +87,9 @@ class MainActivity : AppCompatActivity() {
                                     ""
                                 )
                             )
+                    }else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "PatientNotificationFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(PatientNotificationFragmentDirections.actionPatientNotificationFragmentToPatientHomeFragment("","",""))
                     }
                     true
                 }
@@ -92,8 +100,24 @@ class MainActivity : AppCompatActivity() {
                     } else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "AddNewMedicineFragment") {
                         Navigation.findNavController(this, R.id.fragmentContainerView)
                             .navigate(AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToCaregiversPatientFragment())
-
+                    }else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "PatientNotificationFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(PatientNotificationFragmentDirections.actionPatientNotificationFragmentToCaregiversPatientFragment())
                     }
+                    true
+                }
+                R.id.notification_icon ->{
+                    if(findNavController(R.id.fragmentContainerView).currentDestination?.label == "PatientHomeFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToPatientNotificationFragment())
+                    }else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "AddNewMedicineFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToPatientNotificationFragment())
+                    }else if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "CaregiversPatientFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToPatientNotificationFragment())
+                    }
+
                     true
                 }
                 else -> {

@@ -34,8 +34,8 @@ class NotificationRecyclerView: RecyclerView.Adapter<NotificationRecyclerView.No
             Glide.with(itemView).load(imageUrl).into(image)
             notification.text=item.sender.name +" "+ item.type +" "+ item.description
             notification.setTypeface(null,Typeface.BOLD)
-            date.text=item.createdAt.subSequence(0,9)
-            time.text=item.createdAt.subSequence(11,15)
+            date.text=item.createdAt.subSequence(0,10)
+            time.text=item.createdAt.subSequence(11,16)
 
         }
     }
