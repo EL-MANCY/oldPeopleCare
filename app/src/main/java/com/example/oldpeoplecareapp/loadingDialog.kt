@@ -8,6 +8,7 @@ class LoadingDialog(val mActivity:Activity) {
     val bulider = AlertDialog.Builder(mActivity)
     private  var isdialog:AlertDialog=bulider.create()
 
+
     fun startLoading(){
         /**set View*/
         val infalter = mActivity.layoutInflater
