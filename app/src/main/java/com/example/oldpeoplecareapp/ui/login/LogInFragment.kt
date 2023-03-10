@@ -23,14 +23,15 @@ import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.example.oldpeoplecareapp.ui.registration.RegViewModel
 import com.example.oldpeoplecareapp.ui.registration.RegistrationFragmentDirections
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class LogInFragment : Fragment() {
     lateinit var binding: FragmentLogInBinding
-    lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var logInViewModel: LogInViewModel
+    lateinit var fcm_token:String
 
     private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
         textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
@@ -47,8 +48,10 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val loading= LoadingDialog(requireActivity())
 
-        val serviceInstant = RetroBuilder.builder
-        remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
+        val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        fcm_token = getpreferences.getString("FCMTOKEN", null).toString()
+
+
         logInViewModel = ViewModelProvider(requireActivity()).get(LogInViewModel::class.java)
 
         binding.RegisterPath.setOnClickListener {
@@ -83,7 +86,7 @@ class LogInFragment : Fragment() {
             if (!binding.emailLogin.text.toString().isNullOrEmpty() &&
                 !binding.passwordLogin.text.toString().isNullOrEmpty()
                     ) {
-                logInViewModel.logIn("email", email, password)
+                logInViewModel.logIn("email", email, password,fcm_token)
                 loading.startLoading()
 
             }

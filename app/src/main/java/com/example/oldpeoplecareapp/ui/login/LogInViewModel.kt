@@ -25,12 +25,14 @@ class LogInViewModel(application: Application): AndroidViewModel(application) {
     }
     fun logIn(emailOrPhone: String,
               email: String,
-              password: String) {
+              password: String,
+              FcmToken: String
+    ) {
         Log.i("scopeTag","reached")
 
         viewModelScope.launch {
             val token = remoteRepositoryImp.logIn(
-               emailOrPhone,email,password)
+               emailOrPhone,email,password,FcmToken)
             if(token.isSuccessful){
                 tokenMutableLiveData.postValue(token.body())
                 Log.i("success",token.body().toString())

@@ -1,6 +1,10 @@
 package com.example.oldpeoplecareapp.ui.PatientNotification
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +19,7 @@ import com.example.oldpeoplecareapp.databinding.FragmentRegistrationBinding
 import com.example.oldpeoplecareapp.ui.patientHome.MedicineRecyclerView
 import com.example.oldpeoplecareapp.ui.patientHome.PatientHomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.socket.client.IO
 
 class PatientNotificationFragment : Fragment() {
 
@@ -49,9 +54,30 @@ class PatientNotificationFragment : Fragment() {
             }
         })
 
-
+        createChannel(
+            getString(R.string.FCM_CHANNEL_ID),
+            getString(R.string.FCM_CHANNEL_STRING)
+        )
 
     }
+
+    private fun createChannel(channelId: String, channelName: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            val notificationChannel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+                .apply {
+                    setShowBadge(true)
+                }
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Med Time"
+
+            val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+    }
+
 
 
 }

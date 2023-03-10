@@ -12,13 +12,17 @@ interface RemoteRepository {
         dateOfBirth: String,
         gender: String,
         registAs: String,
-        password: String
+        password: String,
+        FcmToken: String
+
     ): Response<UserResponse>
 
     suspend fun logIn(
         emailOrPhone: String,
         email: String,
-        password: String
+        password: String,
+        FcmToken: String
+
     ): Response<UserLogInInfo>
 
     suspend fun postMedicine(

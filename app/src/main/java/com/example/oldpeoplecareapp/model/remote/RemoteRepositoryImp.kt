@@ -9,7 +9,8 @@ import retrofit2.Response
 class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     override suspend fun addNewUser(
         fullname: String, email: String, phone: String, dateOfBirth: String,
-        gender: String, registAs: String, password: String
+        gender: String, registAs: String, password: String,FcmToken: String
+
     ): Response<UserResponse> {
         return withContext(Dispatchers.IO) {
             Log.i("repoImp", fullname)
@@ -20,7 +21,8 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
                 dateOfBirth,
                 gender,
                 registAs,
-                password
+                password,
+                FcmToken
             )
         }
     }
@@ -28,10 +30,11 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     override suspend fun logIn(
         emailOrPhone: String,
         email: String,
-        password: String
+        password: String,
+        FcmToken: String
     ): Response<UserLogInInfo> {
         return withContext(Dispatchers.IO) {
-            api.logIn(emailOrPhone, email, password)
+            api.logIn(emailOrPhone, email, password,FcmToken)
         }
     }
 

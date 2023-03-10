@@ -11,12 +11,14 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.oldpeoplecareapp.MyFirebaseMessagingService
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.ActivityMainBinding
 import com.example.oldpeoplecareapp.ui.AddNewMedicine.AddNewMedicineFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientNotification.PatientNotificationFragmentDirections
 import com.example.oldpeoplecareapp.ui.patientHome.PatientHomeFragmentDirections
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             )
             ActivityCompat.requestPermissions(this, permissions, 0)
         }
+        Log.i("FCMTOKEN",FirebaseMessaging.getInstance().token.toString())
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment?

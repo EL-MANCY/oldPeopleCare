@@ -1,6 +1,7 @@
 package com.example.oldpeoplecareapp.ui.PatientNotification
 
 import android.graphics.Typeface
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,11 +33,17 @@ class NotificationRecyclerView: RecyclerView.Adapter<NotificationRecyclerView.No
             val imageUrl = item.sender.id.image.url
             image.setBackgroundResource(R.drawable.oval)
             Glide.with(itemView).load(imageUrl).into(image)
-            notification.text=item.sender.name +" "+ item.type +" "+ item.description
-            notification.setTypeface(null,Typeface.BOLD)
+            notification.text= Html.fromHtml("<b>${item.sender.name}</b>"+" "+"${item.description}")
+        //  notification.setTypeface(null,Typeface.BOLD)
             date.text=item.createdAt.subSequence(0,10)
-            time.text=item.createdAt.subSequence(11,16)
-
+            var timex=item.createdAt.subSequence(11,13).toString().toInt()
+            if(timex>12){
+                time.text=(timex/2).toString()+item.createdAt.subSequence(13,16)+" PM"
+            }else if(timex==12){
+                time.text=(timex).toString()+item.createdAt.subSequence(13,16)+" PM"
+            }else{
+                time.text=timex.toString()+item.createdAt.subSequence(13,16)+" AM"
+            }
         }
     }
 

@@ -3,6 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="FCM_CHANNEL_ID">FCM_ID</string>
+    <string name="MedNotify">NEW NOTIFICATION</string>
+    <string name="FCM_CHANNEL_STRING">FCM COMMING NOTIFICATION</string>
+
     <string-array name="medicines">
         <item>pills</item>
         <item>injection</item>

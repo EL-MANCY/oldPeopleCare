@@ -15,7 +15,8 @@ interface ServiceAPI {
         @Field("dateOfBirth") dateOfBirth: String,
         @Field("gender") gender: String,
         @Field("registAs") registAs: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("fcmToken") FcmToken: String
     ): Response<UserResponse>
 
     @FormUrlEncoded
@@ -23,7 +24,8 @@ interface ServiceAPI {
     suspend fun logIn(
         @Field("emailOrPhone") emailOrPhone: String,
         @Field("email") email: String,
-        @Field("password") password: String
+        @Field("password") password: String,
+        @Field("fcmToken") FcmToken: String
     ): Response<UserLogInInfo>
 
     @FormUrlEncoded

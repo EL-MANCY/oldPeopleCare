@@ -23,12 +23,14 @@ import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentRegistrationBinding
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 class RegistrationFragment : Fragment() {
     lateinit var binding: FragmentRegistrationBinding
     // lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var regViewModel:RegViewModel
+    lateinit var fcm_token:String
 
     private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
         textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
@@ -44,6 +46,9 @@ class RegistrationFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val loading=LoadingDialog(requireActivity())
+
+        val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        fcm_token = getpreferences.getString("FCMTOKEN", null).toString()
 
 //        val serviceInstant = RetroBuilder.builder
 //        remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
@@ -167,7 +172,8 @@ class RegistrationFragment : Fragment() {
                     dateOfBirth,
                     gender,
                     registerAs,
-                    password
+                    password,
+                    fcm_token
                 )
                 Log.i("go","done")
                 loading.startLoading()

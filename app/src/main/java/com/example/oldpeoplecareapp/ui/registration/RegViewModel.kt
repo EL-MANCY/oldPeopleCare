@@ -23,7 +23,8 @@ class RegViewModel(application: Application):AndroidViewModel(application) {
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
     fun addUsersAPI(fullname: String, email: String, phone: String, dateOfBirth: String,
-        gender: String, registerAs: String, password: String) {
+        gender: String, registerAs: String, password: String,FcmToken: String
+    ) {
         Log.i("scopeTag","reached")
 
         viewModelScope.launch {
@@ -34,7 +35,8 @@ class RegViewModel(application: Application):AndroidViewModel(application) {
                 dateOfBirth,
                 gender,
                 registerAs,
-                password
+                password,
+                FcmToken
             )
             if(result.isSuccessful){
                     addUserAPIMutableLiveData.postValue(result.body())

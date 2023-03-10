@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "733754410190",
+    "project_id": "old-people-care-app",
+    "storage_bucket": "old-people-care-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733754410190:android:661ba4a7171b5b93ab7c9f",
+        "android_client_info": {
+          "package_name": "com.example.oldpeoplecareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733754410190-ajt89rmj7ovtgrknqsp1cmdhbiq15o8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtaX2_dVN59XTGQBjmNcjPJ5uImlX9wA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733754410190-ajt89rmj7ovtgrknqsp1cmdhbiq15o8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
