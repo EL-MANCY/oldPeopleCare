@@ -11,13 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.oldpeoplecareapp.MyFirebaseMessagingService
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.ActivityMainBinding
-import com.example.oldpeoplecareapp.ui.AddNewMedicine.AddNewMedicineFragmentDirections
-import com.example.oldpeoplecareapp.ui.CaregiversPatient.CaregiversPatientFragmentDirections
-import com.example.oldpeoplecareapp.ui.PatientNotification.PatientNotificationFragmentDirections
-import com.example.oldpeoplecareapp.ui.patientHome.PatientHomeFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
 import com.google.firebase.messaging.FirebaseMessaging
 
 
@@ -49,12 +48,28 @@ class MainActivity : AppCompatActivity() {
             || navController.currentDestination?.label == "EditMedicineFragment"
             || navController.currentDestination?.label == "AddNewcaregiverPatientFragment"
             || navController.currentDestination?.label == "PatientNotificationFragment"
+            || navController.currentDestination?.label == "CaregiveHomeFragment"
+
 
         ) {
             binding.bottomNavigation.visibility = View.GONE
+
         } else {
             binding.bottomNavigation.visibility = View.VISIBLE
         }
+
+        if (navController.currentDestination?.label == "fragment_registration"
+            || navController.currentDestination?.label == "fragment_log_in"
+
+        ) {
+            binding.bottomNavigation2.visibility = View.GONE
+
+        } else {
+            binding.bottomNavigation2.visibility = View.VISIBLE
+        }
+
+
+
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -128,6 +143,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.bottomNavigation2.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home_icon -> {
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+
 
 
     }

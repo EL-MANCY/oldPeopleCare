@@ -10,23 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.graphics.toColor
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentLogInBinding
-import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
-import com.example.oldpeoplecareapp.model.remote.RetroBuilder
-import com.example.oldpeoplecareapp.ui.registration.RegViewModel
-import com.example.oldpeoplecareapp.ui.registration.RegistrationFragmentDirections
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class LogInFragment : Fragment() {
     lateinit var binding: FragmentLogInBinding
@@ -100,8 +89,18 @@ class LogInFragment : Fragment() {
                 preferences.edit().putString("TOKEN", logInViewModel.tokenLiveData.value!!.token).apply()
                 preferences.edit().putString("REGIST", logInViewModel.tokenLiveData.value!!.registAs).apply()
 
-                findNavController()
-                    .navigate(LogInFragmentDirections.actionLogInToPatientHomeFragment(logInViewModel.tokenLiveData.value!!.token,logInViewModel.tokenLiveData.value!!.registAs,logInViewModel.tokenLiveData.value!!.id))
+                if(logInViewModel.tokenLiveData.value!!.registAs=="patient") {
+                    findNavController()
+                        .navigate(
+                            LogInFragmentDirections.actionLogInToPatientHomeFragment(
+                                logInViewModel.tokenLiveData.value!!.token,
+                                logInViewModel.tokenLiveData.value!!.registAs,
+                                logInViewModel.tokenLiveData.value!!.id
+                            )
+                        )
+                }else{
+                    findNavController().navigate(LogInFragmentDirections.actionLogInToCaregiveHomeFragment())
+                }
                 Log.i("ifObserve", "yes")
             } else {
                 Log.i("elseObserve", "not")

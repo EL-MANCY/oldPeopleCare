@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/registration"
-        android:name="com.example.oldpeoplecareapp.ui.registration.RegistrationFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -15,6 +15,9 @@
             app:destination="@id/logIn"
             app:popUpTo="@id/registration"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registration_to_caregiveHomeFragment"
+            app:destination="@id/caregiveHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/logIn"
@@ -31,10 +34,13 @@
             app:destination="@id/patientHomeFragment"
             app:popUpTo="@id/logIn"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_logIn_to_caregiveHomeFragment"
+            app:destination="@id/caregiveHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientHomeFragment"
-        android:name="com.example.oldpeoplecareapp.ui.patientHome.PatientHomeFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragment"
         android:label="PatientHomeFragment" >
         <action
             android:id="@+id/action_patientHomeFragment_to_addNewMedicineFragment"
@@ -61,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNewMedicineFragment"
-        android:name="com.example.oldpeoplecareapp.ui.AddNewMedicine.AddNewMedicineFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragment"
         android:label="AddNewMedicineFragment" >
         <action
             android:id="@+id/action_addNewMedicineFragment_to_patientHomeFragment"
@@ -76,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/editMedicineFragment"
-        android:name="com.example.oldpeoplecareapp.ui.editMedicine.EditMedicineFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.editMedicine.EditMedicineFragment"
         android:label="EditMedicineFragment" >
         <action
             android:id="@+id/action_editMedicineFragment_to_patientHomeFragment"
@@ -91,7 +97,7 @@
     </fragment>
     <fragment
         android:id="@+id/caregiversPatientFragment"
-        android:name="com.example.oldpeoplecareapp.ui.CaregiversPatient.CaregiversPatientFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragment"
         android:label="CaregiversPatientFragment" >
         <action
             android:id="@+id/action_caregiversPatientFragment_to_addNewMedicineFragment"
@@ -108,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
-        android:name="com.example.oldpeoplecareapp.ui.AddNewcaregiverPatient.AddNewcaregiverPatientFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AddNewcaregiverPatient.AddNewcaregiverPatientFragment"
         android:label="AddNewcaregiverPatientFragment" >
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_caregiversPatientFragment"
@@ -119,7 +125,7 @@
     </fragment>
     <fragment
         android:id="@+id/patientNotificationFragment"
-        android:name="com.example.oldpeoplecareapp.ui.PatientNotification.PatientNotificationFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragment"
         android:label="PatientNotificationFragment" >
         <action
             android:id="@+id/action_patientNotificationFragment_to_patientHomeFragment"
@@ -134,4 +140,8 @@
             android:id="@+id/action_patientNotificationFragment_to_addNewcaregiverPatientFragment"
             app:destination="@id/addNewcaregiverPatientFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/caregiveHomeFragment"
+        android:name="com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragment"
+        android:label="CaregiveHomeFragment" />
 </navigation>

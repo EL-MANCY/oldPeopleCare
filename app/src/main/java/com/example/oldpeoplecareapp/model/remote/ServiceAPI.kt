@@ -87,6 +87,8 @@ interface ServiceAPI {
     suspend fun getAllNotification(
         @Header("token") token: String,
         ):Response<List<notificationData>>
+
+
 }
 
 
