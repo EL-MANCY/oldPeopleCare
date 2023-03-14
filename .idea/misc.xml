@@ -3,8 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/btn_border.xml" value="0.1555" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/et_style.xml" value="0.1555" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/green_border.xml" value="0.1555" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_main.xml" value="0.2484375" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_patients_item.xml" value="0.4" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_item.xml" value="0.24461538461538462" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_notifiy_item.xml" value="0.5076628352490421" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiverhome_item.xml" value="0.4" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_all_patients.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregive_home.xml" value="0.2484375" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregiver_notifications.xml" value="0.2484375" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_patient_notification.xml" value="0.2484375" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/notification_item.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/menu/bottom_navigation_menu2.xml" value="0.24739583333333334" />
       </map>

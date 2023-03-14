@@ -10,9 +10,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="#FFFFFF"
+        android:background="@drawable/green_border"
         app:cardElevation="4dp"
+        android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +23,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="235dp"
+            android:background="@drawable/green_border"
+
             >
 
             <androidx.cardview.widget.CardView
@@ -30,7 +34,6 @@
                 android:backgroundTint="#EEEEEE"
                 app:cardBackgroundColor="#EEEEEE"
                 app:cardCornerRadius="45dp"
-                app:cardElevation="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.06"
@@ -84,8 +87,7 @@
                 android:layout_width="375dp"
                 android:layout_height="150dp"
                 app:cardBackgroundColor="#D9D9D9"
-                app:cardCornerRadius="30dp"
-                app:cardElevation="22dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +95,9 @@
                 app:layout_constraintVertical_bias="0.728">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/green_border"
+                    >
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/p3"
