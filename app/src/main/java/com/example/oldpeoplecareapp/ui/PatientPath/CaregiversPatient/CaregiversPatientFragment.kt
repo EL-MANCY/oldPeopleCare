@@ -22,9 +22,7 @@ class CaregiversPatientFragment : Fragment() {
     lateinit var  retrivedToken:String
     val circleRecyclerView by lazy { CircleRecyclerView() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCaregiversPatientBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.visibility = View.VISIBLE

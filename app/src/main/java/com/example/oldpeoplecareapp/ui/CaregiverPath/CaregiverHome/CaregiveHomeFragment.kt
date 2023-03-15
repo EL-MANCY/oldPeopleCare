@@ -21,7 +21,7 @@ class CaregiveHomeFragment : Fragment() {
         navBar.visibility = View.GONE
         val navBar2 = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation2)
         navBar2.visibility = View.VISIBLE
-        navBar2?.selectedItemId =R.id.home_icon
+        navBar2?.selectedItemId =R.id.home_page
         return binding.root
     }
 

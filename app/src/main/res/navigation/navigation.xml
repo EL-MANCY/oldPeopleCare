@@ -143,5 +143,17 @@
     <fragment
         android:id="@+id/caregiveHomeFragment"
         android:name="com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragment"
-        android:label="CaregiveHomeFragment" />
+        android:label="CaregiveHomeFragment" >
+        <action
+            android:id="@+id/action_caregiveHomeFragment_to_allPatientsFragment"
+            app:destination="@id/allPatientsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allPatientsFragment"
+        android:name="com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragment"
+        android:label="AllPatientsFragment" >
+        <action
+            android:id="@+id/action_allPatientsFragment_to_caregiveHomeFragment"
+            app:destination="@id/caregiveHomeFragment" />
+    </fragment>
 </navigation>

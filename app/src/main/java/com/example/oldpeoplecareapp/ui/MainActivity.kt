@@ -13,6 +13,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.ActivityMainBinding
+import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragmentDirections
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
@@ -23,11 +25,18 @@ import com.google.firebase.messaging.FirebaseMessaging
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    private val CALL_PERMISSION_REQUEST_CODE = 1
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // Permission not granted, request it
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION_REQUEST_CODE)
+        }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             val permissions = arrayOf(
@@ -146,7 +155,19 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation2.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home_icon -> {
+                R.id.home_page -> {
+                    if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "AllPatientsFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(AllPatientsFragmentDirections.actionAllPatientsFragmentToCaregiveHomeFragment())
+                    }
+
+                    true
+                }
+                R.id.patients_icon ->{
+                    if (findNavController(R.id.fragmentContainerView).currentDestination?.label == "CaregiveHomeFragment") {
+                        Navigation.findNavController(this, R.id.fragmentContainerView)
+                            .navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToAllPatientsFragment())
+                    }
                     true
                 }
                 else -> {
@@ -158,6 +179,19 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            CALL_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, do something
+                } else {
+                    finish()
+                }
+            }
+        }
+    }
+
 
 
 }

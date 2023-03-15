@@ -38,8 +38,6 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
         var medicineProgressBar: ProgressBar = itemView.findViewById(R.id.medicineProgressBar)
 
 
-
-
         fun bind(medicineInfo: AllMedicineRespone) {
 //            val imgUri: Uri = Uri.parse(medicineInfo.imgUrl)
 //            medicineImage.setImageURI(imgUri)

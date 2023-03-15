@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     android:background="@drawable/search_editbox">
 
 
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.47000003">
 
         <ImageView
-            android:id="@+id/patientImg"
+            android:id="@+id/patientPicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/fullname_txtfield"
+        android:id="@+id/patientFullname_txtfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="110dp"
@@ -63,11 +63,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullname_txtfield"
+        app:layout_constraintTop_toBottomOf="@+id/patientFullname_txtfield"
         app:layout_constraintVertical_bias="0.243" />
 
     <ImageView
-        android:id="@+id/editbtn"
+        android:id="@+id/phoneBtn"
         android:layout_width="22dp"
         android:layout_height="21dp"
         app:layout_constraintBottom_toBottomOf="parent"

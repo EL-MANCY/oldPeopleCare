@@ -2,12 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/home_icon"
+        android:id="@+id/home_page"
         android:enabled="true"
         android:icon="@drawable/home_icon"
         android:title="Home"/>
     <item
-        android:id="@+id/caregiver_icon"
+        android:id="@+id/patients_icon"
         android:enabled="true"
         android:icon="@drawable/caregiver_icon"
         android:title="Patients"/>
