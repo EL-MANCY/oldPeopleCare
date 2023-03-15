@@ -39,7 +39,7 @@ class PatientsRecyclerView: RecyclerView.Adapter<PatientsRecyclerView.PatientVie
 
             Glide.with(itemView).load(imageUrl).into(image)
 
-            itemView.setOnClickListener {
+            phonebtn.setOnClickListener {
                 onListItemClick2?.onItemClick2(item)
             }
 

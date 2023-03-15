@@ -131,6 +131,16 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
+    override suspend fun Accept(notifyId: String, token: String):Response<Any> {
+        return withContext((Dispatchers.IO)) {
+            api.Accept(notifyId,token)
+        }    }
+
+    override suspend fun Reject(notifyId: String, token: String) :Response<Any>{
+        return withContext((Dispatchers.IO)) {
+            api.Reject(notifyId,token)
+        }    }
+
 }
 
 

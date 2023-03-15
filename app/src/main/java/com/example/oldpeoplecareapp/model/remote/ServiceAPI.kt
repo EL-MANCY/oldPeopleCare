@@ -88,6 +88,19 @@ interface ServiceAPI {
         @Header("token") token: String,
         ):Response<List<notificationData>>
 
+    @POST("/notification/accept/{notifyId}")
+    suspend fun Accept(
+        @Path("notifyId") notifyId: String,
+        @Header("token") token: String,
+    ):Response<Any>
+
+    @POST("/notification/refuse/{notifyId}")
+    suspend fun Reject(
+        @Path("notifyId") notifyId: String,
+        @Header("token") token: String,
+    ):Response<Any>
+
+
 
 }
 

@@ -75,6 +75,17 @@ interface RemoteRepository {
         token: String,
     ):Response<List<notificationData>>
 
+
+    suspend fun Accept(
+        notifyId: String,
+        token: String,
+    ):Response<Any>
+
+    suspend fun Reject(
+         notifyId: String,
+         token: String,
+    ):Response<Any>
+
 }
 
 

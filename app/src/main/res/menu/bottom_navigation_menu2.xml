@@ -14,7 +14,7 @@
 
 
     <item
-        android:id="@+id/notification_icon"
+        android:id="@+id/notifi_icon"
         android:enabled="true"
         android:icon="@drawable/notification_icon"
         android:title="Notifications"/>
