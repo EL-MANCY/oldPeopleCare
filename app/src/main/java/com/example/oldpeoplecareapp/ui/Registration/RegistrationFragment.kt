@@ -3,16 +3,22 @@ package com.example.oldpeoplecareapp.ui.Registration
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -23,40 +29,196 @@ import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 class RegistrationFragment : Fragment() {
+    val TAG = "RegistrationFragment"
     lateinit var binding: FragmentRegistrationBinding
-    // lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var regViewModel: RegViewModel
     lateinit var fcm_token:String
 
-    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
-        textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
-    }
-
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         val loading=LoadingDialog(requireActivity())
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         fcm_token = getpreferences.getString("FCMTOKEN", null).toString()
 
-//        val serviceInstant = RetroBuilder.builder
-//        remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
         regViewModel= ViewModelProvider(requireActivity()).get(RegViewModel::class.java)
 
-        val gender = listOf("Male", "Female")
-        val adapterG = ArrayAdapter(requireContext(), R.layout.spinner_item, gender)
-        (binding.genderX.editText as? AutoCompleteTextView)?.setAdapter(adapterG)
+/////////////////////////////////////////////////////////////////////////////////////////////
 
-        val register = listOf("Patient", "Care Giver")
-        val adapterR = ArrayAdapter(requireContext(), R.layout.spinner_item, register)
-        (binding.registerAsX.editText as? AutoCompleteTextView)?.setAdapter(adapterR)
+        val genderitems = resources.getStringArray(R.array.gender)
+        val spinnerAdapter2 = object :
+            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, genderitems) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle2)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                }
+                return view
+            }
+        }
+        val spinnerAdapter = object :
+            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, genderitems) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                 }
+                return view
+            }
+        }
+        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        binding.gender.adapter = spinnerAdapter
+        binding.gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                val value = parent!!.selectedItem.toString()
+                if (value == genderitems[0]) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)                      }
+            }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (value == genderitems[0]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                      }
+                else{
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+
+                }
+            }
+        }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+        val registitems = resources.getStringArray(R.array.regist)
+        val spinnerAdaptererror = object :
+            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, registitems) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle2)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                }
+                return view
+            }
+        }
+        val spinnerAdaptertrue = object :
+            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, registitems) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                 }
+                return view
+            }
+        }
+        spinnerAdaptertrue.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        spinnerAdaptererror.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        binding.registerAsX.adapter = spinnerAdaptertrue
+        binding.registerAsX.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                val value = parent!!.selectedItem.toString()
+                if (value == registitems[0]) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)                      }
+            }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (value == registitems[0]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                      }
+                else{
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+
+                }
+            }
+        }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
         val calendar=Calendar.getInstance()
         val year=calendar.get(Calendar.YEAR)
@@ -67,85 +229,152 @@ class RegistrationFragment : Fragment() {
             binding.DateOfBirth.setBackgroundResource(R.drawable.et_style)
             binding.DateOfBirth.hint="   Date Of Birth"
             val datePickerDialog=DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { it, year, month, dayOfMonth ->
-                binding.DateOfBirth.text = "   $year-$month-$dayOfMonth"
+                binding.DateOfBirth.text = "   $year-${month+1}-$dayOfMonth"
             },year,month,day)
             datePickerDialog.show()
         }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         binding.LoginPath.setOnClickListener {
             it.findNavController().navigate(RegistrationFragmentDirections.actionRegistrationToLogIn())
         }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         binding.add.setOnClickListener {
             val fullname = binding.fullname.text.toString()
             val email = binding.email.text.toString()
             val phone = binding.phone.text.toString()
             val dateOfBirth = binding.DateOfBirth.text.toString()
-            val gender = binding.genderX.editText!!.text.toString()
-            val registerAs = binding.registerAsX.editText!!.text.toString()
+            val gender = binding.gender.selectedItem.toString()
+            val registerAs = binding.registerAsX.selectedItem.toString()
             val password = binding.password.text.toString()
 
+            //////////////////////////////////////////////////////////////////
 
             if(binding.DateOfBirth.text.toString().isNullOrEmpty()){
                 binding.DateOfBirth.setHintTextColor( getResources().getColor(R.color.holo));
                 binding.DateOfBirth.setBackgroundResource(R.drawable.error_style)
-                binding.DateOfBirth.hint="   Date Of Birth is Required"
+                binding.DateOfBirth.hint="  Date Of Birth"
             }
 
+            //////////////////////////////////////////////////////////////////
 
             if(binding.fullname.text.toString().isNullOrEmpty()){
                 setTextInputLayoutHintColor(binding.fullnameX,requireContext(), android.R.color.holo_red_dark)
                 binding.fullname.setBackgroundResource(R.drawable.error_style)
-                binding.fullnameX.hint="Full Name is Required"
+                binding.fullnameX.hint="Full Name"
                 binding.fullname.setOnClickListener {
                     setTextInputLayoutHintColor(binding.fullnameX,requireContext(), R.color.normal)
                     binding.fullname.setBackgroundResource(R.drawable.et_style)
-                    binding.fullnameX.hint="Full Name"                }
+                    binding.fullnameX.hint="Full Name"
+                }
             }
+
+            //////////////////////////////////////////////////////////////////
+
             if(binding.email.text.toString().isNullOrEmpty()){
                 setTextInputLayoutHintColor(binding.emailX,requireContext(), android.R.color.holo_red_dark)
                 binding.email.setBackgroundResource(R.drawable.error_style)
-                binding.emailX.hint="E-Mail is Required"
+                binding.emailX.hint="E-Mail"
                 binding.email.setOnClickListener {
                     setTextInputLayoutHintColor(binding.emailX,requireContext(), R.color.normal)
                     binding.email.setBackgroundResource(R.drawable.et_style)
                     binding.emailX.hint="E-Mail"
                 }
             }
+
+            //////////////////////////////////////////////////////////////////
+
             if(binding.phone.text.toString().isNullOrEmpty()){
                 setTextInputLayoutHintColor(binding.phoneX,requireContext(), android.R.color.holo_red_dark)
                 binding.phone.setBackgroundResource(R.drawable.error_style)
-                binding.phoneX.hint="Phone is Required"
+                binding.phoneX.hint="Phone"
                 binding.phone.setOnClickListener {
                     setTextInputLayoutHintColor(binding.phoneX,requireContext(), R.color.normal)
                     binding.phone.setBackgroundResource(R.drawable.et_style)
-                    binding.phoneX.hint="Phone"                }
+                    binding.phoneX.hint="Phone"
+                }
             }
-            if(binding.genderX.editText!!.text.toString().isNullOrEmpty()){
-                setTextInputLayoutHintColor(binding.genderX,requireContext(), android.R.color.holo_red_dark)
-                binding.genderX.editText!!.setBackgroundResource(R.drawable.error_style)
-                binding.genderX.hint="Gender is Required"
-                binding.genderX.editText!!.setOnClickListener {
-                    setTextInputLayoutHintColor(binding.genderX,requireContext(), R.color.normal)
-                    binding.genderX.editText!!.setBackgroundResource(R.drawable.et_style)
-                    binding.phoneX.hint="Gender"                      }
+
+            //////////////////////////////////////////////////////////////////
+
+            if(binding.gender.selectedItem==genderitems[0]){
+                binding.gender.adapter = spinnerAdapter2
+                binding.gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        val value = parent!!.selectedItem.toString()
+                        if (value == genderitems[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)
+                        }
+                    }
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val value = parent!!.getItemAtPosition(position).toString()
+                        if (value == genderitems[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)                        }
+                        else{
+                            val color = resources.getColor(R.color.bbbb)
+                            (view as TextView).setTextColor(color)
+
+                        }
+                    }
+                }
             }
-            if(binding.registerAsX.editText!!.text.toString().isNullOrEmpty()){
-                setTextInputLayoutHintColor(binding.registerAsX,requireContext(), android.R.color.holo_red_dark)
-                binding.registerAsX.editText!!.setBackgroundResource(R.drawable.error_style)
-                binding.registerAsX.hint="User Type is Required"
-                binding.registerAsX.editText!!.setOnClickListener {
-                    setTextInputLayoutHintColor(binding.registerAsX,requireContext(), R.color.normal)
-                    binding.registerAsX.editText!!.setBackgroundResource(R.drawable.et_style)
-                    binding.registerAsX.hint="Register As"                          }
+
+            //////////////////////////////////////////////////////////////////
+
+            if(binding.registerAsX.selectedItem==registitems[0]){
+                binding.registerAsX.adapter = spinnerAdaptererror
+                binding.registerAsX.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        val value = parent!!.selectedItem.toString()
+                        if (value == registitems[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)
+                        }
+                    }
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val value = parent!!.getItemAtPosition(position).toString()
+                        if (value == registitems[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)                        }
+                        else{
+                            val color = resources.getColor(R.color.bbbb)
+                            (view as TextView).setTextColor(color)
+
+                        }
+                    }
+                }
             }
+
+            //////////////////////////////////////////////////////////////////
+
             if(binding.password.text.toString().isNullOrEmpty()){
-                setTextInputLayoutHintColor(binding.passwordX,requireContext(), android.R.color.holo_red_dark)
+                setTextInputLayoutHintColor(binding.passwordX,requireContext(), R.color.holo)
                 binding.password.setBackgroundResource(R.drawable.error_style)
-                binding.passwordX.hint="Password is Required"
+                binding.passwordX.hint="Password"
                 binding.password.setOnClickListener {
                     setTextInputLayoutHintColor(binding.passwordX,requireContext(), R.color.normal)
                     binding.password.setBackgroundResource(R.drawable.et_style)
-                    binding.passwordX.hint="Password"                          }
+                    binding.passwordX.hint="Password"
+                }
             }
+
+            //////////////////////////////////////////////////////////////////
+
             if(!binding.confirmpassword.text.toString().equals(binding.password.text.toString()) || binding.confirmpassword.text.toString().isNullOrEmpty()){
                 setTextInputLayoutHintColor(binding.confirmpasswordX,requireContext(), android.R.color.holo_red_dark)
                 binding.confirmpassword.setBackgroundResource(R.drawable.error_style)
@@ -153,14 +382,16 @@ class RegistrationFragment : Fragment() {
                 binding.confirmpassword.setOnClickListener {
                     setTextInputLayoutHintColor(binding.confirmpasswordX,requireContext(), R.color.normal)
                     binding.confirmpassword.setBackgroundResource(R.drawable.et_style)
-                    binding.confirmpasswordX.hint="Confirm Password"                                    }
+                    binding.confirmpasswordX.hint="Confirm Password"
+                }
             }
+
+            //////////////////////////////////////////////////////////////////
+
             if (!binding.fullname.text.toString().isNullOrEmpty() && !binding.email.text.toString().isNullOrEmpty() &&
-                !binding.phone.text.toString().isNullOrEmpty() && !binding.genderX.editText!!.text.toString().isNullOrEmpty() &&
-                !binding.registerAsX.editText!!.text.toString().isNullOrEmpty() && !binding.password.text.toString().isNullOrEmpty() &&
+                !binding.phone.text.toString().isNullOrEmpty() && !(binding.gender == null) &&
+                !(binding.registerAsX == null) && !binding.password.text.toString().isNullOrEmpty() &&
                 !binding.confirmpassword.text.toString().isNullOrEmpty() && binding.confirmpassword.text.toString().equals(binding.password.text.toString())) {
-//                it.findNavController()
-//                    .navigate(RegistrationDirections.actionRegistrationToLogIn())
                 regViewModel.addUsersAPI(
                     fullname,
                     email,
@@ -171,53 +402,27 @@ class RegistrationFragment : Fragment() {
                     password,
                     fcm_token
                 )
-                Log.i("go","done")
                 loading.startLoading()
-
-
             }
         }
+
+        //////////////////////////////////////////////////////////////////
+
         regViewModel.addUserAPILiveData.observe(viewLifecycleOwner) {
-            Log.i("outIf", "yes")
             if (it != null) {
                 loading.isDismiss()
                 findNavController()
                     .navigate(RegistrationFragmentDirections.actionRegistrationToLogIn())
-                Log.i("ifObserve", "yes")
             } else {
-                Log.i("elseObserve", "not")
-
+                Log.i(TAG, "not")
             }
         }
+
+    }
+
+    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
+        textInputLayout.defaultHintTextColor =
+            ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                val result = remoteRepositoryImp.addNewUser(
-//                        "mancy",
-//                        "abdel@gmail.com",
-//                        "01554500089",
-//                        "2002-12-09",
-//                        "Male",
-//                        "Patient",
-//                        "12AAA4599789Abdl@"
-//
-//                )
-
-
-//        binding.DateOfBirth.setOnClickListener {
-//            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.hideSoftInputFromWindow(requireView().windowToken, 0)
-//        }
