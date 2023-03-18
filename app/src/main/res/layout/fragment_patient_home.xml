@@ -7,97 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.PatientPath.patientHome.PatientHomeFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/searchIconX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="Search for medicine"
-
-        app:endIconMode="clear_text"
-        app:errorTextColor="#EF0C0C"
-        app:hintTextColor="#00BCD4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/search_icon">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/searchIcon"
-            android:layout_width="294dp"
-            android:layout_height="34dp"
-            android:layout_marginTop="31dp"
-            android:background="@drawable/search_editbox"
-            android:inputType="textEmailAddress"
-            android:paddingRight="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
         android:src="@drawable/male_pic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchIconX"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="388dp"
-        android:layout_height="9dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/line"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <TextView
-        android:id="@+id/dailyMedicineBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
-        android:text="Daily Medicine"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/allMedicineBtn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/allMedicineBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="17dp"
-        android:text="All Medicine"
-        android:textColor="#000000"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/medicineRecyclerView"
-        android:layout_width="405dp"
-        android:layout_height="650dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dailyMedicineBtn" />
-
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/emergency_btn"
@@ -105,25 +24,153 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:clickable="true"
-        app:backgroundTint="#0021F5"
+        app:backgroundTint="#F4F4F4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.942"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/emegency_call" />
+        app:srcCompat="@drawable/phone_emerg" />
+
+
 
     <TextView
-        android:id="@+id/NoMedicine"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Medicine Added"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Old People Care"
         android:textColor="#000000"
-        android:textStyle="italic"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/medicineRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:textAllCaps="false"
+        android:id="@+id/button2"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/buttom_bottomcorner"
+        android:backgroundTint="#008080"
+        android:text="Upcoming"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/allMedicineBtn"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <Button
+        android:textAllCaps="false"
+        android:id="@+id/allMedicineBtn"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/buttom_bottomcorner"
+        android:backgroundTint="#D9D9D9"
+        android:text="Completed"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/medicineRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/medicineRecyclerView"
+        android:layout_width="410dp"
+        android:layout_height="350dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <ImageButton
+        android:id="@+id/All_Alarms"
+        android:layout_width="90dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/buttonstyle"
+        android:padding="15dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/reminderpic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/medicineRecyclerView" />
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="68dp"
+        android:layout_height="16dp"
+        android:layout_above="@+id/All_Alarms"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:text="All Alarms"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/All_Alarms"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/All_Alarms"
+        app:layout_constraintTop_toTopOf="@+id/All_Alarms" />
+
+
+    <ImageButton
+        android:id="@+id/Missed_Alarms"
+        android:layout_width="90dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginBottom="88dp"
+        android:background="@drawable/buttonstyle"
+        android:padding="20dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/All_Alarms"
+        app:layout_constraintTop_toBottomOf="@+id/medicineRecyclerView" />
+
+    <TextView
+        android:id="@+id/text_view2x"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/Missed_Alarms"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="10dp"
+        android:text="Missed Alarms"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/Missed_Alarms"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="@+id/Missed_Alarms"
+        app:layout_constraintTop_toTopOf="@+id/Missed_Alarms" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
