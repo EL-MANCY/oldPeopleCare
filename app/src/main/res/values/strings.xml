@@ -8,6 +8,7 @@
     <string name="FCM_CHANNEL_STRING">FCM COMMING NOTIFICATION</string>
 
     <string-array name="medicines">
+        <item>Select Medicine Type</item>
         <item>pills</item>
         <item>injection</item>
         <item>drink</item>

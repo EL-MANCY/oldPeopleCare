@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -43,7 +44,6 @@ class AddNewMedicineFragment : Fragment() {
     var TAG="AddNewMedicineFragmentLOG"
     lateinit var binding:FragmentAddNewMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
-//    lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var addNewMedicineViewModel: AddNewMedicineViewModel
 
 
@@ -60,11 +60,9 @@ class AddNewMedicineFragment : Fragment() {
         binding.MedicineName.text=null
         binding.UploadPhoto.text=null
         binding.recordX.editText!!.text=null
-        binding.medicineType.editText!!.text=null
-        binding.Date.text=null
+        binding.medicineType.setSelection(0)
         binding.Time.text=null
         binding.description.text=null
-        binding.RepeatTimesX.editText!!.text=null
    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -92,13 +90,94 @@ class AddNewMedicineFragment : Fragment() {
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////
-//        val serviceInstant = RetroBuilder.builder
-//        remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
-        addNewMedicineViewModel =
-            ViewModelProvider(requireActivity()).get(AddNewMedicineViewModel::class.java)
+
+        val typesMed = resources.getStringArray(R.array.medicines)
+        val spinnerAdapter2 = object :
+            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, typesMed) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle2)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                }
+                return view
+            }
+        }
+        val spinnerAdapter = object :
+            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, typesMed) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                 }
+                return view
+            }
+        }
+        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+        binding.medicineType.adapter = spinnerAdapter
+        binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                val value = parent!!.selectedItem.toString()
+                if (value == typesMed[0]) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)                      }
+            }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (value == typesMed[0]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                      }
+                else{
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+
+                }
+            }
+        }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+        addNewMedicineViewModel = ViewModelProvider(requireActivity()).get(AddNewMedicineViewModel::class.java)
         val loading= LoadingDialog(requireActivity())
-
-
 
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
@@ -115,8 +194,9 @@ class AddNewMedicineFragment : Fragment() {
             output = appDir.path + "/" + fileName
         }
         var isRecording = false
-        binding.recordBtn.setOnClickListener {
-            try {
+        binding.addrec.setOnClickListener {
+
+                try {
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
                 mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
@@ -130,91 +210,22 @@ class AddNewMedicineFragment : Fragment() {
 
                 e.printStackTrace()
             }
-            binding.recordBtn.visibility = View.GONE
-            binding.stopBtn.visibility = View.VISIBLE
+            binding.recordX.editText!!.setText("Recording!")
+            binding.cancelbtn.visibility = View.VISIBLE
+            binding.addrec.visibility=View.GONE
         }
-        binding.stopBtn.setOnClickListener {
+
+        binding.cancelbtn.setOnClickListener {
             if (isRecording) {
                 mediaRecorder.stop()
             }
             binding.recordX.editText!!.setText(output)
             isRecording = false
-            binding.stopBtn.visibility = View.GONE
-            binding.recordBtn.visibility = View.VISIBLE
+            binding.cancelbtn.visibility = View.GONE
+            binding.addrec.visibility=View.VISIBLE
+
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-        var M = 0
-        val medicines = resources.getStringArray(R.array.medicines)
-        val medicine_adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, medicines)
-        binding.spinner.adapter = medicine_adapter
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                if (M == 0) {
-                    binding.medicineType.editText?.getText()?.clear()
-                    M++
-                } else {
-                    binding.medicineType.editText!!.setText(medicines[position])
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-//        var Re = 0
-//        val Repeated = resources.getStringArray(R.array.Repeat)
-//        val repeated_adapter =
-//            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, Repeated)
-//        binding.Repeatspinner.adapter = repeated_adapter
-//        binding.Repeatspinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>,
-//                view: View,
-//                position: Int,
-//                id: Long
-//            ) {
-//                if (Re == 0) {
-//                    binding.RepeatTimes.editText?.getText()?.clear()
-//                    Re++
-//                } else {
-//                    binding.RepeatTimes.editText!!.setText(Repeated[position])
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                TODO("Not yet implemented")
-//            }
-//        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        binding.Date.setOnClickListener {
-            binding.Date.setHintTextColor(getResources().getColor(R.color.normal));
-            binding.Date.setBackgroundResource(R.drawable.et_style)
-            binding.Date.hint = "   Date"
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { it, year, month, dayOfMonth ->
-                    binding.Date.text = "$year-${month+1}-$dayOfMonth"
-                }, year, month, day
-            )
-            datePickerDialog.show()
-        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -222,7 +233,7 @@ class AddNewMedicineFragment : Fragment() {
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
-        binding.imageBtn.setOnClickListener { pickImageGallery() }
+        binding.UploadPhoto.setOnClickListener { pickImageGallery() }
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -272,22 +283,6 @@ class AddNewMedicineFragment : Fragment() {
                 }
             }
 
-            if (binding.RepeatTimes.text.toString().isNullOrEmpty()) {
-                setTextInputLayoutHintColor(
-                    binding.RepeatTimesX,
-                    requireContext(),
-                    android.R.color.holo_red_dark
-                )
-                binding.RepeatTimesX.hint = "Times is Required"
-                binding.RepeatTimes.setOnClickListener {
-                    setTextInputLayoutHintColor(
-                        binding.RepeatTimesX,
-                        requireContext(),
-                        R.color.normal
-                    )
-                    binding.RepeatTimesX.hint = "Repeated Times"
-                }
-            }
             if (binding.UploadPhoto.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.UploadPhotoX,
@@ -317,29 +312,36 @@ class AddNewMedicineFragment : Fragment() {
                 }
             }
 
-            if (binding.medicineType.editText!!.text.toString().isNullOrEmpty()) {
-                setTextInputLayoutHintColor(
-                    binding.medicineType,
-                    requireContext(),
-                    android.R.color.holo_red_dark
-                )
-                binding.medicineType.hint = "Medicine Type is Required"
-                binding.medicineType.editText!!.setOnClickListener {
-                    setTextInputLayoutHintColor(
-                        binding.medicineType,
-                        requireContext(),
-                        R.color.normal
-                    )
-                    binding.medicineType.hint = "Medicine Type"
+            if(binding.medicineType.selectedItem==typesMed[0]){
+                binding.medicineType.adapter = spinnerAdapter2
+                binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        val value = parent!!.selectedItem.toString()
+                        if (value == typesMed[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)
+                        }
+                    }
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val value = parent!!.getItemAtPosition(position).toString()
+                        if (value == typesMed[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)                        }
+                        else{
+                            val color = resources.getColor(R.color.bbbb)
+                            (view as TextView).setTextColor(color)
+
+                        }
+                    }
                 }
             }
 
 
-            if (binding.Date.text.toString().isNullOrEmpty()) {
-                binding.Date.setHintTextColor(getResources().getColor(R.color.holo));
-                binding.Date.setBackgroundResource(R.drawable.error_style)
-                binding.Date.hint = "  Required"
-            }
             if (binding.Time.text.toString().isNullOrEmpty()) {
                 binding.Time.setHintTextColor(getResources().getColor(R.color.holo));
                 binding.Time.setBackgroundResource(R.drawable.error_style)
@@ -353,30 +355,26 @@ class AddNewMedicineFragment : Fragment() {
             val name= binding.MedicineName.text.toString()
             val photo=binding.UploadPhoto.text.toString()
             val record=binding.recordX.editText!!.text.toString()
-            val type=binding.medicineType.editText!!.text.toString()
-            val date=binding.Date.text.toString()
+            val type=binding.medicineType.selectedItem.toString()
             val time=binding.Time.text.toString()
             val description=binding.description.text.toString()
-            val repeated =binding.RepeatTimesX.editText!!.text.toString()
 
             if (!binding.MedicineName.text.toString()
                     .isNullOrEmpty() && !binding.description.text.toString().isNullOrEmpty() &&
                 !binding.UploadPhoto.text.toString()
                     .isNullOrEmpty() && !binding.record.text.toString().isNullOrEmpty() &&
-                !binding.medicineType.editText!!.text.toString()
-                    .isNullOrEmpty() && !binding.RepeatTimesX.editText!!.text.toString()
-                    .isNullOrEmpty()
+                !binding.medicineType.selectedItem.toString().isNullOrEmpty()
             ) {
                 addNewMedicineViewModel.addMedicine(
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
                     name,
-                    "https://th.bing.com/th/id/R.f536c7f2f88aab7047dd18f34245ac96?rik=%2bIszp%2bhbl5%2bDKQ&pid=ImgRaw&r=0",
+                    photo,
                     record,
                     type,
-                    date,
                     time,
-                    repeated.toInt(),
+                    time,
+                    2,
                     description
                 )
                 loading.startLoading()
@@ -399,7 +397,7 @@ class AddNewMedicineFragment : Fragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==111 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            binding.recordBtn.isEnabled=true
+            binding.recordX.isEnabled=true
         }
     }
 
@@ -426,11 +424,6 @@ class AddNewMedicineFragment : Fragment() {
                 }
 
             }
-//            if(m>=10){
-//                binding.Time.text ="${h}:$m"}
-//            else{
-//                binding.Time.text="${h}:0$m"
-//            }
         }),hour,minute,false)
         tpd.show()
         Log.i(TAG,"hour = "+hour.toString())
@@ -446,7 +439,6 @@ class AddNewMedicineFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== IMAGE_REQUEST_CODE &&resultCode ==RESULT_OK ){
             binding.UploadPhoto.setText(data?.data?.path)
-           // binding.UploadPhoto.setText("Uploaded Image")
         }
     }
 }
