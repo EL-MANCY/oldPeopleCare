@@ -208,34 +208,35 @@
 
 
         </com.google.android.material.textfield.TextInputLayout>
+
         <ImageButton
             android:id="@+id/cancelbtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:visibility="gone"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/recordX"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toEndOf="@+id/recordX"
             app:layout_constraintTop_toBottomOf="@+id/descriptionX"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.75"
             app:srcCompat="@drawable/cancel_rec" />
 
         <ImageButton
             android:id="@+id/addrec"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/recordX"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.054"
             app:layout_constraintStart_toEndOf="@+id/recordX"
             app:layout_constraintTop_toBottomOf="@+id/descriptionX"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.743"
             app:srcCompat="@drawable/add_icon" />
 
         <TextView
@@ -243,7 +244,7 @@
             style="@style/MyHintTextStyle"
             android:layout_width="330dp"
             android:layout_height="47dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/et_style"
             android:backgroundTint="#5CD9D9D9"
             android:drawableLeft="@drawable/date"
@@ -262,7 +263,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:background="@drawable/et_style"
-            android:backgroundTint="#5CD9D9D9"            android:layout_width="330dp"
+            android:layout_width="330dp"
             android:layout_height="100dp"
             android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
