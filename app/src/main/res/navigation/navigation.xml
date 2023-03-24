@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/addNewMedicineFragment">
+    app:startDestination="@id/logIn">
 
     <fragment
         android:id="@+id/registration"
@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_logIn_to_caregiveHomeFragment"
             app:destination="@id/caregiveHomeFragment" />
+        <action
+            android:id="@+id/action_logIn_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientHomeFragment"
@@ -172,5 +175,13 @@
         <action
             android:id="@+id/action_caregiverNotificationsFragment_to_allPatientsFragment"
             app:destination="@id/allPatientsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.example.oldpeoplecareapp.ui.login.ForgetPasswordFragment"
+        android:label="ForgetPasswordFragment" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_logIn"
+            app:destination="@id/logIn" />
     </fragment>
 </navigation>

@@ -94,11 +94,16 @@ interface ServiceAPI {
         @Header("token") token: String,
     ):Response<Any>
 
+
     @POST("/notification/refuse/{notifyId}")
     suspend fun Reject(
         @Path("notifyId") notifyId: String,
         @Header("token") token: String,
     ):Response<Any>
+
+    @FormUrlEncoded
+    @POST("/auth/reset")
+    suspend fun ResetPassword(@Field("email") email: String):Response<Any>
 
 
 

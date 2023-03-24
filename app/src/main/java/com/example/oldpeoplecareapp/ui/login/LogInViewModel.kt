@@ -10,38 +10,64 @@ import com.example.oldpeoplecareapp.model.entity.UserLogInInfo
 import com.example.oldpeoplecareapp.model.entity.UserResponse
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
+import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
 
 class LogInViewModel(application: Application): AndroidViewModel(application) {
+    val TAG = "LogInViewModel"
     private var remoteRepositoryImp: RemoteRepositoryImp
 
     private var tokenMutableLiveData = MutableLiveData<UserLogInInfo>()
     val tokenLiveData: LiveData<UserLogInInfo>
         get() = tokenMutableLiveData
 
+    private var responseMutableLiveData = MutableLiveData<Any>()
+    val responseLiveData: LiveData<Any>
+        get() = responseMutableLiveData
+
+
     init {
         val serviceInstant = RetroBuilder.builder
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
-    fun logIn(emailOrPhone: String,
-              email: String,
-              password: String,
-              FcmToken: String
+
+    fun logIn(
+        emailOrPhone: String,
+        email: String,
+        password: String,
+        FcmToken: String
     ) {
-        Log.i("scopeTag","reached")
+        Log.i("scopeTag", "reached")
 
         viewModelScope.launch {
             val token = remoteRepositoryImp.logIn(
-               emailOrPhone,email,password,FcmToken)
-            if(token.isSuccessful){
+                emailOrPhone, email, password, FcmToken
+            )
+            if (token.isSuccessful) {
                 tokenMutableLiveData.postValue(token.body())
-                Log.i("success",token.body().toString())
-            }else{
-                Log.i("failed",token.toString())
+                Log.i("success", token.body().toString())
+            } else {
+                Log.i("failed", token.toString())
             }
 
         }
     }
 
+    fun resetPass(email: String) {
+        Log.i("scopeTag", "reached")
 
+        viewModelScope.launch {
+            try {
+                val response = remoteRepositoryImp.ResetPassword(email)
+                if (response.isSuccessful) {
+                    responseMutableLiveData.postValue(response.body())
+                    Log.i(TAG, response.body().toString())
+                } else {
+                    Log.i(TAG, response.toString())
+                }
+            } catch (e: JsonIOException) {
+                Log.i(TAG, e.toString())
+            }
+        }
+    }
 }

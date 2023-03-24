@@ -86,6 +86,8 @@ interface RemoteRepository {
          token: String,
     ):Response<Any>
 
+    suspend fun ResetPassword(email: String):Response<Any>
+
 }
 
 

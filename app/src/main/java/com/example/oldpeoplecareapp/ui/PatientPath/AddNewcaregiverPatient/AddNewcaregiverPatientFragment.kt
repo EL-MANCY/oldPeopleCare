@@ -50,7 +50,6 @@ class AddNewcaregiverPatientFragment : Fragment() {
                 return position != 0
             }
 
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,

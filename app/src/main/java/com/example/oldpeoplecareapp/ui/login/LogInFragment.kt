@@ -81,6 +81,10 @@ class LogInFragment : Fragment() {
             }
 
         }
+        binding.forgetpath.setOnClickListener {
+                findNavController().navigate(LogInFragmentDirections.actionLogInToForgetPasswordFragment())
+
+        }
         logInViewModel.tokenLiveData.observe(viewLifecycleOwner){
             if (it != null) {
                 loading.isDismiss()

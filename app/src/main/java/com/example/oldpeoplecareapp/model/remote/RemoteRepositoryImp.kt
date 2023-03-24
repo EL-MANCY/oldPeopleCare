@@ -141,6 +141,12 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
             api.Reject(notifyId,token)
         }    }
 
+    override suspend fun ResetPassword(email: String):Response<Any> {
+        return withContext((Dispatchers.IO)){
+            api.ResetPassword(email)
+        }
+    }
+
 }
 
 
