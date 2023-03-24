@@ -1,8 +1,16 @@
 package com.example.oldpeoplecareapp.ui
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +25,7 @@ import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFrag
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotificationsFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AlarmReceiver
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
@@ -47,6 +56,21 @@ class MainActivity : AppCompatActivity() {
             )
             ActivityCompat.requestPermissions(this, permissions, 0)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + this.packageName)
+                )
+                startActivityForResult(intent, 111)
+            } else {
+                //Permission Granted-System will work
+            }
+        }
+
+
+
         Log.i("FCMTOKEN",FirebaseMessaging.getInstance().token.toString())
 
         val navHostFragment =

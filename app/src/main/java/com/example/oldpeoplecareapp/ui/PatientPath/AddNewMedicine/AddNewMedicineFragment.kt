@@ -2,7 +2,8 @@ package com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.DatePickerDialog
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -35,78 +37,57 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
-
-@RequiresApi(Build.VERSION_CODES.N)
 class AddNewMedicineFragment : Fragment() {
-
-    var TAG="AddNewMedicineFragmentLOG"
+    var TAG="AddNewMedicineFrag"
     lateinit var binding:FragmentAddNewMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var addNewMedicineViewModel: AddNewMedicineViewModel
+    val timeRecyclerView by lazy { TimeRecyclerView() }
+    var  TimeList: MutableList<String> = mutableListOf()
+    var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
 
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
     }
 
-    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
-        textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
-    }
-   private fun reset(){
-       if(!binding.MedicineName.text.isNullOrEmpty()){
-           Snackbar.make(MED,"YOUR MEDICINE IS ADDED SUCCESSFULLY",Snackbar.LENGTH_SHORT).show()}
-        binding.MedicineName.text=null
-        binding.UploadPhoto.text=null
-        binding.recordX.editText!!.text=null
-        binding.medicineType.setSelection(0)
-        binding.Time.text=null
-        binding.description.text=null
-   }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         binding = FragmentAddNewMedicineBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navBar.visibility = View.VISIBLE
-        navBar?.selectedItemId =R.id.add
-        return binding.root   }
+//        navBar.visibility = View.VISIBLE
+        navBar?.selectedItemId = R.id.add
+        return binding.root
+    }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        RecordPermissions()
+        binding.timeRecycle.adapter = timeRecyclerView
+        addNewMedicineViewModel = ViewModelProvider(requireActivity()).get(AddNewMedicineViewModel::class.java)
+        val loading= LoadingDialog(requireActivity())
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ), 111
-            )
-        }
+        //------------------------------------------------------//
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //Retrieve token wherever necessary
+        val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        val retrivedToken = preferences.getString("TOKEN", null)
+        val retrivedID = preferences.getString("ID", null)
+
+        //------------------------------------------------------//
 
         val typesMed = resources.getStringArray(R.array.medicines)
-        val spinnerAdapter2 = object :
+       //When there is an empty field that adapter will be assigned
+        val ErrorAdapter = object :
             ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, typesMed) {
             override fun isEnabled(position: Int): Boolean {
                 // Disable the first item from Spinner
                 // First item will be used for hint
                 return position != 0
             }
-            @RequiresApi(Build.VERSION_CODES.M)
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view: TextView =
-                    super.getDropDownView(position, convertView, parent) as TextView
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
                 //set the color of first item in the drop down list to gray
                 if (position == 0) {
                     val color = resources.getColor(android.R.color.holo_red_dark)
@@ -119,21 +100,20 @@ class AddNewMedicineFragment : Fragment() {
                 return view
             }
         }
-        val spinnerAdapter = object :
+        ErrorAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+
+        //if there is no error thats the main adapter
+        val MedApapter = object :
             ArrayAdapter<String>(requireContext(), R.layout.spinner_item, typesMed) {
             override fun isEnabled(position: Int): Boolean {
                 // Disable the first item from Spinner
                 // First item will be used for hint
                 return position != 0
             }
-            @RequiresApi(Build.VERSION_CODES.M)
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view: TextView =
-                    super.getDropDownView(position, convertView, parent) as TextView
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
                 //set the color of first item in the drop down list to gray
                 if (position == 0) {
                     val color = resources.getColor(R.color.bbbb)
@@ -146,9 +126,11 @@ class AddNewMedicineFragment : Fragment() {
                 return view
             }
         }
-        spinnerAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_checked)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
-        binding.medicineType.adapter = spinnerAdapter
+        MedApapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+
+        binding.medicineType.adapter = MedApapter
         binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 val value = parent!!.selectedItem.toString()
@@ -156,12 +138,7 @@ class AddNewMedicineFragment : Fragment() {
                     val color = resources.getColor(android.R.color.holo_red_dark)
                     (view as TextView).setTextColor(color)                      }
             }
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val value = parent!!.getItemAtPosition(position).toString()
                 if (value == typesMed[0]) {
                     val color = resources.getColor(R.color.bbbb)
@@ -169,21 +146,16 @@ class AddNewMedicineFragment : Fragment() {
                 else{
                     val color = resources.getColor(R.color.bbbb)
                     (view as TextView).setTextColor(color)
-
                 }
             }
         }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-        addNewMedicineViewModel = ViewModelProvider(requireActivity()).get(AddNewMedicineViewModel::class.java)
-        val loading= LoadingDialog(requireActivity())
+        //------------------------------------------------------//
 
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
         var output: String
-        val appDir =
-            File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecordings/")
+        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecordings/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
@@ -194,8 +166,11 @@ class AddNewMedicineFragment : Fragment() {
             output = appDir.path + "/" + fileName
         }
         var isRecording = false
-        binding.addrec.setOnClickListener {
 
+        //------------------------------------------------------//
+
+        //Add rec btn listener
+        binding.addrec.setOnClickListener {
                 try {
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -207,7 +182,6 @@ class AddNewMedicineFragment : Fragment() {
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             } catch (e: IOException) {
-
                 e.printStackTrace()
             }
             binding.recordX.editText!!.setText("Recording!")
@@ -215,6 +189,9 @@ class AddNewMedicineFragment : Fragment() {
             binding.addrec.visibility=View.GONE
         }
 
+        //------------------------------------------------------//
+
+        //Cancel rec btn listener
         binding.cancelbtn.setOnClickListener {
             if (isRecording) {
                 mediaRecorder.stop()
@@ -226,16 +203,17 @@ class AddNewMedicineFragment : Fragment() {
 
         }
 
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //------------------------------------------------------//
 
         binding.Time.setOnClickListener { clickTimePicker(it) }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //------------------------------------------------------//
 
-        binding.UploadPhoto.setOnClickListener { pickImageGallery() }
+        binding.addpicbtn.setOnClickListener { pickImageGallery()
+            setAlarm()
+        }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //------------------------------------------------------//
 
         binding.backBtn.setOnClickListener {
             findNavController().navigate(
@@ -247,9 +225,10 @@ class AddNewMedicineFragment : Fragment() {
             )
         }
 
-
+        //------------------------------------------------------//
 
         binding.addMedicine.setOnClickListener {
+
             if (binding.MedicineName.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.MedicineNameX,
@@ -266,6 +245,9 @@ class AddNewMedicineFragment : Fragment() {
                     binding.MedicineNameX.hint = "Medicine Name"
                 }
             }
+
+            //------------------------------------------------------//
+
             if (binding.description.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.descriptionX,
@@ -283,6 +265,8 @@ class AddNewMedicineFragment : Fragment() {
                 }
             }
 
+            //------------------------------------------------------//
+
             if (binding.UploadPhoto.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.UploadPhotoX,
@@ -299,6 +283,9 @@ class AddNewMedicineFragment : Fragment() {
                     binding.UploadPhotoX.hint = "Upload Photo"
                 }
             }
+
+            //------------------------------------------------------//
+
             if (binding.record.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.recordX,
@@ -312,8 +299,10 @@ class AddNewMedicineFragment : Fragment() {
                 }
             }
 
+            //------------------------------------------------------//
+
             if(binding.medicineType.selectedItem==typesMed[0]){
-                binding.medicineType.adapter = spinnerAdapter2
+                binding.medicineType.adapter = ErrorAdapter
                 binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {
                         val value = parent!!.selectedItem.toString()
@@ -322,12 +311,7 @@ class AddNewMedicineFragment : Fragment() {
                             (view as TextView).setTextColor(color)
                         }
                     }
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         val value = parent!!.getItemAtPosition(position).toString()
                         if (value == typesMed[0]) {
                             val color = resources.getColor(android.R.color.holo_red_dark)
@@ -335,22 +319,20 @@ class AddNewMedicineFragment : Fragment() {
                         else{
                             val color = resources.getColor(R.color.bbbb)
                             (view as TextView).setTextColor(color)
-
                         }
                     }
                 }
             }
 
+            //------------------------------------------------------//
 
             if (binding.Time.text.toString().isNullOrEmpty()) {
                 binding.Time.setHintTextColor(getResources().getColor(R.color.holo));
                 binding.Time.setBackgroundResource(R.drawable.error_style)
                 binding.Time.hint = "  Required"
             }
-            //Retrieve token wherever necessary
-            val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-            val retrivedToken = preferences.getString("TOKEN", null)
-            val retrivedID = preferences.getString("ID", null)
+
+            //------------------------------------------------------//
 
             val name= binding.MedicineName.text.toString()
             val photo=binding.UploadPhoto.text.toString()
@@ -381,18 +363,28 @@ class AddNewMedicineFragment : Fragment() {
 
             }
         }
+
+        //------------------------------------------------------//
+
         addNewMedicineViewModel.AddLiveData.observe(viewLifecycleOwner){
             if (it != null) {
                 reset()
                 loading.isDismiss()
-                Log.i("ifObserve", "yes")
+                Log.i(TAG, "yes")
             } else {
-                Log.i("elseObserve", "not")
+                Log.i(TAG, "not")
             }
         }       
     }
 
-
+    ///////////////////////////////////////////////////////////////////////////////////
+    private fun RecordPermissions() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
+        }
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -401,32 +393,39 @@ class AddNewMedicineFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun clickTimePicker(view: View) {
         binding.Time.setHintTextColor( getResources().getColor(R.color.normal))
         binding.Time.setBackgroundResource(R.drawable.et_style)
+
         val c = Calendar.getInstance()
-        val hour =c.get(Calendar.HOUR)
+        val hour = c.get(Calendar.HOUR_OF_DAY)
         val minute = c.get(Calendar.MINUTE)
-        val tpd = TimePickerDialog(requireContext(),TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
+                c.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                c.set(Calendar.MINUTE, minuteOfHour)
+                val timeText = String.format("%02d:%02d", hourOfDay, minuteOfHour)
+                binding.Time.text = timeText
+                TimeList.add("$hourOfDay : $minuteOfHour")
+                timeRecyclerView.setList(TimeList)
+                val calendar = Calendar.getInstance()
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minuteOfHour)
+                selectedAlarmTimes.add(calendar)
 
-            if(h<10){
-                if (m>=10){
-                    binding.Time.text="0${h}:$m"
-                }else{
-                    binding.Time.text="0${h}:0$m"
-                }
-            }else{
-                if (m>=10){
-                    binding.Time.text="${h}:$m"
-                }else{
-                    binding.Time.text="${h}:0$m"
-                }
+            },
+            hour,
+            minute,
+            true
+        )
+        timePickerDialog.show()
+    }
 
-            }
-        }),hour,minute,false)
-        tpd.show()
-        Log.i(TAG,"hour = "+hour.toString())
+    private fun setAlarm() {
+        // Set the alarms using the AlarmHelper
+        val alarmHelper = AlarmHelper()
+        alarmHelper.setAlarm(requireContext(), selectedAlarmTimes)
     }
 
     private fun pickImageGallery() {
@@ -441,47 +440,19 @@ class AddNewMedicineFragment : Fragment() {
             binding.UploadPhoto.setText(data?.data?.path)
         }
     }
+
+    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
+        textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
+    }
+
+    private fun reset(){
+        if(!binding.MedicineName.text.isNullOrEmpty()){
+            Snackbar.make(MED,"YOUR MEDICINE IS ADDED SUCCESSFULLY",Snackbar.LENGTH_SHORT).show()}
+        binding.MedicineName.text=null
+        binding.UploadPhoto.text=null
+        binding.recordX.editText!!.text=null
+        binding.medicineType.setSelection(0)
+        binding.Time.text=null
+        binding.description.text=null
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                GlobalScope.launch(Dispatchers.IO) {
-//                    val value = remoteRepositoryImp.postMedicine(
-//                        retrivedID.toString(),
-//                        "barier ${retrivedToken}",
-//                        "PanadolX",
-//                        "https://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1356&h=668&fit=crop",
-//                        "https://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1356&h=668&fit=crop",
-//                        "injection",
-//                        "2002-12-09",
-//                        "21:55",
-//                        1,
-//                        "Good"
-//                    )
-//                    if (value.isSuccessful) {
-//                        Log.i(TAG, value.body().toString())
-//                    } else {
-//                        Log.i(TAG, value.toString())
-//                    }
-//
-//                }
