@@ -3,6 +3,7 @@ package com.example.oldpeoplecareapp.model.remote
 import com.example.oldpeoplecareapp.model.entity.*
 import retrofit2.Response
 import retrofit2.http.*
+import java.util.*
 
 interface ServiceAPI {
     //Registration
@@ -37,10 +38,9 @@ interface ServiceAPI {
         @Field("imgUrl") imgUrl: String,
         @Field("recordUrl") recordUrl: String,
         @Field("type") type: String,
-        @Field("date") date: String,
-        @Field("time") time: String,
-        @Field("repeatDays") repeatDays: Int,
-        @Field("description") description: String
+        @Field("description") description: String,
+        @Field("time") time: List<String>,
+        @Field("weakly") weakly:List<String>
     ): Response<MedicineResponse>
 
     @GET("/medicine/{id}")

@@ -2,15 +2,12 @@ package com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.MediaRecorder
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -20,9 +17,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.TimePicker
 import androidx.annotation.ColorRes
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,18 +32,18 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import java.io.File
 import java.io.IOException
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AddNewMedicineFragment : Fragment() {
-    var TAG="AddNewMedicineFrag"
+    var TAG="AddNewMedicineFragxxx"
     lateinit var binding:FragmentAddNewMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var addNewMedicineViewModel: AddNewMedicineViewModel
     val timeRecyclerView by lazy { TimeRecyclerView() }
     var  TimeList: MutableList<String> = mutableListOf()
     var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
-
+    val r=0
+    var daysList= listOf("Sunday")
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
@@ -155,7 +150,7 @@ class AddNewMedicineFragment : Fragment() {
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
         var output: String
-        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecordings/")
+        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
@@ -338,7 +333,6 @@ class AddNewMedicineFragment : Fragment() {
             val photo=binding.UploadPhoto.text.toString()
             val record=binding.recordX.editText!!.text.toString()
             val type=binding.medicineType.selectedItem.toString()
-            val time=binding.Time.text.toString()
             val description=binding.description.text.toString()
 
             if (!binding.MedicineName.text.toString()
@@ -347,6 +341,8 @@ class AddNewMedicineFragment : Fragment() {
                     .isNullOrEmpty() && !binding.record.text.toString().isNullOrEmpty() &&
                 !binding.medicineType.selectedItem.toString().isNullOrEmpty()
             ) {
+                Log.i("data", retrivedID.toString() +"/"+ "barier ${retrivedToken}"+ "/"
+                       + name + "/"+ photo +"/"+record + "/" +type+"/"+description+"/"+TimeList)
                 addNewMedicineViewModel.addMedicine(
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
@@ -354,10 +350,9 @@ class AddNewMedicineFragment : Fragment() {
                     photo,
                     record,
                     type,
-                    time,
-                    time,
-                    2,
-                    description
+                    description,
+                    TimeList,
+                    daysList,
                 )
                 loading.startLoading()
 
@@ -407,7 +402,7 @@ class AddNewMedicineFragment : Fragment() {
                 c.set(Calendar.MINUTE, minuteOfHour)
                 val timeText = String.format("%02d:%02d", hourOfDay, minuteOfHour)
                 binding.Time.text = timeText
-                TimeList.add("$hourOfDay : $minuteOfHour")
+                TimeList.add(timeText)
                 timeRecyclerView.setList(TimeList)
                 val calendar = Calendar.getInstance()
                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)

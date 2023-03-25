@@ -32,10 +32,9 @@ interface RemoteRepository {
         imgUrl: String,
         recordUrl: String,
         type: String,
-        date: String,
-        time: String,
-        repeatDays: Int,
         description: String,
+        time: List<String>,
+        weakly: List<String>
     ): Response<MedicineResponse>
 
     suspend fun getAllMedicine(
@@ -73,23 +72,22 @@ interface RemoteRepository {
 
     suspend fun getAllNotification(
         token: String,
-    ):Response<List<notificationData>>
+    ): Response<List<notificationData>>
 
 
     suspend fun Accept(
         notifyId: String,
         token: String,
-    ):Response<Any>
+    ): Response<Any>
 
     suspend fun Reject(
-         notifyId: String,
-         token: String,
-    ):Response<Any>
+        notifyId: String,
+        token: String,
+    ): Response<Any>
 
-    suspend fun ResetPassword(email: String):Response<Any>
+    suspend fun ResetPassword(email: String): Response<Any>
 
 }
-
 
 
 

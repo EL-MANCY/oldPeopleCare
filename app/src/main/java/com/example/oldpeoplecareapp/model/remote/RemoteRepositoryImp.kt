@@ -38,17 +38,16 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
-    override suspend fun postMedicine(
+    override  suspend fun postMedicine(
         id: String,
         token: String,
         name: String,
         imgUrl: String,
         recordUrl: String,
         type: String,
-        date: String,
-        time: String,
-        repeatDays: Int,
-        description: String
+        description: String,
+        time: List<String>,
+        weakly: List<String>
     ): Response<MedicineResponse> {
         return withContext((Dispatchers.IO)) {
             api.postMedicine(
@@ -58,10 +57,9 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
                 imgUrl,
                 recordUrl,
                 type,
-                date,
+                description,
                 time,
-                repeatDays,
-                description
+                weakly,
             )
         }
     }
