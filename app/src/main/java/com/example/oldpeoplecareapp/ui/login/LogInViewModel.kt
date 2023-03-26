@@ -12,6 +12,7 @@ import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 class LogInViewModel(application: Application): AndroidViewModel(application) {
     val TAG = "LogInViewModel"
@@ -47,7 +48,7 @@ class LogInViewModel(application: Application): AndroidViewModel(application) {
                 tokenMutableLiveData.postValue(token.body())
                 Log.i("success", token.body().toString())
             } else {
-                Log.i("failed", token.toString())
+                Log.i("failed", token.errorBody()?.string().toString())
             }
 
         }

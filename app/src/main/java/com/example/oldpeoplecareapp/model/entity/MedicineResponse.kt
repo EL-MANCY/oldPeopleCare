@@ -4,6 +4,7 @@ import java.util.*
 
 
 data class MedicineResponse(
+    val error : String,
     var name: String,
     var imgUrl: String,
     var recordUrl: String,

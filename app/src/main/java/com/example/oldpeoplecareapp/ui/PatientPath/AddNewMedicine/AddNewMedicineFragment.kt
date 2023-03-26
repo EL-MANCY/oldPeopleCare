@@ -52,7 +52,7 @@ class AddNewMedicineFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAddNewMedicineBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
-//        navBar.visibility = View.VISIBLE
+        navBar.visibility = View.VISIBLE
         navBar?.selectedItemId = R.id.add
         return binding.root
     }

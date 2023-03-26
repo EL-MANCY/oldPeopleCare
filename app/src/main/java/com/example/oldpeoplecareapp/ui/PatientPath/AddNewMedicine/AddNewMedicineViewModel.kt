@@ -51,9 +51,9 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
                 AddedMutableLiveData.postValue(result.body())
                 Log.i(Tag, result.body().toString())
             } else {
-                Log.i(Tag, result.toString())
+                AddedMutableLiveData.postValue(result.body())
+                Log.i(Tag, result.errorBody()?.string().toString())
             }
         }
-
     }
 }
