@@ -12,20 +12,21 @@ import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.HttpException
+import retrofit2.Response
 
 class LogInViewModel(application: Application): AndroidViewModel(application) {
     val TAG = "LogInViewModel"
     private var remoteRepositoryImp: RemoteRepositoryImp
 
-    private var tokenMutableLiveData = MutableLiveData<UserLogInInfo>()
-    val tokenLiveData: LiveData<UserLogInInfo>
+    private var tokenMutableLiveData = MutableLiveData<LogInStatus>()
+    val tokenLiveData: LiveData<LogInStatus>
         get() = tokenMutableLiveData
 
     private var responseMutableLiveData = MutableLiveData<Any>()
     val responseLiveData: LiveData<Any>
         get() = responseMutableLiveData
-
 
     init {
         val serviceInstant = RetroBuilder.builder
@@ -45,12 +46,12 @@ class LogInViewModel(application: Application): AndroidViewModel(application) {
                 emailOrPhone, email, password, FcmToken
             )
             if (token.isSuccessful) {
-                tokenMutableLiveData.postValue(token.body())
-                Log.i("success", token.body().toString())
+                tokenMutableLiveData.postValue(LogInStatus.sucess(token.body()))
+                Log.i(TAG, token.body().toString())
             } else {
-                Log.i("failed", token.errorBody()?.string().toString())
+                tokenMutableLiveData.postValue(LogInStatus.error(token.errorBody()!!.string().toString()))
+                Log.i(TAG, token.body().toString())
             }
-
         }
     }
 
@@ -70,5 +71,10 @@ class LogInViewModel(application: Application): AndroidViewModel(application) {
                 Log.i(TAG, e.toString())
             }
         }
+    }
+
+    sealed class LogInStatus{
+        class error(val errormessage:String) : LogInStatus()
+        class sucess(var result :UserLogInInfo?) : LogInStatus()
     }
 }

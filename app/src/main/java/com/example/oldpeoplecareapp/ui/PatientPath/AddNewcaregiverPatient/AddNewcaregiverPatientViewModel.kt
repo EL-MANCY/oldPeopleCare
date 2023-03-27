@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class AddNewcaregiverPatientViewModel(application: Application): AndroidViewModel(application) {
     val Tag = "AddNewcaregiverX"
     private var remoteRepositoryImp: RemoteRepositoryImp
+    var errorMutableLiveData :String?=null
 
     private var sucessMutableLiveData = MutableLiveData<Any>()
     val sucessLiveData: LiveData<Any>
@@ -34,10 +35,10 @@ class AddNewcaregiverPatientViewModel(application: Application): AndroidViewMode
                 sucessMutableLiveData.postValue(sucess.body())
                 Log.i(Tag, sucess.body().toString())
             } else {
-                Log.i(Tag, sucess.body().toString())
+                errorMutableLiveData=sucess.errorBody()?.string()!!.toString()
+                Log.i(Tag, errorMutableLiveData.toString())
+                sucessMutableLiveData.postValue(sucess.body())
             }
         }
     }
-
-
 }

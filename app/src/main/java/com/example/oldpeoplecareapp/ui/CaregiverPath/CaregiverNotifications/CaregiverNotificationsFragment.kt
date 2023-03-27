@@ -11,18 +11,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
-import com.example.oldpeoplecareapp.databinding.ActivityMainBinding.inflate
-import com.example.oldpeoplecareapp.databinding.FragmentAllPatientsBinding
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
 import com.example.oldpeoplecareapp.model.entity.notificationData
-import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientViewModel
-import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.OnItemClickListener2
-import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.PatientsRecyclerView
-import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 
 class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
 
@@ -30,7 +28,7 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
     lateinit var binding: FragmentCaregiverNotificationsBinding
     lateinit var caregiverNotifyViewModel: CaregiverNotifyViewModel
     lateinit var retrivedToken: String
-    val caregiverNotifyRecyclerview by lazy { CaregiverNotifyRecyclerview() }
+    val caregiverNotifyRecyclerview by lazy { CaregiverNotifyRecyclerview(requireActivity()) }
 
 
     override fun onCreateView(
@@ -46,6 +44,8 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //val loading= LoadingDialog(requireActivity())
+
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
@@ -68,6 +68,17 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
             getString(R.string.FCM_CHANNEL_ID),
             getString(R.string.FCM_CHANNEL_STRING)
         )
+
+        caregiverNotifyViewModel.StatusLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+             //   loading.isDismiss()
+                Log.i("TTTTT","TTTTTTTTT")
+            } else {
+              //  loading.isDismiss()
+                Snackbar.make(MED, caregiverNotifyViewModel.error.toString(), Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+        })
 
     }
 
@@ -94,10 +105,13 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
     }
 
     override fun accepted(item: notificationData) {
+       // loading.startLoading()
         caregiverNotifyViewModel.Accept(item._id,"barier " + retrivedToken)
+
     }
 
     override fun rejected(item: notificationData) {
+       // loading.startLoading()
         caregiverNotifyViewModel.Reject(item._id,"barier " + retrivedToken)
     }
 

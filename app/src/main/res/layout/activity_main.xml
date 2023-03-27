@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="#ffffff"
-            app:itemIconTint="#0021F5"
+            app:itemIconTint="#008080"
             app:itemTextColor="#000000"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

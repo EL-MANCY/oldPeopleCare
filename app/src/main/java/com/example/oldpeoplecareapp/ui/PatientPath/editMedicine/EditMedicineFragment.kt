@@ -34,6 +34,7 @@ import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicine
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import kotlinx.android.synthetic.main.fragment_edit_medicine.*
 import java.io.File
 import java.io.IOException
@@ -47,7 +48,6 @@ class EditMedicineFragment : Fragment() {
     val TAG="EditMedicineFragmentTAG"
     lateinit var binding: FragmentEditMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
-//  lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var editMedicineViewModel: EditMedicineViewModel
 
     companion object {
@@ -105,8 +105,7 @@ class EditMedicineFragment : Fragment() {
             bottomNavigation.visibility = View.VISIBLE
         }
         ///////////////////////////////////////////////////////////////////////////////////////////
-//        val serviceInstant = RetroBuilder.builder
-//        remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
+
         editMedicineViewModel =
             ViewModelProvider(requireActivity()).get(EditMedicineViewModel::class.java)
         val loading= LoadingDialog(requireActivity())
@@ -406,6 +405,12 @@ class EditMedicineFragment : Fragment() {
                 loading.isDismiss()
                 Log.i("ifObserve", "yes")
             } else {
+                loading.isDismiss()
+                Snackbar.make(
+                    MED,
+                    editMedicineViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
                 Log.i("elseObserve", "not")
             }
         }

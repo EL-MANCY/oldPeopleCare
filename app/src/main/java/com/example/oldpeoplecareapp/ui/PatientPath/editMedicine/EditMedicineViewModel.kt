@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 class EditMedicineViewModel (application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     val Tag = "EditMedicineViewModelX"
+    var error :String?=null
+
 
 
     init {
@@ -52,6 +54,8 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
                 updateMedicineMutableLiveData.postValue(MedicineList.body())
                 Log.i(Tag, MedicineList.body().toString())
             } else {
+                error=MedicineList.errorBody()?.string()!!.toString()
+                updateMedicineMutableLiveData.postValue(MedicineList.body())
                 Log.i(Tag, MedicineList.toString())
             }
         }

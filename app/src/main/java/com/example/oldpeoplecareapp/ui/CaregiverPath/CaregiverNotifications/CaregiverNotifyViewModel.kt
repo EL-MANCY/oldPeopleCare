@@ -19,6 +19,8 @@ import retrofit2.Response
 class CaregiverNotifyViewModel(application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     val Tag = "CareNotifyViewModel"
+    var error :String?=null
+
 
     init {
         val serviceInstant = RetroBuilder.builder
@@ -49,12 +51,24 @@ class CaregiverNotifyViewModel(application: Application): AndroidViewModel(appli
     fun Accept(notifyId: String, token: String) {
          viewModelScope.launch{
              val state = remoteRepositoryImp.Accept(notifyId,token)
+             if(state.isSuccessful){
+                 StatusMutableLiveData.postValue(state.body())
+             }else{
+                 error=state.errorBody()!!.string().toString()
+                 StatusMutableLiveData.postValue(state.body())
+             }
          }
     }
 
     fun Reject(notifyId: String, token: String) {
        viewModelScope.launch {
            val state = remoteRepositoryImp.Reject(notifyId,token)
+           if(state.isSuccessful){
+               StatusMutableLiveData.postValue(state.body())
+           }else{
+               error=state.errorBody()!!.string().toString()
+               StatusMutableLiveData.postValue(state.body())
+           }
        }
     }
 

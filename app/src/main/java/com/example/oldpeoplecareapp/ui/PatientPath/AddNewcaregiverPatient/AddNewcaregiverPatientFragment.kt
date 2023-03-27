@@ -119,25 +119,21 @@ class AddNewcaregiverPatientFragment : Fragment() {
             if (it != null) {
                 loading.isDismiss()
                 Log.i(TAG, it.toString())
-                if(it=="You have already sent it before !"){
-                    Snackbar.make(
+                addNewcaregiverViewModel.sucessLiveData==null
+                loading.isDismiss()
+                Snackbar.make(
                     REQ,
-                    "You have already sent it before !",
+                    "Reqest sent",
                     Snackbar.LENGTH_SHORT
                 ).show()
-                    addNewcaregiverViewModel.sucessLiveData==null
-                }else{
-                    loading.isDismiss()
-                    Snackbar.make(
-                        REQ,
-                        "Req sent",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    addNewcaregiverViewModel.sucessLiveData==null
-                }
+                addNewcaregiverViewModel.sucessLiveData==null
             }else{
-                Log.i(TAG, it.toString())
-            }
+                loading.isDismiss()
+                Snackbar.make(
+                    REQ,
+                    addNewcaregiverViewModel.errorMutableLiveData.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()            }
         }
 
     }

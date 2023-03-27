@@ -30,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
+import kotlinx.android.synthetic.main.fragment_add_newcaregiver_patient.*
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -368,6 +369,13 @@ class AddNewMedicineFragment : Fragment() {
                 Log.i(TAG, "yes")
             } else {
                 Log.i(TAG, "not")
+                loading.isDismiss()
+                Snackbar.make(
+                    MED,
+                    addNewMedicineViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+
             }
         }       
     }

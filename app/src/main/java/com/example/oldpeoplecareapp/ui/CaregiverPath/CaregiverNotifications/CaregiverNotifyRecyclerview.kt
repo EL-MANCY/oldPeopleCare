@@ -1,5 +1,6 @@
 package com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications
 
+import android.app.Activity
 import android.graphics.Color
 import android.text.Html
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.model.entity.notificationData
 import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.OnItemClickListener2
@@ -17,9 +19,11 @@ import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.Notificat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CaregiverNotifyRecyclerview : RecyclerView.Adapter<CaregiverNotifyRecyclerview.NotificationCaregiveViewHolder>() {
+class CaregiverNotifyRecyclerview(val mActivity: Activity) : RecyclerView.Adapter<CaregiverNotifyRecyclerview.NotificationCaregiveViewHolder>() {
     var onListItemClick3: OnItemClickListner3? =null
     var  NotificationList: List<notificationData> = emptyList()
+    val loading= LoadingDialog(mActivity)
+
 
     fun setList(NotificationItems: List<notificationData>) {
         this.NotificationList = NotificationItems
@@ -58,21 +62,23 @@ class CaregiverNotifyRecyclerview : RecyclerView.Adapter<CaregiverNotifyRecycler
             }
 
             acceptBtn.setOnClickListener {
-                onListItemClick3?.accepted(item)
                 acceptBtn.visibility=View.GONE
                 rejectBtn.visibility=View.GONE
                 status.visibility = View.VISIBLE
                 status.text = "Accepted"
                 status.setTextColor(Color.GREEN)
+                onListItemClick3?.accepted(item)
+
             }
 
             rejectBtn.setOnClickListener {
-                onListItemClick3?.rejected(item)
                 acceptBtn.visibility=View.GONE
                 rejectBtn.visibility=View.GONE
                 status.visibility = View.VISIBLE
                 status.text = "Rejected"
                 status.setTextColor(Color.RED)
+                onListItemClick3?.rejected(item)
+
             }
 
         }

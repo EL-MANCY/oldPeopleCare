@@ -56,7 +56,6 @@
         android:layout_width="357dp"
         android:layout_height="10dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:src="@drawable/line"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,19 +65,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/caregiverNotifyRecyclerView"
         android:layout_width="405dp"
-        android:layout_height="650dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="675dp"
         android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="4dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:reverseLayout="true"
+        app:stackFromEnd="true" />
 
 
 

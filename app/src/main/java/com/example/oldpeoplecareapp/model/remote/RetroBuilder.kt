@@ -1,7 +1,9 @@
 package com.example.oldpeoplecareapp.model.remote
 
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -14,10 +16,10 @@ object RetroBuilder {
    // private const val BaseUrl: String = "http://10.0.2.2:8080"
 
     var okHttp = OkHttpClient.Builder()
-         .connectTimeout(30, TimeUnit.MINUTES) // connect timeout
+        .connectTimeout(30, TimeUnit.MINUTES) // connect timeout
          .writeTimeout(30, TimeUnit.MINUTES) // write timeout
          .readTimeout(30, TimeUnit.MINUTES) // read timeout
-         .build()
+        .build()
 
 //json
     var gson = GsonBuilder()
