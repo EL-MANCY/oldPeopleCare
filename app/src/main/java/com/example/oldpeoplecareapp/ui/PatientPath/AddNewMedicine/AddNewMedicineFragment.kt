@@ -138,10 +138,10 @@ class AddNewMedicineFragment : Fragment() {
                 val value = parent!!.getItemAtPosition(position).toString()
                 if (value == typesMed[0]) {
                     val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)                      }
-                else{
+                   // (view as TextView).setTextColor(color)
+                } else{
                     val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)
+               //     (view as TextView).setTextColor(color)
                 }
             }
         }
