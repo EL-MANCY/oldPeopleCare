@@ -1,10 +1,8 @@
-package com.example.oldpeoplecareapp.ui.Registration
+package com.example.oldpeoplecareapp.ui.Authentication.Registration
 
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi

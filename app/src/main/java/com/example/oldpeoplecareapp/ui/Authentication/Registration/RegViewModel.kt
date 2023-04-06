@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.Registration
+package com.example.oldpeoplecareapp.ui.Authentication.Registration
 
 import android.app.Application
 import android.util.Log

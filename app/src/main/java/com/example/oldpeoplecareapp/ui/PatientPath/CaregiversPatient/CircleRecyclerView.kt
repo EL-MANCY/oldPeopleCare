@@ -12,6 +12,8 @@ import com.example.oldpeoplecareapp.model.entity.Circles
 
 class CircleRecyclerView:RecyclerView.Adapter<CircleRecyclerView.CircleViewHolder>() {
     var  CircleList: List<Circles> = emptyList()
+    var onListItemClick: OnCaregiverClickListener?=null
+
     fun setList(CircleItems: List<Circles>) {
         this.CircleList = CircleItems
         notifyDataSetChanged()
@@ -21,6 +23,7 @@ class CircleRecyclerView:RecyclerView.Adapter<CircleRecyclerView.CircleViewHolde
         val image: ImageView =itemView.findViewById(R.id.patientImg)
         val fullname:TextView=itemView.findViewById(R.id.fullname_txtfield)
         val role:TextView=itemView.findViewById(R.id.role_txtfield)
+        val edit_icon :ImageView = itemView.findViewById(R.id.editButton)
 
         fun bind(item: Circles) {
 
@@ -37,6 +40,9 @@ class CircleRecyclerView:RecyclerView.Adapter<CircleRecyclerView.CircleViewHolde
 //            }
             Glide.with(itemView).load(imageUrl).into(image)
 
+            edit_icon.setOnClickListener {
+                onListItemClick?.onItemClick(item)
+            }
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircleViewHolder {

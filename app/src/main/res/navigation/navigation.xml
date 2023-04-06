@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/registration"
-        android:name="com.example.oldpeoplecareapp.ui.Registration.RegistrationFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.Registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/logIn"
-        android:name="com.example.oldpeoplecareapp.ui.login.LogInFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.login.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -114,6 +114,9 @@
         <action
             android:id="@+id/action_caregiversPatientFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_editRemoveCaregiverRole"
+            app:destination="@id/editRemoveCaregiverRole" />
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
@@ -121,7 +124,9 @@
         android:label="AddNewcaregiverPatientFragment" >
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_caregiversPatientFragment"
-            app:destination="@id/caregiversPatientFragment" />
+            app:destination="@id/caregiversPatientFragment"
+            app:popUpTo="@id/caregiversPatientFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
@@ -178,10 +183,23 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.example.oldpeoplecareapp.ui.login.ForgetPasswordFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.login.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" >
         <action
             android:id="@+id/action_forgetPasswordFragment_to_logIn"
             app:destination="@id/logIn" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRemoveCaregiverRole"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver.EditRemoveCaregiverRole"
+        android:label="EditRemoveCaregiverRole" >
+        <action
+            android:id="@+id/action_editRemoveCaregiverRole_to_caregiversPatientFragment"
+            app:destination="@id/caregiversPatientFragment"
+            app:popUpTo="@id/caregiversPatientFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="ID"
+            app:argType="string" />
     </fragment>
 </navigation>

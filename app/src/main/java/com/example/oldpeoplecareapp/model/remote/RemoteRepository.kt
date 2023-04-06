@@ -87,6 +87,11 @@ interface RemoteRepository {
 
     suspend fun ResetPassword(email: String): Response<Any>
 
+    suspend fun updateRole(token: String,
+                           caregiverID: String,
+                           newRole: String): Response<UpdateResponse>
+
+
 }
 
 

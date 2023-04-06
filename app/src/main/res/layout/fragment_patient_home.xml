@@ -22,7 +22,7 @@
         android:id="@+id/emergency_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="70dp"
         android:clickable="true"
         app:backgroundTint="#F4F4F4"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,10 +104,10 @@
 
     <ImageButton
         android:id="@+id/All_Alarms"
-        android:layout_width="90dp"
+        android:layout_width="95dp"
         android:layout_height="130dp"
         android:layout_marginTop="39dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="75dp"
         android:background="@drawable/buttonstyle"
         android:padding="15dp"
         android:scaleType="fitEnd"
@@ -139,11 +139,11 @@
 
     <ImageButton
         android:id="@+id/Missed_Alarms"
-        android:layout_width="90dp"
+        android:layout_width="95dp"
         android:layout_height="130dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="39dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="75dp"
         android:background="@drawable/buttonstyle"
         android:padding="20dp"
         android:scaleType="fitEnd"

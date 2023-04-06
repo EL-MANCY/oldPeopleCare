@@ -105,6 +105,11 @@ interface ServiceAPI {
     @POST("/auth/reset")
     suspend fun ResetPassword(@Field("email") email: String):Response<Any>
 
+    @PUT("/user/circles/editRole/{caregiverID}")
+    suspend fun updateRole(@Header("token") token: String,
+                           @Path("caregiverID") caregiverID: String,
+                           @Query("role") newRole: String): Response<UpdateResponse>
+
 
 
 }

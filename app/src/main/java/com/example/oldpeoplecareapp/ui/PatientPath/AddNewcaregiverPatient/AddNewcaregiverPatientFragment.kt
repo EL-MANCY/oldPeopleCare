@@ -2,7 +2,6 @@ package com.example.oldpeoplecareapp.ui.PatientPath.AddNewcaregiverPatient
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,17 +11,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewcaregiverPatientBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_newcaregiver_patient.*
 
 class AddNewcaregiverPatientFragment : Fragment() {
-
     val TAG="AddCareGiver"
+    private lateinit var navController: NavController
     lateinit var binding: FragmentAddNewcaregiverPatientBinding
     lateinit var addNewcaregiverViewModel: AddNewcaregiverPatientViewModel
     lateinit var Role: String
@@ -30,16 +32,29 @@ class AddNewcaregiverPatientFragment : Fragment() {
     lateinit var retrivedToken: String
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAddNewcaregiverPatientBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        navController = NavHostFragment.findNavController(this)
+
+        val bottomNavigation: BottomNavigationView =requireActivity().findViewById(R.id.bottom_navigation)
+
+        if (navController.currentDestination?.label == "fragment_registration"
+            || navController.currentDestination?.label == "fragment_log_in"
+            || navController.currentDestination?.label=="EditMedicineFragment"
+            || navController.currentDestination?.label=="EditMedicineFragment"
+            || navController.currentDestination?.label == "AddNewcaregiverPatientFragment"
+
+        ) {
+            bottomNavigation.visibility = View.GONE
+        } else {
+            bottomNavigation.visibility = View.VISIBLE
+        }
+
 
         val items = resources.getStringArray(R.array.caregivers)
         val spinnerAdapter = object :
@@ -99,6 +114,10 @@ class AddNewcaregiverPatientFragment : Fragment() {
 
         val loading= LoadingDialog(requireActivity())
 
+        binding.backBtn.setOnClickListener {
+            findNavController()
+                .navigate(AddNewcaregiverPatientFragmentDirections.actionAddNewcaregiverPatientFragmentToCaregiversPatientFragment())
+        }
 
         binding.sendbtn.setOnClickListener {
             Email = binding.editTextEmailAddress.text.toString()
@@ -133,7 +152,8 @@ class AddNewcaregiverPatientFragment : Fragment() {
                     REQ,
                     addNewcaregiverViewModel.errorMutableLiveData.toString(),
                     Snackbar.LENGTH_SHORT
-                ).show()            }
+                ).show()
+            }
         }
 
     }

@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.login
+package com.example.oldpeoplecareapp.ui.Authentication.login
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -15,10 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentForgetPasswordBinding
-import com.example.oldpeoplecareapp.databinding.FragmentLogInBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import kotlinx.android.synthetic.main.fragment_forget_password.*
 
 class ForgetPasswordFragment : Fragment() {

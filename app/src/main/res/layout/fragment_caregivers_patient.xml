@@ -7,55 +7,23 @@
         android:layout_height="match_parent"
         tools:context=".ui.PatientPath.CaregiversPatient.CaregiversPatientFragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchIconX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:hint="Search for caregivers"
-            app:endIconMode="clear_text"
-            app:errorTextColor="#EF0C0C"
-            app:hintTextColor="#00BCD4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:startIconDrawable="@drawable/search_icon">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchIcon"
-                android:layout_width="294dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="31dp"
-                android:background="@drawable/search_editbox"
-                android:inputType="textEmailAddress"
-                android:paddingRight="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="28dp"
             android:src="@drawable/male_pic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/searchIconX"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="357dp"
             android:layout_height="10dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/line"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -63,17 +31,16 @@
             android:id="@+id/dailyMedicineBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="27dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:text="All Caregivers"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchIconX"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/circlesRecyclerView"
@@ -81,12 +48,11 @@
             android:layout_height="650dp"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dailyMedicineBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -94,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            app:backgroundTint="#0021F5"
+            app:backgroundTint="#008080"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.952"

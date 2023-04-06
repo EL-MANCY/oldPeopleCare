@@ -10,35 +10,48 @@
         android:background="#FFFFFF"
         tools:context=".ui.PatientPath.AddNewcaregiverPatient.AddNewcaregiverPatientFragment">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/male_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:text="New Caregiver"
             android:textColor="#000000"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.268"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/backBtn"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.035" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/backBtn"
             android:layout_width="40dp"
-            android:layout_height="38dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/spinner_background"
             android:backgroundTint="#FFFFFF"
             android:src="@drawable/back_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.036"
-            android:background="@drawable/spinner_background"
-            />
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <ImageView
@@ -51,14 +64,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.159"
-            app:srcCompat="@drawable/login_main" />
+            app:srcCompat="@drawable/caregiverpics" />
 
         <Button
             android:id="@+id/sendbtn"
             android:layout_width="228dp"
             android:layout_height="55dp"
             android:background="@drawable/button"
-            android:backgroundTint="#5379F4"
+            android:backgroundTint="#008080"
             android:text="Send Invitation"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -93,7 +106,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint=" Enter Caregiver Email"
+                    android:hint="Enter Caregiver Email"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"

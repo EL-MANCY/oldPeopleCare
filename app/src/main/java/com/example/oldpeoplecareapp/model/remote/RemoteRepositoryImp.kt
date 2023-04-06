@@ -145,6 +145,12 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
+    override suspend fun updateRole(token: String, caregiverID: String,newRole: String): Response<UpdateResponse> {
+        return withContext((Dispatchers.IO)){
+            api.updateRole(token,caregiverID,newRole)
+        }
+    }
+
 }
 
 

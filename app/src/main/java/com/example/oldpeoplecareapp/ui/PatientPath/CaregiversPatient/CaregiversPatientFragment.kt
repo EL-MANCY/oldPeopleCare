@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiversPatientBinding
+import com.example.oldpeoplecareapp.model.entity.Circles
+import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class CaregiversPatientFragment : Fragment() {
+class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
 
     val TAG: String = "CaregiversFragment"
     lateinit var binding: FragmentCaregiversPatientBinding
@@ -51,6 +53,12 @@ class CaregiversPatientFragment : Fragment() {
             }
         })
 
+        circleRecyclerView.onListItemClick = this
 
+    }
+
+    override fun onItemClick(info: Circles) {
+        findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToEditRemoveCaregiverRole(info.id._id))
+        Log.i(TAG,"clicked")
     }
 }

@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.login
+package com.example.oldpeoplecareapp.ui.Authentication.login
 
 import android.app.Application
 import android.util.Log
@@ -7,14 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.entity.UserLogInInfo
-import com.example.oldpeoplecareapp.model.entity.UserResponse
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
-import retrofit2.HttpException
-import retrofit2.Response
 
 class LogInViewModel(application: Application): AndroidViewModel(application) {
     val TAG = "LogInViewModel"
