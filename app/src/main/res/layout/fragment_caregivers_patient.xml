@@ -5,6 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.PatientPath.CaregiversPatient.CaregiversPatientFragment">
 
         <ImageView
@@ -14,14 +15,15 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="28dp"
             android:src="@drawable/male_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="357dp"
             android:layout_height="10dp"
-            android:layout_marginTop="5dp"
             android:src="@drawable/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,16 +33,28 @@
             android:id="@+id/dailyMedicineBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="All Caregivers"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.088"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/backBtn"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/greenback" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/circlesRecyclerView"

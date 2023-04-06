@@ -45,6 +45,10 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         patientHomeViewModel = ViewModelProvider(requireActivity()).get(PatientHomeViewModel::class.java)
       //  patientHomeViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
 
+        binding.emergencyBtn.setOnClickListener {
+            findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToEmergencyFragment())
+        }
+
         binding.medicineRecyclerView.adapter = medicineRecyclerView
 
 //        binding.allMedicineBtn.setOnClickListener {

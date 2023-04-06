@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_patientHomeFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_emergencyFragment"
+            app:destination="@id/emergencyFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewMedicineFragment"
@@ -201,5 +204,13 @@
         <argument
             android:name="ID"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/emergencyFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.Emergency.EmergencyFragment"
+        android:label="EmergencyFragment" >
+        <action
+            android:id="@+id/action_emergencyFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
     </fragment>
 </navigation>

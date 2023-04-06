@@ -37,21 +37,26 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/backBtn"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="25dp"
-            android:background="@drawable/spinner_background"
-            android:backgroundTint="#FFFFFF"
-            android:src="@drawable/back_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:srcCompat="@drawable/greenback" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="357dp"
+            android:layout_height="10dp"
+            android:src="@drawable/line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 
         <ImageView

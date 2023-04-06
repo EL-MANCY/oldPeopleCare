@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEmergencyBinding
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
@@ -39,6 +40,10 @@ class EmergencyFragment : Fragment(),OnEmergyClickListener {
 
         emergencyViewModel = ViewModelProvider(requireActivity()).get(EmergencyViewModel::class.java)
         emergencyViewModel.getCircles("barier " + retrivedToken)
+
+        binding.BackBtn.setOnClickListener {
+            findNavController().navigate(EmergencyFragmentDirections.actionEmergencyFragmentToPatientHomeFragment("","",""))
+        }
 
         binding.EmergyRecyclerView.adapter = emergencyRecyclerview
         emergencyViewModel.InfoLiveData.observe(viewLifecycleOwner, Observer {

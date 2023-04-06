@@ -11,6 +11,18 @@
         android:background="#FFFFFF"
         tools:context=".ui.PatientPath.AddNewMedicine.AddNewMedicineFragment">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/male_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
 
         <TextView
             android:id="@+id/textView12"
@@ -28,6 +40,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="357dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <ImageView
             android:id="@+id/backBtn"
             android:layout_width="25dp"
             android:layout_height="25dp"
@@ -43,14 +65,14 @@
             android:id="@+id/MedicineNameX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:hint="Medicine Name"
             app:endIconMode="clear_text"
             app:errorTextColor="#EF0C0C"
             app:hintTextColor="#008080"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:startIconDrawable="@drawable/med_img"
             app:startIconTint="@null">
 
