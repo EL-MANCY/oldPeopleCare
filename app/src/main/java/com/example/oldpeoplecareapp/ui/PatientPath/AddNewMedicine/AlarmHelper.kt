@@ -35,38 +35,29 @@ class AlarmHelper {
         }
     }
 
-    @SuppressLint("UnspecifiedImmutableFlag")
-    @SuppressWarnings("MissingPermission")
     fun cancelAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // Create an Intent for the BroadcastReceiver
         val intent = Intent(context, MainActivity::class.java)
         // Create a PendingIntent to be triggered when the alarm goes off
-        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.getBroadcast(
+        Log.i("CANCEL ALARM","CANCEL ALARM")
+        val pendingIntent=PendingIntent.getBroadcast(
                 context,
                 0,
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT )
-        } else {
-            PendingIntent.getBroadcast(
-                context,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )        }
+            PendingIntent.FLAG_MUTABLE  and  PendingIntent.FLAG_UPDATE_CURRENT )
         // Cancel the alarm using the AlarmManager
+        pendingIntent.cancel()
+
         alarmManager.cancel(pendingIntent)
-
         // Stop the alarm tone
-
     }
 
     fun getNextAlarmTime(context: Context): Long {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         // Create an Intent for the BroadcastReceiver
-        val intent = Intent(context, AlarmReceiver::class.java)
+        val intent = Intent(context, AlarmActivity::class.java)
 
         // Create a PendingIntent to be triggered when the alarm goes off
         val pendingIntent = PendingIntent.getBroadcast(

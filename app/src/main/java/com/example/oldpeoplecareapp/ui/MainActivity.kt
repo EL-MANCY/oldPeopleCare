@@ -1,15 +1,13 @@
 package com.example.oldpeoplecareapp.ui
 
 import android.Manifest
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.net.wifi.WifiConfiguration.AuthAlgorithm.SHARED
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -25,7 +23,6 @@ import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFrag
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotificationsFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
-import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AlarmReceiver
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
@@ -38,11 +35,16 @@ class MainActivity : AppCompatActivity() {
     private val CALL_PERMISSION_REQUEST_CODE = 1
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val getpreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
+        var retrivedToken:String? = getpreferences.getString("TOKEN", "null")
+
+
+
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
@@ -216,7 +218,20 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        if (retrivedToken == "null" ) {
+            // If a token exists, open the home fragment.
+            navController.navigate(R.id.logIn)
+            Log.i("TOKEN Login",retrivedToken.toString())
 
+        } else {
+            // If no token exists, open the login fragment.
+            navController.navigate(R.id.patientHomeFragment)
+            Log.i("TOKEN Home",retrivedToken.toString())
+
+
+
+
+        }
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

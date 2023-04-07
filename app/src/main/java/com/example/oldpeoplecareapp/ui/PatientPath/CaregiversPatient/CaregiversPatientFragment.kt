@@ -28,6 +28,7 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
         binding = FragmentCaregiversPatientBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.visibility = View.VISIBLE
+        navBar?.selectedItemId =R.id.caregiver_icon
         return binding.root
     }
 

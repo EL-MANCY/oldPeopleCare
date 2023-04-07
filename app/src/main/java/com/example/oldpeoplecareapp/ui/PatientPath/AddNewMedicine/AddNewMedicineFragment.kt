@@ -54,7 +54,7 @@ class AddNewMedicineFragment : Fragment() {
         binding = FragmentAddNewMedicineBinding.inflate(inflater, container, false)
         val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
         navBar.visibility = View.VISIBLE
-        navBar?.selectedItemId = R.id.add
+        navBar?.selectedItemId = R.id.add_icon
         return binding.root
     }
 
