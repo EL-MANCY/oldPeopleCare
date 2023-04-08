@@ -64,6 +64,9 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
 //            })
 //        }
 
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToBasicInformationFragment())
+        }
         patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 medicineRecyclerView.setList(it)

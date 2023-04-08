@@ -91,6 +91,7 @@ interface RemoteRepository {
                            caregiverID: String,
                            newRole: String): Response<UpdateResponse>
 
+    suspend fun getSingleUser(token: String,userID: String, ):Response<SingleUserResponse>
 
 }
 

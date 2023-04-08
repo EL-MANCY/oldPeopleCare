@@ -151,6 +151,12 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
+    override suspend fun getSingleUser(token: String,userID: String): Response<SingleUserResponse> {
+        return withContext((Dispatchers.IO)){
+            api.getSingleUser(token,userID)
+        }
+    }
+
 }
 
 

@@ -111,6 +111,11 @@ interface ServiceAPI {
                            @Query("role") newRole: String): Response<UpdateResponse>
 
 
+    @GET("/user/{userID}")
+    suspend fun getSingleUser(
+        @Header("token") token: String,
+        @Path("userID") userID: String,
+    ):Response<SingleUserResponse>
 
 }
 
