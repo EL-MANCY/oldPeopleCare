@@ -39,7 +39,7 @@ interface ServiceAPI {
         @Field("recordUrl") recordUrl: String,
         @Field("type") type: String,
         @Field("description") description: String,
-        @Field("time") time: Array<String>,
+        @Field("time") time: List<String>,
         @Field("weakly") weakly:Array<String>
     ): Response<MedicineResponseX>
 

@@ -35,7 +35,7 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         recordUrl: String,
         type: String,
         description: String,
-        time: Array<String>,
+        time: List<String>,
         weakly: Array<String>
     ) {
         viewModelScope.launch {

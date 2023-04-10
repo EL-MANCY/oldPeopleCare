@@ -352,9 +352,10 @@ class AddNewMedicineFragment : Fragment() {
                     record,
                     type,
                     description,
-                    TimeList.toTypedArray(),
+                    TimeList,
                     daysList,
                 )
+                Log.i(TAG,"THE ARRAY IS ${TimeList} +")
                 loading.startLoading()
 
             }

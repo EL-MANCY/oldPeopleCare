@@ -47,7 +47,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         recordUrl: String,
         type: String,
         description: String,
-        time: Array<String>,
+        time: List<String>,
         weakly: Array<String>
     ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
