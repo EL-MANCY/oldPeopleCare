@@ -39,15 +39,15 @@ interface ServiceAPI {
         @Field("recordUrl") recordUrl: String,
         @Field("type") type: String,
         @Field("description") description: String,
-        @Field("time") time: List<String>,
-        @Field("weakly") weakly:List<String>
-    ): Response<MedicineResponse>
+        @Field("time") time: Array<String>,
+        @Field("weakly") weakly:Array<String>
+    ): Response<MedicineResponseX>
 
     @GET("/medicine/{id}")
     suspend fun getAllMedicine(
         @Path("id") id: String,
         @Header("token") token: String
-    ): Response<List<AllMedicineRespone>>
+    ): Response<List<AllMedicineResponseItem>>
 
     @FormUrlEncoded
     @PUT("/medicine/{medId}/{userId}")
@@ -59,11 +59,10 @@ interface ServiceAPI {
         @Field("imgUrl") imgUrl: String,
         @Field("recordUrl") recordUrl: String,
         @Field("type") type: String,
-        @Field("date") date: String,
-        @Field("time") time: String,
-        @Field("repeatDays") repeatDays: Int,
-        @Field("description") description: String
-    ): Response<AllMedicineRespone>
+        @Field("description") description: String,
+        @Field("time") time: Array<String>,
+        @Field("weakly") weakly:Array<String>
+    ): Response<MedicineResponseX>
 
     @DELETE("/medicine/{medId}/{userId}")
     suspend fun DeleteMedicine(

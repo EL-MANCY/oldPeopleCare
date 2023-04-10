@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
+import com.example.oldpeoplecareapp.model.entity.MedicineResponseX
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.gson.JsonIOException
@@ -24,8 +25,8 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var updateMedicineMutableLiveData = MutableLiveData<AllMedicineRespone>()
-    val updateMedicinLiveData: LiveData<AllMedicineRespone>
+    private var updateMedicineMutableLiveData = MutableLiveData<MedicineResponseX>()
+    val updateMedicinLiveData: LiveData<MedicineResponseX>
         get() = updateMedicineMutableLiveData
 
     private var deleteMedicineMutableLiveData = MutableLiveData<Any?>()
@@ -33,21 +34,29 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         get() = deleteMedicineMutableLiveData
 
     fun updateAllMedicine(
-        medId: String, userId: String, token: String, name: String,
-        imgUrl: String, recordUrl: String, type: String, date: String,
-        time: String, repeatDays: Int, description: String,
+        medId: String,
+        userId: String,
+        token: String,
+        name: String,
+        imgUrl: String,
+        recordUrl: String,
+        type: String,
+        description: String,
+        time: Array<String>,
+        weakly: Array<String>
     ) {
         viewModelScope.launch {
             val MedicineList = remoteRepositoryImp.updateMedicine(
-                medId, userId, token,
+                medId,
+                userId,
+                token,
                 name,
                 imgUrl,
                 recordUrl,
                 type,
-                date,
-                time,
-                repeatDays,
                 description,
+                time,
+                weakly,
             )
 
             if (MedicineList.isSuccessful) {

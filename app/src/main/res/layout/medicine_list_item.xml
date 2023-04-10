@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:background="@drawable/search_editbox"
-    android:layout_margin="20dp">
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
 
 
     <TextView
@@ -86,34 +89,33 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.377"
         app:layout_constraintStart_toEndOf="@+id/time_txtView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.728" />
+        app:layout_constraintVertical_bias="0.661" />
 
     <ImageView
-        android:id="@+id/edit_btn"
+        android:id="@+id/edit_btnx"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_marginStart="144dp"
+        android:layout_marginEnd="40dp"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
-        app:layout_constraintStart_toEndOf="@+id/fullname_txtfield"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.516"
+        app:layout_constraintVertical_bias="0.571"
         app:srcCompat="@drawable/editpic" />
 
     <ImageView
         android:id="@+id/comp_img"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.289"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toEndOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/edit_btn"
-        app:layout_constraintVertical_bias="0.466"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/no_comp" />
 
 

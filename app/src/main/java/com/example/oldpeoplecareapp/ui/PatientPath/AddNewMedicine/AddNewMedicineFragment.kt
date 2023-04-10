@@ -44,7 +44,7 @@ class AddNewMedicineFragment : Fragment() {
     var  TimeList: MutableList<String> = mutableListOf()
     var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
     val r=0
-    var daysList= listOf("Sunday")
+    var daysList= arrayOf("Sunday","Monday")
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
@@ -348,11 +348,11 @@ class AddNewMedicineFragment : Fragment() {
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
                     name,
-                    photo,
+                    "https://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1356&h=668&fit=crop",
                     record,
                     type,
                     description,
-                    TimeList,
+                    TimeList.toTypedArray(),
                     daysList,
                 )
                 loading.startLoading()
@@ -366,6 +366,7 @@ class AddNewMedicineFragment : Fragment() {
             if (it != null) {
                 reset()
                 loading.isDismiss()
+                timeRecyclerView.setList(emptyList())
                 Log.i(TAG, "yes")
             } else {
                 Log.i(TAG, "not")

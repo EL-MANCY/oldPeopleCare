@@ -241,5 +241,10 @@
         <action
             android:id="@+id/action_basicInformationFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
+        <action
+            android:id="@+id/action_basicInformationFragment_to_logIn"
+            app:destination="@id/logIn"
+            app:popUpTo="@id/patientHomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

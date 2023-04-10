@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
 import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
+import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,7 +44,7 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         val retrivedID = getpreferences.getString("ID", null)
 
         patientHomeViewModel = ViewModelProvider(requireActivity()).get(PatientHomeViewModel::class.java)
-      //  patientHomeViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
+        patientHomeViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
 
         binding.emergencyBtn.setOnClickListener {
             findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToEmergencyFragment())
@@ -51,18 +52,18 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
 
         binding.medicineRecyclerView.adapter = medicineRecyclerView
 
-//        binding.allMedicineBtn.setOnClickListener {
-//            val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-//            val retrivedToken = getpreferences.getString("TOKEN", null)
-//            val retrivedID = getpreferences.getString("ID", null)
-//            patientHomeViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
-//            patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
-//                if (it != null) {
-//                    medicineRecyclerView.setList(it)
-//                    Log.i(TAG, it.toString())
-//                }
-//            })
-//        }
+        binding.upcommingBtn.setOnClickListener {
+            val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+            val retrivedToken = getpreferences.getString("TOKEN", null)
+            val retrivedID = getpreferences.getString("ID", null)
+            patientHomeViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
+            patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    medicineRecyclerView.setList(it)
+                    Log.i(TAG, it.toString())
+                }
+            })
+        }
 
         binding.userInfo.setOnClickListener {
             findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToBasicInformationFragment())
@@ -78,8 +79,8 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
 
     }
 
-    override fun onItemClick(info: AllMedicineRespone) {
-        findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToEditMedicineFragment(info._id,info.userId,retrivedToken))
+    override fun onItemClick(info: AllMedicineResponseItem) {
+        findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToEditMedicineFragment(info._id,info.lastUpdatedUserID,retrivedToken))
         Log.i(TAG,info.name)
     }
 }

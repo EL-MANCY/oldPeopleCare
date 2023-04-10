@@ -33,14 +33,14 @@ interface RemoteRepository {
         recordUrl: String,
         type: String,
         description: String,
-        time: List<String>,
-        weakly: List<String>
-    ): Response<MedicineResponse>
+        time: Array<String>,
+        weakly: Array<String>
+    ): Response<MedicineResponseX>
 
     suspend fun getAllMedicine(
         id: String,
         token: String
-    ): Response<List<AllMedicineRespone>>
+    ): Response<List<AllMedicineResponseItem>>
 
     suspend fun updateMedicine(
         medId: String,
@@ -50,11 +50,10 @@ interface RemoteRepository {
         imgUrl: String,
         recordUrl: String,
         type: String,
-        date: String,
-        time: String,
-        repeatDays: Int,
-        description: String
-    ): Response<AllMedicineRespone>
+        description: String,
+        time: Array<String>,
+        weakly: Array<String>
+    ): Response<MedicineResponseX>
 
     suspend fun DeleteMedicine(
         medId: String,

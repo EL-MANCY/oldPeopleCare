@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -30,7 +31,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditMedicineBinding
-import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragment
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -40,7 +41,6 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.N)
 class EditMedicineFragment : Fragment() {
 
     private lateinit var navController: NavController
@@ -49,25 +49,14 @@ class EditMedicineFragment : Fragment() {
     lateinit var binding: FragmentEditMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var editMedicineViewModel: EditMedicineViewModel
+    val timeRecyclerView by lazy { TimeRecyclerView() }
+    var  TimeList: MutableList<String> = mutableListOf()
+    var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
+    val r=0
+    var daysList= arrayOf("Sunday","Monday")
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
-    }
-    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
-        textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
-    }
-
-    private fun reset(){
-        if(!binding.MedicineName.text.isNullOrEmpty()){
-            Snackbar.make(MEDX,"YOUR MEDICINE IS EDITED SUCCESSFULLY", Snackbar.LENGTH_SHORT).show()}
-        binding.MedicineName.text=null
-        binding.UploadPhoto.text=null
-        binding.recordX.editText!!.text=null
-        binding.medicineType.editText!!.text=null
-        binding.Date.text=null
-        binding.Time.text=null
-        binding.description.text=null
-        binding.RepeatTimesX.editText!!.text=null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -76,22 +65,8 @@ class EditMedicineFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.S)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(
-                    Manifest.permission.RECORD_AUDIO,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ), 111
-            )
-        }
         navController = NavHostFragment.findNavController(this)
 
         val bottomNavigation:BottomNavigationView=requireActivity().findViewById(R.id.bottom_navigation)
@@ -104,11 +79,7 @@ class EditMedicineFragment : Fragment() {
         } else {
             bottomNavigation.visibility = View.VISIBLE
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-        editMedicineViewModel =
-            ViewModelProvider(requireActivity()).get(EditMedicineViewModel::class.java)
-        val loading= LoadingDialog(requireActivity())
+        //------------------------------------------------------//
 
         val args = EditMedicineFragmentArgs.fromBundle(requireArguments())
 
@@ -116,17 +87,101 @@ class EditMedicineFragment : Fragment() {
         val userId=args.userId
         val token=args.token
 
+        //------------------------------------------------------//
+
+        RecordPermissions()
+        binding.timeRecycle.adapter = timeRecyclerView
+        editMedicineViewModel = ViewModelProvider(requireActivity()).get(EditMedicineViewModel::class.java)
+        val loading= LoadingDialog(requireActivity())
+
+        //------------------------------------------------------//
+
         //Retrieve token wherever necessary
         val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         val retrivedToken = preferences.getString("TOKEN", null)
         val retrivedID = preferences.getString("ID", null)
 
+        //------------------------------------------------------//
+
+        val typesMed = resources.getStringArray(R.array.medicines)
+        //When there is an empty field that adapter will be assigned
+        val ErrorAdapter = object :
+            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, typesMed) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle2)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                }
+                return view
+            }
+        }
+        ErrorAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+
+        //if there is no error thats the main adapter
+        val MedApapter = object :
+            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, typesMed) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)                 }
+                return view
+            }
+        }
+        MedApapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+
+        binding.medicineType.adapter = MedApapter
+        binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                val value = parent!!.selectedItem.toString()
+                if (value == typesMed[0]) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)                      }
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (value == typesMed[0]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    // (view as TextView).setTextColor(color)
+                } else{
+                    val color = resources.getColor(R.color.bbbb)
+                    //     (view as TextView).setTextColor(color)
+                }
+            }
+        }
+
+        //------------------------------------------------------//
 
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
         var output: String
-        val appDir =
-            File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecordings/")
+        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
@@ -137,7 +192,11 @@ class EditMedicineFragment : Fragment() {
             output = appDir.path + "/" + fileName
         }
         var isRecording = false
-        binding.recordBtn.setOnClickListener {
+
+        //------------------------------------------------------//
+
+        //Add rec btn listener
+        binding.addrec.setOnClickListener {
             try {
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -149,118 +208,53 @@ class EditMedicineFragment : Fragment() {
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             } catch (e: IOException) {
-
                 e.printStackTrace()
             }
-            binding.recordBtn.visibility = View.GONE
-            binding.stopBtn.visibility = View.VISIBLE
+            binding.recordX.editText!!.setText("Recording!")
+            binding.cancelbtn.visibility = View.VISIBLE
+            binding.addrec.visibility=View.GONE
         }
-        binding.stopBtn.setOnClickListener {
+
+        //------------------------------------------------------//
+
+        //Cancel rec btn listener
+        binding.cancelbtn.setOnClickListener {
             if (isRecording) {
                 mediaRecorder.stop()
             }
             binding.recordX.editText!!.setText(output)
             isRecording = false
-            binding.stopBtn.visibility = View.GONE
-            binding.recordBtn.visibility = View.VISIBLE
+            binding.cancelbtn.visibility = View.GONE
+            binding.addrec.visibility=View.VISIBLE
+
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-        var M = 0
-        val medicines = resources.getStringArray(R.array.medicines)
-        val medicine_adapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, medicines)
-        binding.spinner.adapter = medicine_adapter
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                if (M == 0) {
-                    binding.medicineType.editText?.getText()?.clear()
-                    M++
-                } else {
-                    binding.medicineType.editText!!.setText(medicines[position])
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        binding.Date.setOnClickListener {
-            binding.Date.setHintTextColor(getResources().getColor(R.color.normal));
-            binding.Date.setBackgroundResource(R.drawable.et_style)
-            binding.Date.hint = "   Date"
-            val datePickerDialog = DatePickerDialog(
-                requireContext(),
-                DatePickerDialog.OnDateSetListener { it, year, month, dayOfMonth ->
-                    binding.Date.text = "$year-${month+1}-$dayOfMonth"
-                }, year, month, day
-            )
-            datePickerDialog.show()
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //------------------------------------------------------//
 
         binding.Time.setOnClickListener { clickTimePicker(it) }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        //------------------------------------------------------//
 
-        binding.imageBtn.setOnClickListener { pickImageGallery() }
+        binding.addpicbtn.setOnClickListener { pickImageGallery()
+            setAlarm()
+        }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-//HERE
+        //------------------------------------------------------//
+
         binding.backBtn.setOnClickListener {
             findNavController().navigate(
-                EditMedicineFragmentDirections.actionEditMedicineFragmentToPatientHomeFragment("","","")
+                AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToPatientHomeFragment(
+                    "",
+                    "",
+                    ""
+                )
             )
         }
 
-        binding.deleteMedicine.setOnClickListener {
-                editMedicineViewModel.DeleteAllMedicine(medId,userId, "barier ${retrivedToken}")
+        //------------------------------------------------------//
 
-             loading.startLoading()
+        binding.addMedicine.setOnClickListener {
 
-            editMedicineViewModel.deleteMedicineLiveData.observe(viewLifecycleOwner){
-                if (it!=null) {
-                    loading.isDismiss()
-                    editMedicineViewModel.EmptyMedicine()
-                   findNavController().navigate(  EditMedicineFragmentDirections.actionEditMedicineFragmentToPatientHomeFragment("","",""))
-                    Snackbar.make(MEDX,"YOUR MEDICINE IS DELETED SUCCESSFULLY", Snackbar.LENGTH_SHORT).show()
-                    Log.i(TAG, it.toString())
-                } else {
-                    Log.i(TAG, it.toString())
-                }
-            }
-        }
-
-
-        editMedicineViewModel.deleteMedicineLiveData.observe(viewLifecycleOwner){
-            if (it!=null) {
-                loading.isDismiss()
-               // findNavController().navigate(  EditMedicineFragmentDirections.actionEditMedicineFragmentToPatientHomeFragment("","",""))
-                Snackbar.make(MEDX,"YOUR MEDICINE IS DELETED SUCCESSFULLY", Snackbar.LENGTH_SHORT).show()
-                Log.i(TAG, it.toString())
-            } else {
-                Log.i(TAG, it.toString())
-            }
-        }
-
-
-        binding.editMedicine.setOnClickListener {
             if (binding.MedicineName.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.MedicineNameX,
@@ -277,6 +271,9 @@ class EditMedicineFragment : Fragment() {
                     binding.MedicineNameX.hint = "Medicine Name"
                 }
             }
+
+            //------------------------------------------------------//
+
             if (binding.description.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.descriptionX,
@@ -294,22 +291,8 @@ class EditMedicineFragment : Fragment() {
                 }
             }
 
-            if (binding.RepeatTimes.text.toString().isNullOrEmpty()) {
-                setTextInputLayoutHintColor(
-                    binding.RepeatTimesX,
-                    requireContext(),
-                    android.R.color.holo_red_dark
-                )
-                binding.RepeatTimesX.hint = "Times is Required"
-                binding.RepeatTimes.setOnClickListener {
-                    setTextInputLayoutHintColor(
-                        binding.RepeatTimesX,
-                        requireContext(),
-                        R.color.normal
-                    )
-                    binding.RepeatTimesX.hint = "Repeated Times"
-                }
-            }
+            //------------------------------------------------------//
+
             if (binding.UploadPhoto.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.UploadPhotoX,
@@ -326,6 +309,9 @@ class EditMedicineFragment : Fragment() {
                     binding.UploadPhotoX.hint = "Upload Photo"
                 }
             }
+
+            //------------------------------------------------------//
+
             if (binding.record.text.toString().isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.recordX,
@@ -339,62 +325,65 @@ class EditMedicineFragment : Fragment() {
                 }
             }
 
-            if (binding.medicineType.editText!!.text.toString().isNullOrEmpty()) {
-                setTextInputLayoutHintColor(
-                    binding.medicineType,
-                    requireContext(),
-                    android.R.color.holo_red_dark
-                )
-                binding.medicineType.hint = "Medicine Type is Required"
-                binding.medicineType.editText!!.setOnClickListener {
-                    setTextInputLayoutHintColor(
-                        binding.medicineType,
-                        requireContext(),
-                        R.color.normal
-                    )
-                    binding.medicineType.hint = "Medicine Type"
+            //------------------------------------------------------//
+
+            if(binding.medicineType.selectedItem==typesMed[0]){
+                binding.medicineType.adapter = ErrorAdapter
+                binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        val value = parent!!.selectedItem.toString()
+                        if (value == typesMed[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)
+                        }
+                    }
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        val value = parent!!.getItemAtPosition(position).toString()
+                        if (value == typesMed[0]) {
+                            val color = resources.getColor(android.R.color.holo_red_dark)
+                            (view as TextView).setTextColor(color)                        }
+                        else{
+                            val color = resources.getColor(R.color.bbbb)
+                            (view as TextView).setTextColor(color)
+                        }
+                    }
                 }
             }
 
+            //------------------------------------------------------//
 
-            if (binding.Date.text.toString().isNullOrEmpty()) {
-                binding.Date.setHintTextColor(getResources().getColor(R.color.holo));
-                binding.Date.setBackgroundResource(R.drawable.error_style)
-                binding.Date.hint = "  Required"
-            }
             if (binding.Time.text.toString().isNullOrEmpty()) {
                 binding.Time.setHintTextColor(getResources().getColor(R.color.holo));
                 binding.Time.setBackgroundResource(R.drawable.error_style)
                 binding.Time.hint = "  Required"
             }
 
+            //------------------------------------------------------//
 
             val name= binding.MedicineName.text.toString()
             val photo=binding.UploadPhoto.text.toString()
             val record=binding.recordX.editText!!.text.toString()
-            val type=binding.medicineType.editText!!.text.toString()
-            val date=binding.Date.text.toString()
-            val time=binding.Time.text.toString()
+            val type=binding.medicineType.selectedItem.toString()
             val description=binding.description.text.toString()
-            val repeated =binding.RepeatTimesX.editText!!.text.toString()
 
             if (!binding.MedicineName.text.toString()
                     .isNullOrEmpty() && !binding.description.text.toString().isNullOrEmpty() &&
                 !binding.UploadPhoto.text.toString()
                     .isNullOrEmpty() && !binding.record.text.toString().isNullOrEmpty() &&
-                !binding.medicineType.editText!!.text.toString()
-                    .isNullOrEmpty() && !binding.RepeatTimesX.editText!!.text.toString()
-                    .isNullOrEmpty()
+                !binding.medicineType.selectedItem.toString().isNullOrEmpty()
             ) {
-                editMedicineViewModel.updateAllMedicine(medId,userId, "barier ${retrivedToken}",
+                editMedicineViewModel.updateAllMedicine(
+                    medId,
+                    userId,
+                    "barier ${retrivedToken}",
                     name,
                     "https://th.bing.com/th/id/R.f536c7f2f88aab7047dd18f34245ac96?rik=%2bIszp%2bhbl5%2bDKQ&pid=ImgRaw&r=0",
                     record,
                     type,
-                    date,
-                    time,
-                    repeated.toInt(),
-                    description)
+                    description,
+                    TimeList.toTypedArray(),
+                    daysList,)
+
                 loading.startLoading()
 
             }
@@ -407,7 +396,7 @@ class EditMedicineFragment : Fragment() {
             } else {
                 loading.isDismiss()
                 Snackbar.make(
-                    MED,
+                    MEDX,
                     editMedicineViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
@@ -416,45 +405,62 @@ class EditMedicineFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode==111 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            binding.recordBtn.isEnabled=true
+
+
+
+
+    private fun RecordPermissions() {
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode==111 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            binding.recordX.isEnabled=true
+        }
+    }
+
     fun clickTimePicker(view: View) {
         binding.Time.setHintTextColor( getResources().getColor(R.color.normal))
         binding.Time.setBackgroundResource(R.drawable.et_style)
+
         val c = Calendar.getInstance()
-        val hour =c.get(Calendar.HOUR)
+        val hour = c.get(Calendar.HOUR_OF_DAY)
         val minute = c.get(Calendar.MINUTE)
-        val tpd = TimePickerDialog(requireContext(),
-            TimePickerDialog.OnTimeSetListener(function = { view, h, m ->
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
+                c.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                c.set(Calendar.MINUTE, minuteOfHour)
+                val timeText = String.format("%02d:%02d", hourOfDay, minuteOfHour)
+                binding.Time.text = timeText
+                TimeList.add(timeText)
+                timeRecyclerView.setList(TimeList)
+                val calendar = Calendar.getInstance()
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minuteOfHour)
+                selectedAlarmTimes.add(calendar)
 
-            if(h<10){
-                if (m>=10){
-                    binding.Time.text="0${h}:$m"
-                }else{
-                    binding.Time.text="0${h}:0$m"
-                }
-            }else{
-                if (m>=10){
-                    binding.Time.text="${h}:$m"
-                }else{
-                    binding.Time.text="${h}:0$m"
-                }
+            },
+            hour,
+            minute,
+            true
+        )
+        timePickerDialog.show()
+    }
 
-            }
-
-        }),hour,minute,false)
-        tpd.show()
-        Log.i(TAG,"hour = "+hour.toString())
+    private fun setAlarm() {
+        // Set the alarms using the AlarmHelper
+        val alarmHelper = AlarmHelper()
+        alarmHelper.setAlarm(requireContext(), selectedAlarmTimes)
     }
 
     private fun pickImageGallery() {
-        val intent= Intent(Intent.ACTION_PICK)
+        val intent=Intent(Intent.ACTION_PICK)
         intent.type="image/*"
         startActivityForResult(intent, AddNewMedicineFragment.IMAGE_REQUEST_CODE)
     }
@@ -463,11 +469,25 @@ class EditMedicineFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode== AddNewMedicineFragment.IMAGE_REQUEST_CODE &&resultCode == Activity.RESULT_OK){
             binding.UploadPhoto.setText(data?.data?.path)
-            // binding.UploadPhoto.setText("Uploaded Image")
         }
     }
 
+    private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
+        textInputLayout.defaultHintTextColor = ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
+    }
 
-
-
+    private fun reset(){
+        if(!binding.MedicineName.text.isNullOrEmpty()){
+            Snackbar.make(MEDX,"YOUR MEDICINE IS EDITED SUCCESSFULLY",Snackbar.LENGTH_SHORT).show()}
+        binding.MedicineName.text=null
+        binding.UploadPhoto.text=null
+        binding.recordX.editText!!.text=null
+        binding.medicineType.setSelection(0)
+        binding.Time.text=null
+        binding.description.text=null
+    }
 }
+
+
+
+

@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
+import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import kotlinx.coroutines.launch
@@ -20,8 +21,8 @@ class PatientHomeViewModel(application: Application): AndroidViewModel(applicati
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var allMedicineMutableLiveData= MutableLiveData<List<AllMedicineRespone>>()
-    val allMedicinLiveData: LiveData<List<AllMedicineRespone>>
+    private var allMedicineMutableLiveData= MutableLiveData<List<AllMedicineResponseItem>>()
+    val allMedicinLiveData: LiveData<List<AllMedicineResponseItem>>
         get() =allMedicineMutableLiveData
 
     fun getAllMedicine(id: String, token: String){

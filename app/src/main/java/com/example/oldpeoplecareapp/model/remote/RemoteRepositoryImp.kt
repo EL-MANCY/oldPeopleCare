@@ -5,6 +5,7 @@ import com.example.oldpeoplecareapp.model.entity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import retrofit2.http.Path
 
 class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     override suspend fun addNewUser(
@@ -46,9 +47,9 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         recordUrl: String,
         type: String,
         description: String,
-        time: List<String>,
-        weakly: List<String>
-    ): Response<MedicineResponse> {
+        time: Array<String>,
+        weakly: Array<String>
+    ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
             api.postMedicine(
                 id,
@@ -67,7 +68,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     override suspend fun getAllMedicine(
         id: String,
         token: String
-    ): Response<List<AllMedicineRespone>> {
+    ): Response<List<AllMedicineResponseItem>> {
         return withContext((Dispatchers.IO)) {
             api.getAllMedicine(id, token)
         }
@@ -75,28 +76,27 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
 
     override suspend fun updateMedicine(
         medId: String,
-        userId: String,
-        token: String,
+        userId: String, token: String,
         name: String,
         imgUrl: String,
         recordUrl: String,
         type: String,
-        date: String,
-        time: String,
-        repeatDays: Int,
         description: String,
-    ): Response<AllMedicineRespone> {
+        time: Array<String>,
+        weakly: Array<String>
+    ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
             api.updateMedicine(
-                medId, userId, token,
+                medId,
+                userId,
+                token,
                 name,
                 imgUrl,
                 recordUrl,
                 type,
-                date,
+                description,
                 time,
-                repeatDays,
-                description
+                weakly,
             )
         }
     }

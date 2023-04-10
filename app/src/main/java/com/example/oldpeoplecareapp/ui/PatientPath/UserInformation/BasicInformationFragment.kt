@@ -49,13 +49,13 @@ class BasicInformationFragment : Fragment() {
         loading.isDismiss()
 
         binding.logoutBtn.setOnClickListener {
+            val navController = findNavController()
+            navController.navigate(BasicInformationFragmentDirections.actionBasicInformationFragmentToLogIn())
+
             val sharedPreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.clear()
             editor.apply()
-            val navController = findNavController()
-            navController.popBackStack(navController.graph.startDestinationId, false)
-            navController.navigate(R.id.logIn)
         }
 
         userInfoViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {

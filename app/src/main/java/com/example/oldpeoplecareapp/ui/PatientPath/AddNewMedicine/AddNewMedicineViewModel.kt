@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.entity.MedicineResponse
+import com.example.oldpeoplecareapp.model.entity.MedicineResponseX
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import kotlinx.coroutines.launch
@@ -22,8 +23,8 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var AddedMutableLiveData = MutableLiveData<MedicineResponse>()
-    val AddLiveData: LiveData<MedicineResponse>
+    private var AddedMutableLiveData = MutableLiveData<MedicineResponseX>()
+    val AddLiveData: LiveData<MedicineResponseX>
         get() = AddedMutableLiveData
 
     fun addMedicine(
@@ -34,8 +35,8 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         recordUrl: String,
         type: String,
         description: String,
-        time: List<String>,
-        weakly: List<String>
+        time: Array<String>,
+        weakly: Array<String>
     ) {
         viewModelScope.launch {
             val result = remoteRepositoryImp.postMedicine(
