@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_patientHomeFragment_to_basicInformationFragment"
             app:destination="@id/basicInformationFragment" />
+        <action
+            android:id="@+id/action_patientHomeFragment_to_allAlarmsFragment"
+            app:destination="@id/allAlarmsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewMedicineFragment"
@@ -106,6 +109,9 @@
         <argument
             android:name="token"
             app:argType="string" />
+        <action
+            android:id="@+id/action_editMedicineFragment_to_allAlarmsFragment"
+            app:destination="@id/allAlarmsFragment" />
     </fragment>
     <fragment
         android:id="@+id/caregiversPatientFragment"
@@ -246,5 +252,16 @@
             app:destination="@id/logIn"
             app:popUpTo="@id/patientHomeFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/allAlarmsFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AllAlarms.AllAlarmsFragment"
+        android:label="AllAlarmsFragment" >
+        <action
+            android:id="@+id/action_allAlarmsFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment" />
+        <action
+            android:id="@+id/action_allAlarmsFragment_to_editMedicineFragment"
+            app:destination="@id/editMedicineFragment" />
     </fragment>
 </navigation>

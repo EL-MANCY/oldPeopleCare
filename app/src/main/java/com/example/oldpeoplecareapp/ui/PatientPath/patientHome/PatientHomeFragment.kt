@@ -22,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class PatientHomeFragment : Fragment(),OnItemClickListener {
     val TAG: String = "PatientHomeFragmentTAG"
     lateinit var binding: FragmentPatientHomeBinding
-    lateinit var remoteRepositoryImp: RemoteRepositoryImp
     lateinit var patientHomeViewModel: PatientHomeViewModel
     lateinit var  retrivedToken:String
     val medicineRecyclerView by lazy { MedicineRecyclerView() }
@@ -63,6 +62,10 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                     Log.i(TAG, it.toString())
                 }
             })
+        }
+
+        binding.AllAlarms.setOnClickListener {
+            findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToAllAlarmsFragment())
         }
 
         binding.userInfo.setOnClickListener {
