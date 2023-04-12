@@ -1,6 +1,9 @@
 package com.example.oldpeoplecareapp.ui
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -27,6 +30,7 @@ import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversP
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +43,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            Intent(this, UpcomingBroadcastReciever::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
+
 
         val getpreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         var retrivedToken:String? = getpreferences.getString("TOKEN", "null")
