@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAllAlarmsBinding
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_all_alarms.*
 
 class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
     private  val TAG = "AllAlarmsFragment"
+    private lateinit var navController: NavController
     lateinit var binding:FragmentAllAlarmsBinding
     lateinit var  retrivedToken:String
     lateinit var allAlarmsViewModel: AllAlarmsViewModel
@@ -30,13 +33,26 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAllAlarmsBinding.inflate(inflater, container, false)
-        val navBar = requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        navBar.visibility = View.VISIBLE
-        navBar?.selectedItemId =R.id.home_icon
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        navController = NavHostFragment.findNavController(this)
+
+        val bottomNavigation:BottomNavigationView=requireActivity().findViewById(R.id.bottom_navigation)
+
+        if (navController.currentDestination?.label == "fragment_registration"
+            || navController.currentDestination?.label == "fragment_log_in"
+            || navController.currentDestination?.label=="EditMedicineFragment"
+            || navController.currentDestination?.label=="AllAlarmsFragment"
+        ) {
+            bottomNavigation.visibility = View.GONE
+        } else {
+            bottomNavigation.visibility = View.VISIBLE
+        }
+
+
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()

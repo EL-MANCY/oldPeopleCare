@@ -116,6 +116,28 @@ interface ServiceAPI {
         @Path("userID") userID: String,
     ):Response<SingleUserResponse>
 
+    @GET("/upcoming/{userID}")
+    suspend fun getUpcoming(
+        @Header("token") token: String,
+        @Path("userID") userID: String,
+        @Query("state") state:String
+    ):Response<List<Medicine>>
+
+    @POST("/upcoming}")
+    suspend fun getUpcomingDaily(
+        @Header("token") token: String,
+    ):Response<Any>
+
+    @PUT("/upcoming/{userID}/{medID}")
+    suspend fun changeState(
+        @Header("token") token: String,
+        @Path("userID") userID: String,
+        @Path("medID") medID: String,
+        @Query("state") state:String
+    ):Response<Any>
+
+
+
 }
 
 

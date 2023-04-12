@@ -157,6 +157,31 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
+    override suspend fun getUpcoming(
+        token: String,
+        userID: String,
+        state: String
+    ): Response<List<Medicine>> {
+        return withContext((Dispatchers.IO)){
+            api.getUpcoming(token,userID,state)
+        }
+    }
+
+    override suspend fun getUpcomingDaily(token: String): Response<Any> {
+        return withContext((Dispatchers.IO)){
+            api.getUpcomingDaily(token)
+        }    }
+
+    override suspend fun changeState(
+        token: String,
+        userID: String,
+        medID: String,
+        state: String
+    ): Response<Any> {
+        return withContext((Dispatchers.IO)){
+            api.changeState(token,userID,medID,state)
+        }    }
+
 }
 
 

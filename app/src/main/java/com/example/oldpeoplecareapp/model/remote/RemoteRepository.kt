@@ -86,11 +86,30 @@ interface RemoteRepository {
 
     suspend fun ResetPassword(email: String): Response<Any>
 
-    suspend fun updateRole(token: String,
-                           caregiverID: String,
-                           newRole: String): Response<UpdateResponse>
+    suspend fun updateRole(
+        token: String,
+        caregiverID: String,
+        newRole: String
+    ): Response<UpdateResponse>
 
-    suspend fun getSingleUser(token: String,userID: String, ):Response<SingleUserResponse>
+    suspend fun getSingleUser(token: String, userID: String, ): Response<SingleUserResponse>
+
+    suspend fun getUpcoming(
+        token: String,
+        userID: String,
+        state: String
+    ): Response<List<Medicine>>
+
+    suspend fun getUpcomingDaily(
+        token: String,
+    ):Response<Any>
+
+    suspend fun changeState(
+       token: String,
+       userID: String,
+       medID: String,
+       state:String
+    ):Response<Any>
 
 }
 

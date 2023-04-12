@@ -9,16 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
 import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
+import com.example.oldpeoplecareapp.model.entity.Medicine
 
 
 class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineViewHolder>() {
     var onListItemClick:OnItemClickListener?=null
-    var  medicineList: List<AllMedicineResponseItem> = emptyList()
-    fun setList(medicineItems: List<AllMedicineResponseItem>) {
+    var  medicineList: List<Medicine> = emptyList()
+    fun setList(medicineItems: List<Medicine>) {
         this.medicineList = medicineItems
         notifyDataSetChanged()
     }
-
+    fun refresh() {
+        notifyDataSetChanged()
+    }
 
     inner class MedicineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var medicineImage: ImageView = itemView.findViewById(R.id.medicineImage)
@@ -27,15 +30,25 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
         var edit_icon: ImageView = itemView.findViewById(R.id.edit_btnx)
         var mark_icon: ImageView = itemView.findViewById(R.id.comp_img)
 
-        fun bind(medicineInfo: AllMedicineResponseItem) {
+        fun bind(medicineInfo: Medicine) {
 
-            time_txtView.text = medicineInfo.time[0]
-            medicineNameTxtView.text = medicineInfo.name
-            mark_icon.setImageResource(R.drawable.no_comp)
+            time_txtView.text = medicineInfo.medicine.time[0]
+            medicineNameTxtView.text = medicineInfo.medicine.name
 
+            if(medicineInfo.state=="Completed"){
+                mark_icon.setImageResource(R.drawable.yes_comp)
+            }else if(medicineInfo.state=="Missed"){
+                mark_icon.setImageResource(R.drawable.no_comp)
+            }else if(medicineInfo.state=="Waiting"){
+                mark_icon.setImageResource(R.drawable.no_comp)
+                }
             edit_icon.setOnClickListener {
                 onListItemClick?.onItemClick(medicineInfo)
             }
+            mark_icon.setOnClickListener {
+                onListItemClick?.onStateClick(medicineInfo)
+            }
+
         }
     }
 
@@ -46,7 +59,7 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
     }
 
     override fun onBindViewHolder(holder: MedicineViewHolder, position: Int) {
-        var item: AllMedicineResponseItem = medicineList.get(position)
+        var item: Medicine = medicineList.get(position)
         holder.bind(item)
     }
 
