@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.HOUR_OF_DAY, 12)
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             this,
             0,
             Intent(this, UpcomingBroadcastReciever::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,

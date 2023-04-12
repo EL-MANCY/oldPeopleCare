@@ -123,7 +123,7 @@ interface ServiceAPI {
         @Query("state") state:String
     ):Response<List<Medicine>>
 
-    @POST("/upcoming}")
+    @POST("/upcoming")
     suspend fun getUpcomingDaily(
         @Header("token") token: String,
     ):Response<Any>
