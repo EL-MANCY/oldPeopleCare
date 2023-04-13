@@ -12,8 +12,8 @@
         android:id="@+id/searchIconX"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
         android:hint="Search for medicine"
 
         app:endIconMode="clear_text"
@@ -25,7 +25,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchIcon"
-            android:layout_width="294dp"
+            android:layout_width="320dp"
             android:layout_height="34dp"
             android:layout_marginTop="31dp"
             android:background="@drawable/search_editbox"
@@ -37,15 +37,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/userInfo"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="28dp"
         android:src="@drawable/male_pic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchIconX"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -53,13 +51,12 @@
         android:layout_width="388dp"
         android:layout_height="9dp"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="12dp"
         android:src="@drawable/line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/userInfo" />
 <!--    <TextView-->
 <!--        android:id="@+id/fragmentName"-->
 <!--        android:layout_width="wrap_content"-->
@@ -84,17 +81,18 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
         android:text="Patient Medicine Reminder"
         android:textColor="#008080"
         android:textColorLink="#008080"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.026" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

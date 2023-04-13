@@ -77,7 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="El-Mancy"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -86,10 +85,9 @@
         app:layout_constraintTop_toBottomOf="@+id/pp" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/mailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="abdelrahmanelmancy@gmail.com"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +105,7 @@
         app:hintTextColor="#008080"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/mailTitle"
         app:startIconDrawable="@drawable/useer"
         app:startIconTint="@null">
 

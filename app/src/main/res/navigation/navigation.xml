@@ -179,6 +179,9 @@
         <action
             android:id="@+id/action_caregiveHomeFragment_to_caregiverNotificationsFragment"
             app:destination="@id/caregiverNotificationsFragment" />
+        <action
+            android:id="@+id/action_caregiveHomeFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/allPatientsFragment"
@@ -252,6 +255,9 @@
             app:destination="@id/logIn"
             app:popUpTo="@id/patientHomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicInformationFragment_to_caregiveHomeFragment"
+            app:destination="@id/caregiveHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/allAlarmsFragment"

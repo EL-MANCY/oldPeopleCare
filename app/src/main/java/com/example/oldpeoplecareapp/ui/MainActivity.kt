@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         val getpreferences = getSharedPreferences("MY_APP", MODE_PRIVATE)
         var retrivedToken:String? = getpreferences.getString("TOKEN", "null")
+        var REGIST:String? = getpreferences.getString("REGIST", "null")
 
 
 
@@ -127,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
+        navController.popBackStack()
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -247,14 +248,14 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.logIn)
             Log.i("TOKEN Login",retrivedToken.toString())
 
-        } else {
+        } else if(REGIST=="patient") {
             // If no token exists, open the login fragment.
             navController.navigate(R.id.patientHomeFragment)
             Log.i("TOKEN Home",retrivedToken.toString())
-
-
-
-
+        }else if(REGIST=="caregiver") {
+            // If no token exists, open the login fragment.
+            navController.navigate(R.id.caregiveHomeFragment)
+            Log.i("TOKEN Home",retrivedToken.toString())
         }
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

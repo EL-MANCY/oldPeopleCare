@@ -61,6 +61,8 @@ class BasicInformationFragment : Fragment() {
         userInfoViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 loading.isDismiss()
+                binding.userName.setText(it.fullname)
+                binding.mailTitle.setText(it.email)
                 binding.nametxtX.editText!!.setText(it.fullname)
                 binding.phonetxtx.editText!!.setText(it.phone)
                 binding.mailtxtx.editText!!.setText(it.email)

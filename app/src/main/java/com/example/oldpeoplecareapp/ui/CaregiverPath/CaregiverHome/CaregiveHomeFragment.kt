@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiveHomeBinding
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
+import com.example.oldpeoplecareapp.ui.Authentication.login.LogInFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CaregiveHomeFragment : Fragment() {
@@ -23,6 +25,13 @@ class CaregiveHomeFragment : Fragment() {
         navBar2.visibility = View.VISIBLE
         navBar2?.selectedItemId =R.id.home_page
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToBasicInformationFragment())
+
+        }
     }
 
 
