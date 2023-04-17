@@ -37,6 +37,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import kotlinx.android.synthetic.main.fragment_edit_medicine.*
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -252,6 +253,48 @@ class EditMedicineFragment : Fragment() {
         }
 
         //------------------------------------------------------//
+        binding.removeMed.setOnClickListener {
+            Log.i(TAG, "clicked")
+            editMedicineViewModel.DeleteAllMedicine(medId,retrivedID.toString(), "barier ${retrivedToken}")
+            Log.i(TAG,"med id: $medId  userId:$userId userId:$retrivedID  token: $retrivedToken")
+            loading.startLoading()
+            editMedicineViewModel.deleteMedicineLiveData.observe(viewLifecycleOwner){
+                if (it!=null) {
+                    loading.isDismiss()
+                    editMedicineViewModel.EmptyMedicine()
+                    findNavController().navigate(  EditMedicineFragmentDirections.actionEditMedicineFragmentToPatientHomeFragment("","",""))
+                    Snackbar.make(MEDX,"YOUR MEDICINE IS DELETED SUCCESSFULLY", Snackbar.LENGTH_SHORT).show()
+                    Log.i(TAG, "deleted")
+                } else if(editMedicineViewModel.error!=null) {
+                    Snackbar.make(
+                        MEDX,
+                        editMedicineViewModel.error.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    Log.i(TAG, editMedicineViewModel.error.toString())
+                    editMedicineViewModel.error=null
+                }
+            }
+        }
+        editMedicineViewModel.deleteMedicineLiveData.observe(viewLifecycleOwner){
+            if (it!=null) {
+              //  loading.isDismiss()
+                // findNavController().navigate(  EditMedicineFragmentDirections.actionEditMedicineFragmentToPatientHomeFragment("","",""))
+                Snackbar.make(MEDX,"YOUR MEDICINE IS DELETED SUCCESSFULLY", Snackbar.LENGTH_SHORT).show()
+                Log.i(TAG, "deleted out")
+                Log.i(TAG, it.toString())
+            } else if(editMedicineViewModel.error!=null) {
+                Snackbar.make(
+                    MEDX,
+                    editMedicineViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Log.i(TAG, it.toString())
+                editMedicineViewModel.error=null
+            }
+        }
+
+        //------------------------------------------------------//
 
         binding.addMedicine.setOnClickListener {
 
@@ -393,14 +436,15 @@ class EditMedicineFragment : Fragment() {
                 reset()
                 loading.isDismiss()
                 Log.i("ifObserve", "yes")
-            } else {
+            } else if(editMedicineViewModel.error !=null) {
                 loading.isDismiss()
                 Snackbar.make(
                     MEDX,
                     editMedicineViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
-                Log.i("elseObserve", "not")
+                editMedicineViewModel.error=null
+                Log.i(TAG, "not")
             }
         }
     }

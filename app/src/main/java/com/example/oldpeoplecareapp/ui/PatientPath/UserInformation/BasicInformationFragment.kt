@@ -17,6 +17,7 @@ import com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver.EditRemov
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_basic_information.*
 import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 
 
@@ -72,7 +73,7 @@ class BasicInformationFragment : Fragment() {
             } else if(userInfoViewModel.error!=null) {
                 loading.isDismiss()
                 Snackbar.make(
-                    Role,
+                    USERINFO,
                     userInfoViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()

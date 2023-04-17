@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 class AllAlarmsViewModel (application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     val Tag="PatientHomeViewModelx"
+    var error :String?=null
+
 
     init {
         val serviceInstant = RetroBuilder.builder
@@ -32,6 +34,8 @@ class AllAlarmsViewModel (application: Application): AndroidViewModel(applicatio
                 allMedicineMutableLiveData.postValue(MedicineList.body())
                 Log.i(Tag,MedicineList.body().toString())
             }else{
+                error=MedicineList.errorBody()?.string()!!.toString()
+                allMedicineMutableLiveData.postValue(MedicineList.body())
                 Log.i(Tag,MedicineList.toString())
             }
         }

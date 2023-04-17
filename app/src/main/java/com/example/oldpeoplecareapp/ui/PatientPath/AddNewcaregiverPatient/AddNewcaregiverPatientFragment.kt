@@ -146,7 +146,7 @@ class AddNewcaregiverPatientFragment : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
                 addNewcaregiverViewModel.sucessLiveData==null
-            }else{
+            }else if(addNewcaregiverViewModel.errorMutableLiveData !=null) {
                 loading.isDismiss()
                 Snackbar.make(
                     REQ,

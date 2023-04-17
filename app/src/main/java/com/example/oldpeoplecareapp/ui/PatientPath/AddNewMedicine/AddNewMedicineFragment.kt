@@ -369,8 +369,8 @@ class AddNewMedicineFragment : Fragment() {
                 loading.isDismiss()
                 timeRecyclerView.setList(emptyList())
                 Log.i(TAG, "yes")
-            } else {
-                Log.i(TAG, "not")
+            } else if(addNewMedicineViewModel.error != null) {
+                Log.i(TAG, addNewMedicineViewModel.error.toString())
                 loading.isDismiss()
                 Snackbar.make(
                     MED,

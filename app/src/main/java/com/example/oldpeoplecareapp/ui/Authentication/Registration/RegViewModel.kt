@@ -13,6 +13,9 @@ import kotlinx.coroutines.launch
 
 class RegViewModel(application: Application):AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
+    var error :String?=null
+    private val TAG = "RegViewModel"
+
 
     private var addUserAPIMutableLiveData = MutableLiveData<UserResponse>()
     val addUserAPILiveData: LiveData<UserResponse>
@@ -42,7 +45,9 @@ class RegViewModel(application: Application):AndroidViewModel(application) {
                     addUserAPIMutableLiveData.postValue(result.body())
                     Log.i("add",result.message())
             }else{
-                Log.i("after",result.message())
+                error=result.errorBody()?.string()!!.toString()
+                addUserAPIMutableLiveData.postValue(result.body())
+                Log.i(TAG,result.message())
             }
 
         }

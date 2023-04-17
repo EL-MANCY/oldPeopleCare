@@ -16,6 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientNotificationBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
+import kotlinx.android.synthetic.main.fragment_patient_notification.*
 
 class PatientNotificationFragment : Fragment() {
 
@@ -47,9 +50,14 @@ class PatientNotificationFragment : Fragment() {
             if (it != null) {
                 notificationRecyclerView.setList(it)
                 Log.i(TAG, it.toString())
+            }else if(notificationViewModel.error !=null){
+                Snackbar.make(
+                    NOTIFYP,
+                    notificationViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
-
         createChannel(
             getString(R.string.FCM_CHANNEL_ID),
             getString(R.string.FCM_CHANNEL_STRING)

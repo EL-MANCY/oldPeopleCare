@@ -20,7 +20,9 @@ import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.MedicineRecyclerV
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_all_alarms.*
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 
 
 class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
@@ -67,6 +69,12 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
             if (it != null) {
                 allMedicineRV.setList(it)
                 Log.i(TAG, it.toString())
+            }else if(allAlarmsViewModel.error !=null){
+                Snackbar.make(
+                    ALLALARMS,
+                    allAlarmsViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
 

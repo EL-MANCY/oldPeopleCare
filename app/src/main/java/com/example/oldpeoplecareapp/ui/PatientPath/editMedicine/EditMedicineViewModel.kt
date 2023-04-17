@@ -71,15 +71,30 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
     }
 
     fun DeleteAllMedicine(medId: String, userId: String, token: String) {
+        Log.i(Tag, "enter")
+
         viewModelScope.launch {
             try {
                 val MedicineList = remoteRepositoryImp.DeleteMedicine(medId, userId, token)
+                Log.i(Tag, MedicineList.body().toString())
+                Log.i(Tag, "try")
+
+                if (MedicineList.isSuccessful) {
                     deleteMedicineMutableLiveData.postValue("deleted")
                     Log.i(Tag, MedicineList.body().toString())
+                    Log.i(Tag, "success")
+                } else {
+                    error=MedicineList.errorBody()?.string()!!.toString()
+                    deleteMedicineMutableLiveData.postValue("NOT DELETED")
+                    Log.i(Tag, error.toString())
+                    Log.i(Tag, "failed")
+                }
 
             } catch (e: JsonIOException) {
                 deleteMedicineMutableLiveData.postValue("deleted")
                 println("JsonIOException caught: ${e.message}")
+                Log.i(Tag, "JsonIOException caught: ${e.message}")
+
             }
         }
     }

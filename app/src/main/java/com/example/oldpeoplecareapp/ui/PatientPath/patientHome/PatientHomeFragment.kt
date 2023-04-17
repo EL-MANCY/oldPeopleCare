@@ -15,12 +15,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
-import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
-import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.Medicine
-import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
-import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
+import kotlinx.android.synthetic.main.fragment_patient_home.*
 
 
 class PatientHomeFragment : Fragment(),OnItemClickListener {
@@ -74,6 +73,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                 if (it != null) {
                     medicineRecyclerView.setList(it)
                     Log.i(TAG, it.toString())
+                }else if(patientHomeViewModel.error !=null){
+                    Snackbar.make(
+                        PATIENTHOME,
+                        patientHomeViewModel.error.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    patientHomeViewModel.error=null
                 }
             })
         }
@@ -93,7 +99,14 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     medicineRecyclerView.setList(it)
-                    Log.i(TAG, it.toString())
+                    Log.i("tttttt","it is ${it}")
+                }else if(patientHomeViewModel.error !=null){
+                    Snackbar.make(
+                        PATIENTHOME,
+                        patientHomeViewModel.error.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    patientHomeViewModel.error=null
                 }
             })
         }
@@ -111,6 +124,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                 if (it != null) {
                     medicineRecyclerView.setList(it)
                     Log.i(TAG, it.toString())
+                }else if(patientHomeViewModel.error !=null){
+                    Snackbar.make(
+                        PATIENTHOME,
+                        patientHomeViewModel.error.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    patientHomeViewModel.error=null
                 }
             })
         }
@@ -156,21 +176,15 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                         info.medicine._id,
                         "Completed"
                     )
-
-
                     patientHomeViewModel.stateLiveData.observe(viewLifecycleOwner, Observer {
                         if (it != null) {
                             patientHomeViewModel.getAllMedicine("barier " + retrivedToken, retrivedID.toString(), "Missed")
                         }
                     })
-
-
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
             val alert = builder.create()
             alert.show()
-
-
 
         } else if (STATE == "Completed") {
 
@@ -184,14 +198,11 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                         info.medicine._id,
                         "Missed"
                     )
-
                     patientHomeViewModel.stateLiveData.observe(viewLifecycleOwner, Observer {
                         if (it != null) {
                             patientHomeViewModel.getAllMedicine("barier " + retrivedToken, retrivedID.toString(), "Completed")
                         }
                     })
-
-
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
             val alert = builder.create()
@@ -210,8 +221,6 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                         info.medicine._id,
                         "Completed"
                     )
-
-
                     patientHomeViewModel.stateLiveData.observe(viewLifecycleOwner, Observer {
                         if (it != null) {
                             loading.isDismiss()

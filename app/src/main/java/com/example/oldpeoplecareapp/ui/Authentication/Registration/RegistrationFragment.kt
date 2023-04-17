@@ -22,7 +22,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentRegistrationBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
+import kotlinx.android.synthetic.main.fragment_registration.*
 import java.util.*
 
 class RegistrationFragment : Fragment() {
@@ -410,8 +413,13 @@ class RegistrationFragment : Fragment() {
                 loading.isDismiss()
                 findNavController()
                     .navigate(RegistrationFragmentDirections.actionRegistrationToLogIn())
-            } else {
+            } else if(regViewModel.error !=null) {
                 Log.i(TAG, "not")
+                Snackbar.make(
+                    REGIS,
+                    regViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
 

@@ -15,6 +15,9 @@ import com.example.oldpeoplecareapp.databinding.FragmentCaregiversPatientBinding
 import com.example.oldpeoplecareapp.model.entity.Circles
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.PatientHomeFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
+import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 
 class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
 
@@ -51,6 +54,12 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
             if (it != null) {
                 circleRecyclerView.setList(it)
                 Log.i(TAG, it.toString())
+            }else if(caregiversPatientViewModel.error != null){
+                Snackbar.make(
+                    CAREGIVERP,
+                    caregiversPatientViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
 

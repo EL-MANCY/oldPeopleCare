@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 class PatientNotificationViewModel(application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     val Tag="NotificationViewModel"
+    var error :String?=null
+
 
     init {
         val serviceInstant = RetroBuilder.builder
@@ -32,6 +34,8 @@ class PatientNotificationViewModel(application: Application): AndroidViewModel(a
                 NotificationMutableLiveData.postValue(NotificationList.body())
                 Log.i(Tag,NotificationList.body().toString())
             }else{
+                error=NotificationList.errorBody()?.string()!!.toString()
+                NotificationMutableLiveData.postValue(NotificationList.body())
                 Log.i(Tag,NotificationList.toString())
             }
         }

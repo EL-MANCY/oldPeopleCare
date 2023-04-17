@@ -32,24 +32,26 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
 
         fun bind(medicineInfo: Medicine) {
 
-            time_txtView.text = medicineInfo.medicine.time[0]
-            medicineNameTxtView.text = medicineInfo.medicine.name
+                time_txtView.text = medicineInfo.medicine.time[0]
 
-            if(medicineInfo.state=="Completed"){
-                mark_icon.setImageResource(R.drawable.yes_comp)
-            }else if(medicineInfo.state=="Missed"){
-                mark_icon.setImageResource(R.drawable.no_comp)
-            }else if(medicineInfo.state=="Waiting"){
-                mark_icon.setImageResource(R.drawable.no_comp)
+                medicineNameTxtView.text = medicineInfo.medicine.name
+
+                if (medicineInfo.state == "Completed") {
+                    mark_icon.setImageResource(R.drawable.yes_comp)
+                } else if (medicineInfo.state == "Missed") {
+                    mark_icon.setImageResource(R.drawable.no_comp)
+                } else if (medicineInfo.state == "Waiting") {
+                    mark_icon.setImageResource(R.drawable.no_comp)
                 }
-            edit_icon.setOnClickListener {
-                onListItemClick?.onItemClick(medicineInfo)
-            }
-            mark_icon.setOnClickListener {
-                onListItemClick?.onStateClick(medicineInfo)
+                edit_icon.setOnClickListener {
+                    onListItemClick?.onItemClick(medicineInfo)
+                }
+                mark_icon.setOnClickListener {
+                    onListItemClick?.onStateClick(medicineInfo)
+                }
+
             }
 
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicineViewHolder {
