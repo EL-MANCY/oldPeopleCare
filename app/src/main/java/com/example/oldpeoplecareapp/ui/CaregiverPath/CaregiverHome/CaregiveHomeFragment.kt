@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiveHomeBinding
-import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
-import com.example.oldpeoplecareapp.ui.Authentication.login.LogInFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CaregiveHomeFragment : Fragment() {

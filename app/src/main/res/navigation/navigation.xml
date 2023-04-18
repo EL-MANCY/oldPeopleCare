@@ -207,7 +207,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.example.oldpeoplecareapp.ui.Authentication.login.ForgetPasswordFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.ForgetPassword.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" >
         <action
             android:id="@+id/action_forgetPasswordFragment_to_logIn"

@@ -6,7 +6,7 @@ import retrofit2.http.*
 import java.util.*
 
 interface ServiceAPI {
-    //Registration
+
     @FormUrlEncoded
     @POST("/auth/signup")
     suspend fun addNewUser(
@@ -72,7 +72,9 @@ interface ServiceAPI {
     ): Response<Any>
 
     @GET("/user/user/circles")
-    suspend fun getPatientCircle(@Header("token") token: String): Response<List<Circles>?>
+    suspend fun getPatientCircle(
+        @Header("token") token: String
+    ): Response<List<Circles>?>
 
     @FormUrlEncoded
     @POST("/notification/request")
@@ -93,7 +95,6 @@ interface ServiceAPI {
         @Header("token") token: String,
     ):Response<Any>
 
-
     @POST("/notification/refuse/{notifyId}")
     suspend fun Reject(
         @Path("notifyId") notifyId: String,
@@ -108,7 +109,6 @@ interface ServiceAPI {
     suspend fun updateRole(@Header("token") token: String,
                            @Path("caregiverID") caregiverID: String,
                            @Query("role") newRole: String): Response<UpdateResponse>
-
 
     @GET("/user/{userID}")
     suspend fun getSingleUser(
@@ -136,18 +136,7 @@ interface ServiceAPI {
         @Query("state") state:String
     ):Response<Any>
 
-
-
 }
-
-
-
-
-
-
-
-
-
 //    @GET("user/")
 //    suspend fun getSingleUser(@Query("id") id:String):Response<UserResponse>
 

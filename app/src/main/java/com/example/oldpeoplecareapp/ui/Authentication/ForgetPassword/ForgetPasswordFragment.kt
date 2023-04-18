@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.Authentication.login
+package com.example.oldpeoplecareapp.ui.Authentication.ForgetPassword
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -15,28 +15,24 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentForgetPasswordBinding
+import com.example.oldpeoplecareapp.ui.Authentication.login.LogInViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_forget_password.*
 
 class ForgetPasswordFragment : Fragment() {
     lateinit var binding: FragmentForgetPasswordBinding
-    lateinit var logInViewModel: LogInViewModel
+    lateinit var forgetPassViewModel: ForgetPassViewModel
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentForgetPasswordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        logInViewModel = ViewModelProvider(requireActivity()).get(LogInViewModel::class.java)
-
+        forgetPassViewModel = ViewModelProvider(requireActivity()).get(ForgetPassViewModel::class.java)
         val loading = LoadingDialog(requireActivity())
 
         binding.loginbtn.setOnClickListener {
@@ -44,7 +40,6 @@ class ForgetPasswordFragment : Fragment() {
         }
 
         binding.sendCode.setOnClickListener {
-
             if (binding.forgetemailX.editText!!.text.isNullOrEmpty()) {
                 setTextInputLayoutHintColor(
                     binding.forgetemailX,
@@ -64,14 +59,18 @@ class ForgetPasswordFragment : Fragment() {
                 }
             } else {
                 val email = binding.forgetemailX.editText!!.text.toString()
-                logInViewModel.resetPass(email)
+                forgetPassViewModel.resetPass(email)
                 loading.startLoading()
             }
 
-            logInViewModel.responseLiveData.observe(viewLifecycleOwner, Observer {
+            forgetPassViewModel.responseLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     loading.isDismiss()
                     Snackbar.make(FORGET, "Check Your Mail Inbox", Snackbar.LENGTH_SHORT).show()
+                }else if(forgetPassViewModel.error != null){
+                    loading.isDismiss()
+                    Snackbar.make(FORGET, "Check Your Mail Inbox", Snackbar.LENGTH_SHORT).show()
+                    forgetPassViewModel.error = null
                 }
             })
         }

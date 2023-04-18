@@ -24,7 +24,6 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentRegistrationBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import kotlinx.android.synthetic.main.fragment_registration.*
 import java.util.*
 
