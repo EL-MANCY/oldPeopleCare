@@ -377,7 +377,7 @@ class AddNewMedicineFragment : Fragment() {
                     addNewMedicineViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
-
+                addNewMedicineViewModel.error = null
             }
         }       
     }

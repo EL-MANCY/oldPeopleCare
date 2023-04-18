@@ -146,6 +146,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             if (it != null) {
                 medicineRecyclerView.setList(it)
                 Log.i(TAG, it.toString())
+            }else if(patientHomeViewModel.error !=null){
+                Snackbar.make(
+                    PATIENTHOME,
+                    patientHomeViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                patientHomeViewModel.error=null
             }
         })
 

@@ -420,6 +420,7 @@ class RegistrationFragment : Fragment() {
                     regViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                regViewModel.error =null
             }
         }
 

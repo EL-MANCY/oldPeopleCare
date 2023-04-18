@@ -56,6 +56,7 @@ class PatientNotificationFragment : Fragment() {
                     notificationViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                notificationViewModel.error =null
             }
         })
         createChannel(

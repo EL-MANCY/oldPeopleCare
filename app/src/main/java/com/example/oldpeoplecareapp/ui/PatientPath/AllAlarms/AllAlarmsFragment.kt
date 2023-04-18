@@ -75,6 +75,7 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
                     allAlarmsViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                allAlarmsViewModel.error =null
             }
         })
 

@@ -220,6 +220,7 @@ class EditRemoveCaregiverRole : Fragment() {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+            editRemoveViewModel.error =null
 
         })
 

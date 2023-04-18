@@ -77,6 +77,7 @@ class BasicInformationFragment : Fragment() {
                     userInfoViewModel.error.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                userInfoViewModel.error =null
             }
 
         })

@@ -153,6 +153,7 @@ class AddNewcaregiverPatientFragment : Fragment() {
                     addNewcaregiverViewModel.errorMutableLiveData.toString(),
                     Snackbar.LENGTH_SHORT
                 ).show()
+                addNewcaregiverViewModel.errorMutableLiveData =null
             }
         }
 

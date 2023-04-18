@@ -61,6 +61,7 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+            caregiversPatientViewModel.error = null
         })
 
         circleRecyclerView.onListItemClick = this
