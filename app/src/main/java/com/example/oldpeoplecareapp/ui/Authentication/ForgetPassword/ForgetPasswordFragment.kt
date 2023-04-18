@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_forget_password.*
 class ForgetPasswordFragment : Fragment() {
     lateinit var binding: FragmentForgetPasswordBinding
     lateinit var forgetPassViewModel: ForgetPassViewModel
+    lateinit var email:String
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,7 +59,7 @@ class ForgetPasswordFragment : Fragment() {
                     binding.forgetemailX.hint = "E-Mail"
                 }
             } else {
-                val email = binding.forgetemailX.editText!!.text.toString()
+                email = binding.forgetemailX.editText!!.text.toString()
                 forgetPassViewModel.resetPass(email)
                 loading.startLoading()
             }
@@ -67,6 +68,7 @@ class ForgetPasswordFragment : Fragment() {
                 if (it != null) {
                     loading.isDismiss()
                     Snackbar.make(FORGET, "Check Your Mail Inbox", Snackbar.LENGTH_SHORT).show()
+                    findNavController().navigate(ForgetPasswordFragmentDirections.actionForgetPasswordFragmentToCodeNumberFragment(email))
                 }else if(forgetPassViewModel.error != null){
                     loading.isDismiss()
                     Snackbar.make(FORGET, "Check Your Mail Inbox", Snackbar.LENGTH_SHORT).show()

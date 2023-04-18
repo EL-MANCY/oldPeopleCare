@@ -136,8 +136,11 @@ interface ServiceAPI {
         @Query("state") state:String
     ):Response<Any>
 
-}
-//    @GET("user/")
-//    suspend fun getSingleUser(@Query("id") id:String):Response<UserResponse>
+    @FormUrlEncoded
+    @POST("/auth/reset/token")
+    suspend fun sendCode(
+        @Field("token") token: String,
+    ):Response<CodeResponse>
 
+}
 

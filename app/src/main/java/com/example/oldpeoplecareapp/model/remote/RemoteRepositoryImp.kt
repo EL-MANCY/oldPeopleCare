@@ -180,8 +180,14 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
     ): Response<Any> {
         return withContext((Dispatchers.IO)){
             api.changeState(token,userID,medID,state)
-        }    }
+        }
+    }
 
+    override suspend fun sendCode(token: String): Response<CodeResponse> {
+        return withContext((Dispatchers.IO)){
+            api.sendCode(token)
+        }
+    }
 }
 
 

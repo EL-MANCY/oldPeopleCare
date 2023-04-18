@@ -111,6 +111,11 @@ interface RemoteRepository {
        state:String
     ):Response<Any>
 
+    suspend fun sendCode(
+        token: String,
+    ):Response<CodeResponse>
+
+
 }
 
 

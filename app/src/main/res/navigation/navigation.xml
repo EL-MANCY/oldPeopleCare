@@ -212,6 +212,9 @@
         <action
             android:id="@+id/action_forgetPasswordFragment_to_logIn"
             app:destination="@id/logIn" />
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_codeNumberFragment"
+            app:destination="@id/codeNumberFragment" />
     </fragment>
     <fragment
         android:id="@+id/editRemoveCaregiverRole"
@@ -269,5 +272,16 @@
         <action
             android:id="@+id/action_allAlarmsFragment_to_editMedicineFragment"
             app:destination="@id/editMedicineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/codeNumberFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.CodeNo.CodeNumberFragment"
+        android:label="CodeNumberFragment" >
+        <action
+            android:id="@+id/action_codeNumberFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>
