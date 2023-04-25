@@ -1,7 +1,12 @@
 package com.example.oldpeoplecareapp.model.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "AllAlarms")
 data class AllMedicineResponseItem(
     val __v: Int,
+    @PrimaryKey
     val _id: String,
     val createdAt: String,
     val description: String,

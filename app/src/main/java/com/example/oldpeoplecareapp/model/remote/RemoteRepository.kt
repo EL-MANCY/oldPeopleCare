@@ -35,7 +35,7 @@ interface RemoteRepository {
         description: String,
         time: List<String>,
         weakly: Array<String>
-    ): Response<MedicineResponseX>
+    ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(
         id: String,

@@ -62,7 +62,6 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
 
         allAlarmsViewModel = ViewModelProvider(requireActivity()).get(AllAlarmsViewModel::class.java)
         allAlarmsViewModel.getAllMedicine(retrivedID.toString(), "barier " + retrivedToken)
-
         binding.allMedicinRV.adapter = allMedicineRV
 
         allAlarmsViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {

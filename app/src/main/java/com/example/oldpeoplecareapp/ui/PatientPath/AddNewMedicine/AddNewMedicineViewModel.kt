@@ -6,25 +6,32 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.MedicineResponse
 import com.example.oldpeoplecareapp.model.entity.MedicineResponseX
+import com.example.oldpeoplecareapp.model.local.LocalRepositoryImpl
+import com.example.oldpeoplecareapp.model.local.OldCareDB
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import kotlinx.coroutines.launch
 
 class AddNewMedicineViewModel(application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
+    private var localRepositoryImp: LocalRepositoryImpl
     val Tag = "AddNewMedicineViewModel"
     var error :String?=null
 
 
     init {
+        val db = OldCareDB.getInstance(application)
+        localRepositoryImp= LocalRepositoryImpl(db)
+
         val serviceInstant = RetroBuilder.builder
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var AddedMutableLiveData = MutableLiveData<MedicineResponseX>()
-    val AddLiveData: LiveData<MedicineResponseX>
+    private var AddedMutableLiveData = MutableLiveData<AllMedicineResponseItem>()
+    val AddLiveData: LiveData<AllMedicineResponseItem>
         get() = AddedMutableLiveData
 
     fun addMedicine(
@@ -50,6 +57,7 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
                 time,
                 weakly,
             )
+
             if (result.isSuccessful) {
                 AddedMutableLiveData.postValue(result.body())
                 Log.i(Tag, result.body().toString())

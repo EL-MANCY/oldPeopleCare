@@ -41,7 +41,7 @@ interface ServiceAPI {
         @Field("description") description: String,
         @Field("time") time: List<String>,
         @Field("weakly") weakly:Array<String>
-    ): Response<MedicineResponseX>
+    ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
     suspend fun getAllMedicine(

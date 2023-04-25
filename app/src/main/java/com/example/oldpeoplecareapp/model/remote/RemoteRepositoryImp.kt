@@ -49,7 +49,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         description: String,
         time: List<String>,
         weakly: Array<String>
-    ): Response<MedicineResponseX> {
+    ): Response<AllMedicineResponseItem> {
         return withContext((Dispatchers.IO)) {
             api.postMedicine(
                 id,

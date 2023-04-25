@@ -1,18 +1,22 @@
 package com.example.oldpeoplecareapp.model.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 
-    data class notificationData(
-        var sender: Sender,
-        var receiver: Reciever,
-        var _id: String,
-        var type: String,
-        var read: String,
-        var description: String,
-        var caregiverRole: String,
-        var createdAt: String,
-        var updatedAt: String,
-        var __v: Int
+@Entity(tableName = "Notify")
+data class notificationData(
+    var sender: Sender,
+    var receiver: Reciever,
+
+    @PrimaryKey var _id: String,
+    var type: String,
+    var read: String,
+    var description: String,
+    var caregiverRole: String?,
+    var createdAt: String,
+    var updatedAt: String,
+    var __v: Int
     )
 
     data class Sender(
