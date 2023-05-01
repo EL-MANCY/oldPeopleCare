@@ -142,5 +142,8 @@ interface ServiceAPI {
         @Field("token") token: String,
     ):Response<CodeResponse>
 
+    @GET("/upcoming")
+    suspend fun getPatients(@Header("token") token: String):Response<List<CaregiverHomeResponseItem>>
+
 }
 

@@ -115,6 +115,9 @@ interface RemoteRepository {
         token: String,
     ):Response<CodeResponse>
 
+    suspend fun getPatients(
+        token: String
+    ):Response<List<CaregiverHomeResponseItem>>
 
 }
 
@@ -130,6 +133,5 @@ interface RemoteRepository {
 
 
 
-  //  suspend fun getSingleUser( id:String):Response<UserResponse>
 
 

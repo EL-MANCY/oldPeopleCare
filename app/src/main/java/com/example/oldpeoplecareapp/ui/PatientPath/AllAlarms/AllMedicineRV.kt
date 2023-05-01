@@ -11,8 +11,10 @@ import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.OnItemClickListener
 
 class AllMedicineRV: RecyclerView.Adapter<AllMedicineRV.MedicineViewHolder>() {
+
     var onListItemClick: OnAlarmClickListener?=null
     var  medicineList: List<AllMedicineResponseItem> = emptyList()
+
     fun setList(medicineItems: List<AllMedicineResponseItem>) {
         this.medicineList = medicineItems
         notifyDataSetChanged()

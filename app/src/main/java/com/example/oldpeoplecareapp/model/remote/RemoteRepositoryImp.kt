@@ -188,16 +188,10 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
             api.sendCode(token)
         }
     }
+
+    override suspend fun getPatients(token: String): Response<List<CaregiverHomeResponseItem>> {
+        return withContext((Dispatchers.IO)){
+            api.getPatients(token)
+        }
+    }
 }
-
-
-
-
-
-
-
-//    override suspend fun getSingleUser(id: String): Response<UserResponse> {
-//        return withContext(Dispatchers.IO){
-//            api.getSingleUser(id)
-//        }
-//    }
