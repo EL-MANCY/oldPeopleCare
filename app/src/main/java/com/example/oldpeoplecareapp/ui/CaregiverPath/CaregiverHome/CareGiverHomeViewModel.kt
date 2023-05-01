@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
-import com.example.oldpeoplecareapp.ui.UiModel.MedicineUiModel
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import kotlinx.coroutines.launch
 
 class CareGiverHomeViewModel(application: Application): AndroidViewModel(application) {
@@ -29,20 +29,22 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
     fun getPatients(token: String) {
         viewModelScope.launch {
             val result = remoteRepositoryImp.getPatients(token)
+
             if (result.isSuccessful) {
                 val patients = result.body()
-                val medicineUiModels = patients!!.flatMap {CareGiverResponse->
-                    Log.i("nuxx",CareGiverResponse.medicines.toString())
+                val medicineUiModels = patients!!.flatMap { CareGiverResponse ->
                     CareGiverResponse.medicines.map {
                         MedicineUiModel(
                             name = CareGiverResponse.user.fullname,
                             med = it.medicine.name,
                             time = it.medicine.time.firstOrNull() ?: "",
                             imgUrlMed = it.medicine.imgUrl,
-                            imgUrlUser = CareGiverResponse.user.image.url
+                            imgUrlUser = CareGiverResponse.user.image.url,
+                            state = it.state
                         )
                     }
                 }
+
                 MedItemMutableLiveData.postValue(medicineUiModels)
                 Log.i(Tag, result.body().toString())
             } else {
@@ -50,27 +52,6 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
             }
         }
     }
-
-
-
-
-
-//    fun Mapper( PatientItems: CaregiverHomeResponseItem): MedicineUiModel {
-//        for (m in PatientItems.medicines) {
-//            val med= MedicineUiModel(
-//                PatientItems.user.fullname,
-//                m.medicine.name,
-//                m.medicine.time[0],
-//                m.medicine.imgUrl
-//            )
-//        }
-//
-//
-//    }
-
-
-
-
 
 }
 

@@ -153,7 +153,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView8"
+                        android:id="@+id/medComp"
                         android:layout_width="30dp"
                         android:layout_height="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"

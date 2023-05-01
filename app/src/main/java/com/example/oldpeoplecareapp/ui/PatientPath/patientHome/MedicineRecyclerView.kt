@@ -39,9 +39,9 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
                 if (medicineInfo.state == "Completed") {
                     mark_icon.setImageResource(R.drawable.yes_comp)
                 } else if (medicineInfo.state == "Missed") {
-                    mark_icon.setImageResource(R.drawable.no_comp)
+                    mark_icon.setImageResource(R.drawable.no_compe_24)
                 } else if (medicineInfo.state == "Waiting") {
-                    mark_icon.setImageResource(R.drawable.no_comp)
+                    mark_icon.setImageResource(R.drawable.no_compe_24)
                 }
                 edit_icon.setOnClickListener {
                     onListItemClick?.onItemClick(medicineInfo)
