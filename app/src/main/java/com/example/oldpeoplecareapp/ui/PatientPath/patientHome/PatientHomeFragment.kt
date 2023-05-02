@@ -188,6 +188,12 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                             patientHomeViewModel.getAllMedicine("barier " + retrivedToken, retrivedID.toString(), "Missed")
                         }
                     })
+
+                    patientHomeViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                        Snackbar.make(PATIENTHOME, it.toString(), Snackbar.LENGTH_SHORT).show()
+                        loading.isDismiss()
+
+                    }
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
             val alert = builder.create()
@@ -210,6 +216,12 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                             patientHomeViewModel.getAllMedicine("barier " + retrivedToken, retrivedID.toString(), "Completed")
                         }
                     })
+
+                    patientHomeViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                        Snackbar.make(PATIENTHOME, it.toString(), Snackbar.LENGTH_SHORT).show()
+                        loading.isDismiss()
+
+                    }
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
             val alert = builder.create()
@@ -233,6 +245,11 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                             loading.isDismiss()
                         }
                     })
+
+                    patientHomeViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                        Snackbar.make(PATIENTHOME, it.toString(), Snackbar.LENGTH_SHORT).show()
+                        loading.isDismiss()
+                    }
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
             val alert = builder.create()

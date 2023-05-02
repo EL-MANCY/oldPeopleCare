@@ -47,7 +47,7 @@ class PatientNotificationViewModel(application: Application): AndroidViewModel(a
 
                     NotificationList.body()?.let {
                         localRepositoryImp.addNotify(it)
-                        getAllNotificationDao()
+                      //  getAllNotificationDao()
                     }
 
                 } else {

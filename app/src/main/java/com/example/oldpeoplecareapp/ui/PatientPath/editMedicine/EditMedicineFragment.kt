@@ -252,6 +252,7 @@ class EditMedicineFragment : Fragment() {
             )
         }
 
+
         //------------------------------------------------------//
         binding.removeMed.setOnClickListener {
             Log.i(TAG, "clicked")
@@ -428,6 +429,33 @@ class EditMedicineFragment : Fragment() {
                     daysList,)
 
                 loading.startLoading()
+                //------------------------------------------------------//
+
+                editMedicineViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                    it.let {
+                        Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                        loading.isDismiss()
+                    }
+                }
+                //------------------------------------------------------//
+
+                editMedicineViewModel.updateMedicinLiveData.observe(viewLifecycleOwner){
+                    if (it != null) {
+                        reset()
+                        loading.isDismiss()
+                        Log.i("ifObserve", "yes")
+                    } else if(editMedicineViewModel.error !=null) {
+                        loading.isDismiss()
+                        Snackbar.make(
+                            MEDX,
+                            editMedicineViewModel.error.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        editMedicineViewModel.error=null
+                        Log.i(TAG, "not")
+                    }
+                }
+
 
             }
         }

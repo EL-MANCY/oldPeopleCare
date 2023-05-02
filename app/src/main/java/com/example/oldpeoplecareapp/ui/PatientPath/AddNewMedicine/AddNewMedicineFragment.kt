@@ -358,8 +358,39 @@ class AddNewMedicineFragment : Fragment() {
                 Log.i(TAG,"THE ARRAY IS ${TimeList} +")
                 loading.startLoading()
 
+                //------------------------------------------------------//
+
+                addNewMedicineViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                    Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                    loading.isDismiss()
+
+                }
+
+                //------------------------------------------------------//
+
+                addNewMedicineViewModel.AddLiveData.observe(viewLifecycleOwner){
+                    if (it != null) {
+                        reset()
+                        loading.isDismiss()
+                        timeRecyclerView.setList(emptyList())
+                        Log.i(TAG, "yes")
+                    } else if(addNewMedicineViewModel.error != null) {
+                        Log.i(TAG, addNewMedicineViewModel.error.toString())
+                        loading.isDismiss()
+                        Snackbar.make(
+                            MED,
+                            addNewMedicineViewModel.error.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        addNewMedicineViewModel.error = null
+                    }
+                }
+
+
             }
         }
+
+
 
         //------------------------------------------------------//
 

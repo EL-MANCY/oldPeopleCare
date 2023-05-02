@@ -190,9 +190,49 @@ class EditRemoveCaregiverRole : Fragment() {
             } else {
                 editRemoveViewModel.updateRole("barier ${retrivedToken}", caregiverId, role)
                 loading.startLoading()
+
+                editRemoveViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                    it.let {
+                        Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                        loading.isDismiss()
+                    }
+
+                    editRemoveViewModel.updateCaregiverLiveData.observe(viewLifecycleOwner, Observer {
+                        if (it != null) {
+                            editRemoveViewModel.Empty()
+                            loading.isDismiss()
+                            Snackbar.make(
+                                Role,
+                                "Role Updated",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+
+                            findNavController().navigate(EditRemoveCaregiverRoleDirections.actionEditRemoveCaregiverRoleToCaregiversPatientFragment())
+                        } else if(editRemoveViewModel.error!=null) {
+                            loading.isDismiss()
+                            Snackbar.make(
+                                Role,
+                                editRemoveViewModel.error.toString(),
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                        editRemoveViewModel.error =null
+
+                    })
+
+                }
             }
 
         }
+
+//        editRemoveViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+//            it.let {
+//                Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+//                loading.isDismiss()
+//                loading.isDismiss()
+//            }
+//        }
+
 
         editRemoveViewModel.updateCaregiverLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {

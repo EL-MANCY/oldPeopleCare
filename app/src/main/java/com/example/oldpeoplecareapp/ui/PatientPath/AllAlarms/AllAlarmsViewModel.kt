@@ -48,7 +48,7 @@ class AllAlarmsViewModel (application: Application): AndroidViewModel(applicatio
                     MedicineList.body()?.let {
                         localRepositoryImp.postMedicine(it)
                         allMedicineMutableLiveData.postValue(localRepositoryImp.getAllMedicine())
-                        getAllMedicineDao()
+                       // getAllMedicineDao()
                     }
 
                     Log.i(Tag,MedicineList.body().toString())

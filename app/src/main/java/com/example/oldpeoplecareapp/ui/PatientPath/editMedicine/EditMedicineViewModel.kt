@@ -1,6 +1,8 @@
 package com.example.oldpeoplecareapp.ui.PatientPath.editMedicine
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -33,6 +35,10 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
     val deleteMedicineLiveData: LiveData<Any?>
         get() = deleteMedicineMutableLiveData
 
+    private val snackBarMutableLiveData = MutableLiveData<String>()
+    val snackBarLiveData: LiveData<String>
+        get() = snackBarMutableLiveData
+
     fun updateAllMedicine(
         medId: String,
         userId: String,
@@ -46,26 +52,30 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         weakly: Array<String>
     ) {
         viewModelScope.launch {
-            val MedicineList = remoteRepositoryImp.updateMedicine(
-                medId,
-                userId,
-                token,
-                name,
-                imgUrl,
-                recordUrl,
-                type,
-                description,
-                time,
-                weakly,
-            )
+            if (isNetworkAvailable(getApplication())) {
+                val MedicineList = remoteRepositoryImp.updateMedicine(
+                    medId,
+                    userId,
+                    token,
+                    name,
+                    imgUrl,
+                    recordUrl,
+                    type,
+                    description,
+                    time,
+                    weakly,
+                )
 
-            if (MedicineList.isSuccessful) {
-                updateMedicineMutableLiveData.postValue(MedicineList.body())
-                Log.i(Tag, MedicineList.body().toString())
-            } else {
-                error=MedicineList.errorBody()?.string()!!.toString()
-                updateMedicineMutableLiveData.postValue(MedicineList.body())
-                Log.i(Tag, MedicineList.toString())
+                if (MedicineList.isSuccessful) {
+                    updateMedicineMutableLiveData.postValue(MedicineList.body())
+                    Log.i(Tag, MedicineList.body().toString())
+                } else {
+                    error = MedicineList.errorBody()?.string()!!.toString()
+                    updateMedicineMutableLiveData.postValue(MedicineList.body())
+                    Log.i(Tag, MedicineList.toString())
+                }
+            }else{
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
     }
@@ -74,27 +84,31 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         Log.i(Tag, "enter")
 
         viewModelScope.launch {
-            try {
-                val MedicineList = remoteRepositoryImp.DeleteMedicine(medId, userId, token)
-                Log.i(Tag, MedicineList.body().toString())
-                Log.i(Tag, "try")
-
-                if (MedicineList.isSuccessful) {
-                    deleteMedicineMutableLiveData.postValue("deleted")
+            if (isNetworkAvailable(getApplication())) {
+                try {
+                    val MedicineList = remoteRepositoryImp.DeleteMedicine(medId, userId, token)
                     Log.i(Tag, MedicineList.body().toString())
-                    Log.i(Tag, "success")
-                } else {
-                    error=MedicineList.errorBody()?.string()!!.toString()
-                    deleteMedicineMutableLiveData.postValue("NOT DELETED")
-                    Log.i(Tag, error.toString())
-                    Log.i(Tag, "failed")
+                    Log.i(Tag, "try")
+
+                    if (MedicineList.isSuccessful) {
+                        deleteMedicineMutableLiveData.postValue("deleted")
+                        Log.i(Tag, MedicineList.body().toString())
+                        Log.i(Tag, "success")
+                    } else {
+                        error = MedicineList.errorBody()?.string()!!.toString()
+                        deleteMedicineMutableLiveData.postValue("NOT DELETED")
+                        Log.i(Tag, error.toString())
+                        Log.i(Tag, "failed")
+                    }
+
+                } catch (e: JsonIOException) {
+                    deleteMedicineMutableLiveData.postValue("deleted")
+                    println("JsonIOException caught: ${e.message}")
+                    Log.i(Tag, "JsonIOException caught: ${e.message}")
+
                 }
-
-            } catch (e: JsonIOException) {
-                deleteMedicineMutableLiveData.postValue("deleted")
-                println("JsonIOException caught: ${e.message}")
-                Log.i(Tag, "JsonIOException caught: ${e.message}")
-
+            }else{
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
     }
@@ -102,5 +116,14 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         viewModelScope.launch {
             deleteMedicineMutableLiveData.postValue(null)
         }
+    }
+
+    fun clear(){
+        snackBarMutableLiveData.value=""
+    }
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
     }
 }

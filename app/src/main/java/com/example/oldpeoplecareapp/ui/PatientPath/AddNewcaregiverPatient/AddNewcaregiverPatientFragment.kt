@@ -132,6 +132,38 @@ class AddNewcaregiverPatientFragment : Fragment() {
                 addNewcaregiverViewModel.sendReq("barier " + retrivedToken, Email,Role)
                 Log.i("token",retrivedToken)
                 loading.startLoading()
+//////////////////////////////////////////////////////////////////////////////////////////////
+                addNewcaregiverViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                    Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                    loading.isDismiss()
+                }
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+                addNewcaregiverViewModel.sucessLiveData.observe(viewLifecycleOwner){
+                    if (it != null) {
+                        loading.isDismiss()
+                        Log.i(TAG, it.toString())
+                        addNewcaregiverViewModel.sucessLiveData==null
+                        loading.isDismiss()
+                        Snackbar.make(
+                            REQ,
+                            "Reqest sent",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        addNewcaregiverViewModel.sucessLiveData==null
+                    }else if(addNewcaregiverViewModel.errorMutableLiveData !=null) {
+                        loading.isDismiss()
+                        Snackbar.make(
+                            REQ,
+                            addNewcaregiverViewModel.errorMutableLiveData.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        addNewcaregiverViewModel.errorMutableLiveData =null
+                    }
+
+
+                }
+
             }
         }
         addNewcaregiverViewModel.sucessLiveData.observe(viewLifecycleOwner){
@@ -155,7 +187,11 @@ class AddNewcaregiverPatientFragment : Fragment() {
                 ).show()
                 addNewcaregiverViewModel.errorMutableLiveData =null
             }
+
+
         }
+
+
 
     }
 }

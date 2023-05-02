@@ -36,6 +36,11 @@ class PatientHomeViewModel(application: Application): AndroidViewModel(applicati
     private var allMedicineMutableLiveData= MutableLiveData<List<Medicine>>()
     val allMedicinLiveData: LiveData<List<Medicine>>
         get() =allMedicineMutableLiveData
+
+    private val snackBarMutableLiveData = MutableLiveData<String>()
+    val snackBarLiveData: LiveData<String>
+        get() = snackBarMutableLiveData
+
     private var stateMutableLiveData= MutableLiveData<Any>()
     val stateLiveData: LiveData<Any>
         get() =stateMutableLiveData
@@ -51,7 +56,7 @@ class PatientHomeViewModel(application: Application): AndroidViewModel(applicati
 
                     MedicineList.body()?.let {
                         localRepositoryImp.addUpComming(it)
-                        getAllMedicineDao(state)
+                       // getAllMedicineDao(state)
                     }
 
                     Log.i(Tag, MedicineList.body().toString())
@@ -87,15 +92,20 @@ class PatientHomeViewModel(application: Application): AndroidViewModel(applicati
 
     fun changeState(token: String,userID: String,medID: String, state:String){
         viewModelScope.launch {
-           val state= remoteRepositoryImp.changeState(token,userID,medID,state)
+            if(isNetworkAvailable(getApplication())) {
 
-            if(state.isSuccessful){
-                stateMutableLiveData.postValue(state.body())
-                Log.i(Tag,state.body().toString())
+                val state = remoteRepositoryImp.changeState(token, userID, medID, state)
+
+                if (state.isSuccessful) {
+                    stateMutableLiveData.postValue(state.body())
+                    Log.i(Tag, state.body().toString())
+                } else {
+                    error = state.errorBody()?.string()!!.toString()
+                    Log.i(Tag, state.toString())
+                    Log.i(Tag, state.errorBody()!!.string().toString())
+                }
             }else{
-                error=state.errorBody()?.string()!!.toString()
-                Log.i(Tag,state.toString())
-                Log.i(Tag,state.errorBody()!!.string().toString())
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
     }

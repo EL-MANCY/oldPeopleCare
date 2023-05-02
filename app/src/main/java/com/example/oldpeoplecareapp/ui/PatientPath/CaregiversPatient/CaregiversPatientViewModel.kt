@@ -45,7 +45,7 @@ class CaregiversPatientViewModel(application: Application): AndroidViewModel(app
 
                     CircleList.body()?.let {
                         localRepositoryImp.addPatientCircle(it)
-                        getCirclesDao()
+                      //  getCirclesDao()
                     }
                     Log.i(Tag, CircleList.body().toString())
                 } else {

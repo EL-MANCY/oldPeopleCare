@@ -1,6 +1,8 @@
 package com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -34,6 +36,10 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
     val AddLiveData: LiveData<AllMedicineResponseItem>
         get() = AddedMutableLiveData
 
+    private val snackBarMutableLiveData = MutableLiveData<String>()
+    val snackBarLiveData: LiveData<String>
+        get() = snackBarMutableLiveData
+
     fun addMedicine(
         id: String,
         token: String,
@@ -46,26 +52,39 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         weakly: Array<String>
     ) {
         viewModelScope.launch {
-            val result = remoteRepositoryImp.postMedicine(
-                id,
-                token,
-                name,
-                imgUrl,
-                recordUrl,
-                type,
-                description,
-                time,
-                weakly,
-            )
+            if (isNetworkAvailable(getApplication())) {
+                val result = remoteRepositoryImp.postMedicine(
+                    id,
+                    token,
+                    name,
+                    imgUrl,
+                    recordUrl,
+                    type,
+                    description,
+                    time,
+                    weakly,
+                )
 
-            if (result.isSuccessful) {
-                AddedMutableLiveData.postValue(result.body())
-                Log.i(Tag, result.body().toString())
-            } else {
-                error=result.errorBody()?.string()!!.toString()
-                AddedMutableLiveData.postValue(result.body())
-                Log.i(Tag, result.errorBody()?.string().toString())
+                if (result.isSuccessful) {
+                    AddedMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.body().toString())
+                } else {
+                    error = result.errorBody()?.string()!!.toString()
+                    AddedMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.errorBody()?.string().toString())
+                }
+            }else{
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
+    }
+
+    fun clear(){
+        snackBarMutableLiveData.value=""
+    }
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
     }
 }
