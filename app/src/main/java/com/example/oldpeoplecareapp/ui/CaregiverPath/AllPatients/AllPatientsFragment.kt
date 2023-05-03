@@ -16,6 +16,8 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAllPatientsBinding
 import com.example.oldpeoplecareapp.model.entity.Circles
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
 
 
 class AllPatientsFragment : Fragment(),OnItemClickListener2 {
@@ -49,6 +51,12 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
             if (it != null) {
                 patientsRecyclerView.setList(it)
                 Log.i(TAG, it.toString())
+            }else if(allPatientViewModel.error != null){
+                Snackbar.make(
+                    view,
+                    allPatientViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         })
         patientsRecyclerView.onListItemClick2 = this

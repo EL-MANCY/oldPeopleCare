@@ -4,6 +4,7 @@ import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.Circles
 import com.example.oldpeoplecareapp.model.entity.Medicine
 import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -19,13 +20,6 @@ class LocalRepositoryImpl(private val db:OldCareDB) : LocalRepository {
         }
     }
 
-//    override suspend fun DeleteMedicine(medId: String, userId: String, token: String) {
-//        return withContext(Dispatchers.IO) {
-//            db.dataDao().DeleteMedicine(
-//
-//            )
-//        }
-//    }
 
     override suspend fun getAllMedicine(): List<AllMedicineResponseItem> {
         return withContext(Dispatchers.IO) {
@@ -78,6 +72,18 @@ class LocalRepositoryImpl(private val db:OldCareDB) : LocalRepository {
     override suspend fun addPatientCircle(medicine: List<Circles>) {
         return withContext(Dispatchers.IO) {
             db.dataDao().addPatientCircle(medicine)
+        }
+    }
+
+    override suspend fun getPatients(): List<MedicineUiModel> {
+        return withContext(Dispatchers.IO) {
+            db.dataDao().getPatients()
+        }
+    }
+
+    override suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>) {
+        return withContext(Dispatchers.IO) {
+            db.dataDao().addPatientsCareGiver(medicine)
         }
     }
 }

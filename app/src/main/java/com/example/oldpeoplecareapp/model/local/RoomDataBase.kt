@@ -6,9 +6,10 @@ import com.example.oldpeoplecareapp.model.entity.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.example.oldpeoplecareapp.model.entity.Reciever
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 
 private val DATABASE_NAME="oldCare"
-@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class], version = 5, exportSchema = false)
+@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class], version = 7, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OldCareDB: RoomDatabase() {
     abstract fun dataDao(): DataDao
@@ -33,6 +34,7 @@ abstract class OldCareDB: RoomDatabase() {
 
     }
 }
+
 
 class Converters {
     @TypeConverter

@@ -1,10 +1,8 @@
 package com.example.oldpeoplecareapp.model.local
 
 import androidx.room.*
-import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
-import com.example.oldpeoplecareapp.model.entity.Circles
-import com.example.oldpeoplecareapp.model.entity.Medicine
-import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.model.entity.*
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import com.google.gson.Gson
 
 import com.google.gson.reflect.TypeToken
@@ -61,5 +59,13 @@ interface DataDao {
     suspend fun addPatientCircle(
         medicine: List<Circles>
     )
+    //////////////////////////////////////////////////////
+
+    @Query("select * from MedicineCareGiver")
+    suspend fun getPatients():List<MedicineUiModel>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>)
+
 }
 

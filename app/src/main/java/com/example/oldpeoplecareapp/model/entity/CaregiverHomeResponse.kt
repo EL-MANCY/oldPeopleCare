@@ -1,12 +1,5 @@
 package com.example.oldpeoplecareapp.model.entity
 
-import kotlin.time.measureTimedValue
-
-
-
-class CaregiverHomeResponse : ArrayList<CaregiverHomeResponseItem>()
-
-
 data class CaregiverHomeResponseItem(
     val __v: Int,
     val _id: String,

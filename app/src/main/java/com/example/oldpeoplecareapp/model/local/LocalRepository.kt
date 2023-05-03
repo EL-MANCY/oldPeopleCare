@@ -8,6 +8,7 @@ import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.Circles
 import com.example.oldpeoplecareapp.model.entity.Medicine
 import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 
 interface LocalRepository {
 
@@ -36,5 +37,11 @@ interface LocalRepository {
     suspend fun getPatientCircle():List<Circles>?
 
     suspend fun addPatientCircle(medicine: List<Circles>)
+
+    ////////////////////////////////////////////////////////////
+
+    suspend fun getPatients():List<MedicineUiModel>
+
+    suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>)
 
 }

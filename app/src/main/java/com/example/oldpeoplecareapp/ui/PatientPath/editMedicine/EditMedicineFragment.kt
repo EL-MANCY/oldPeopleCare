@@ -276,6 +276,14 @@ class EditMedicineFragment : Fragment() {
                     editMedicineViewModel.error=null
                 }
             }
+
+            editMedicineViewModel.snackBarLiveData.observe(viewLifecycleOwner){
+                it.let {
+                    Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                    loading.isDismiss()
+                }
+            }
+
         }
         editMedicineViewModel.deleteMedicineLiveData.observe(viewLifecycleOwner){
             if (it!=null) {
