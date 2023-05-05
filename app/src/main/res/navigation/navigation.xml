@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/logIn">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/registration"
@@ -263,5 +263,29 @@
         <argument
             android:name="email"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AlarmFragment"
+        android:label="AlarmFragment" />
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Authentication.SplashScreenFragment"
+        android:label="SplashScreenFragment" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_logIn"
+            app:destination="@id/logIn"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_caregiveHomeFragment"
+            app:destination="@id/caregiveHomeFragment"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_patientHomeFragment"
+            app:destination="@id/patientHomeFragment"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

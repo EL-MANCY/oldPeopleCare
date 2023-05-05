@@ -53,10 +53,10 @@ class BasicInformationFragment : Fragment() {
             val navController = findNavController()
             navController.navigate(BasicInformationFragmentDirections.actionBasicInformationFragmentToLogIn())
 
-            val sharedPreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.clear()
-            editor.apply()
+//            val sharedPreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+//            val editor = sharedPreferences.edit()
+//            editor.clear()
+//            editor.apply()
         }
 
         userInfoViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {

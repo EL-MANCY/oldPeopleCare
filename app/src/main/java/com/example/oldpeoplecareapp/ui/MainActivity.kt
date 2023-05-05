@@ -108,6 +108,7 @@ class MainActivity : AppCompatActivity() {
             || navController.currentDestination?.label == "AddNewcaregiverPatientFragment"
             || navController.currentDestination?.label == "PatientNotificationFragment"
             || navController.currentDestination?.label == "CaregiveHomeFragment"
+            || navController.currentDestination?.label == "SplashScreenFragment"
 
 
         ) {
@@ -119,6 +120,7 @@ class MainActivity : AppCompatActivity() {
 
         if (navController.currentDestination?.label == "fragment_registration"
             || navController.currentDestination?.label == "fragment_log_in"
+            || navController.currentDestination?.label == "SplashScreenFragment"
 
         ) {
             binding.bottomNavigation2.visibility = View.GONE
@@ -128,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        navController.popBackStack()
+      //  navController.popBackStack()
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -240,22 +242,6 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
             }
-        }
-
-
-        if (retrivedToken == "null" ) {
-            // If a token exists, open the home fragment.
-            navController.navigate(R.id.logIn)
-            Log.i("TOKEN Login",retrivedToken.toString())
-
-        } else if(REGIST=="patient") {
-            // If no token exists, open the login fragment.
-            navController.navigate(R.id.patientHomeFragment)
-            Log.i("TOKEN Home",retrivedToken.toString())
-        }else if(REGIST=="caregiver") {
-            // If no token exists, open the login fragment.
-            navController.navigate(R.id.caregiveHomeFragment)
-            Log.i("TOKEN Home",retrivedToken.toString())
         }
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
