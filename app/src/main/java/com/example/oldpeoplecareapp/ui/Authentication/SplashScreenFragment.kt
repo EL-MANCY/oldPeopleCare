@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentSplashScreenBinding
+import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
+import java.util.*
 
 class SplashScreenFragment : Fragment() {
 
@@ -43,6 +45,16 @@ class SplashScreenFragment : Fragment() {
             }
 
         }
+//        val alarmHelper = AlarmHelper()
+//        val calendar = Calendar.getInstance()
+//        calendar.set(Calendar.HOUR_OF_DAY, 19)
+//        calendar.set(Calendar.MINUTE,35)
+//        alarmHelper.setAlarm(requireContext(),calendar,"meds.medicine.imgUrl","meds.medicine.name","meds.medicine.imgUrl")
+
+//        calendar.set(Calendar.HOUR_OF_DAY, 19)
+//        calendar.set(Calendar.MINUTE, 54)
+//        alarmHelper.setAlarm(requireContext(),calendar,"xxxxxxxxxx","xxxxxxxxxxxxxxxx","meds.medicine.imgUrl")
+
     }
 
 }

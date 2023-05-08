@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine
+package com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,14 @@ import android.util.Log
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+
         try {
             context?.let {
+
+                val medImageUrl = intent?.getStringExtra("medImageUrl").toString()
+                val medName = intent?.getStringExtra("medName").toString()
+                val alarmSoundPath = intent?.getStringExtra("alarmSoundPath").toString()
+
                 val requestCode = intent.getIntExtra("requestCode", -1)
                 if (requestCode != -1) {
                     // Acquire a wake lock to prevent the device from going to sleep
@@ -24,8 +30,13 @@ class AlarmReceiver : BroadcastReceiver() {
 
                     val alarmIntent = Intent(context, AlarmActivity::class.java)
                     alarmIntent.action =
-                        "com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.ALARM_ACTION"
+                        "com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.ALARM_ACTION"
                     alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+                    alarmIntent.putExtra("medImageUrl", medImageUrl)
+                    alarmIntent.putExtra("medName", medName)
+                    alarmIntent.putExtra("alarmSoundPath", alarmSoundPath)
+
                     context.startActivity(alarmIntent)
 
                     val ringtoneUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
@@ -33,10 +44,12 @@ class AlarmReceiver : BroadcastReceiver() {
                     ringtone.play()
                     wakeLock.release()
 
+
+                    Log.i("nammme",medName)
                 }
             }
             } catch (e: Exception) {
-                Log.i("erroralarm", "errrrer")
+                Log.i("erroralarm", e.toString())
             }
         }
     }

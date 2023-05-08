@@ -40,7 +40,7 @@
         </activity>
 
         <activity
-            android:name=".ui.PatientPath.AddNewMedicine.AlarmActivity"
+            android:name=".ui.PatientPath.AlarmScreen.AlarmActivity"
             android:exported="false">
         <intent-filter>
             <action android:name="com.example.myapp.ALARM_ACTION"/>
@@ -64,7 +64,7 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".ui.PatientPath.AddNewMedicine.AlarmReceiver"
+        <receiver android:name=".ui.PatientPath.AlarmScreen.AlarmReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

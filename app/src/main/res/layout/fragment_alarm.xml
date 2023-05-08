@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2A9494"
-    tools:context=".ui.PatientPath.AddNewMedicine.AlarmFragment">
+    tools:context=".ui.PatientPath.AlarmScreen.AlarmFragment">
 
 
     <ImageView
         android:id="@+id/imageView13"
-        android:layout_width="361dp"
-        android:layout_height="598dp"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_550sdp"
         android:src="@drawable/med_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,20 +25,20 @@
         android:id="@+id/time_txtfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:fontFamily="@font/poppins"
         android:text="07:00 AM"
         android:textColor="#FFFFFF"
-        android:textSize="50sp"
+        android:textSize="@dimen/_30ssp"
         app:layout_constraintEnd_toEndOf="@+id/imageView13"
         app:layout_constraintStart_toStartOf="@+id/imageView13"
         app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
     <ImageView
         android:id="@+id/med_imgview"
-        android:layout_width="226dp"
-        android:layout_height="208dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginTop="@dimen/_35sdp"
         android:src="@drawable/medicine_pic"
         app:layout_constraintEnd_toEndOf="@+id/imageView13"
         app:layout_constraintStart_toStartOf="@+id/imageView13"
@@ -62,22 +62,20 @@
         android:id="@+id/med_txtfield"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="145dp"
-        android:layout_marginEnd="158dp"
         android:fontFamily="@font/poppins"
         android:text="Panadol Extra"
         android:textColor="#FFFFFF"
-        android:textSize="40sp"
+        android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-        app:layout_constraintEnd_toEndOf="@+id/imageView13"
-        app:layout_constraintStart_toStartOf="@+id/imageView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/med_imgview" />
 
     <ImageView
-        android:id="@+id/took_btn"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
+        android:id="@+id/done_btn"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_55sdp"
         android:layout_marginTop="36dp"
         android:src="@drawable/doneimg"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,9 +87,9 @@
 
     <ImageView
         android:id="@+id/imageView18"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="43dp"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_55sdp"
+        android:layout_marginTop="@dimen/_33sdp"
         android:src="@drawable/cancelimg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,8 +100,8 @@
 
     <ImageView
         android:id="@+id/cancel_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:src="@drawable/x"
         app:layout_constraintBottom_toBottomOf="@+id/imageView18"
         app:layout_constraintEnd_toEndOf="@+id/imageView18"

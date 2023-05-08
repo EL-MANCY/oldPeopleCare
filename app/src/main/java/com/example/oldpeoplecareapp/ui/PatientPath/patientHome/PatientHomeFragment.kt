@@ -16,10 +16,12 @@ import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
 import com.example.oldpeoplecareapp.model.entity.Medicine
+import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import kotlinx.android.synthetic.main.fragment_patient_home.*
+import java.util.*
 
 
 class PatientHomeFragment : Fragment(),OnItemClickListener {
@@ -29,6 +31,7 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
     lateinit var retrivedToken: String
     lateinit var retrivedID: String
     lateinit var loading: LoadingDialog
+    val alarmHelper = AlarmHelper()
     var STATE: String = "Upcoming"
     val medicineRecyclerView by lazy { MedicineRecyclerView() }
 
@@ -71,6 +74,17 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             patientHomeViewModel.getAllMedicine("barier " + retrivedToken, retrivedID.toString(), "Waiting")
             patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
+
+                    for (meds in it)
+                    for (med in meds.medicine.time){
+
+                        val hour = med.substring(0, 2).toInt()
+                        val mins = med.substring(3).toInt()
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.HOUR_OF_DAY, hour)
+                        calendar.set(Calendar.MINUTE, mins)
+                        alarmHelper.setAlarm(requireContext(),calendar,meds.medicine.imgUrl,meds.medicine.name,meds.medicine.imgUrl)
+                    }
                     medicineRecyclerView.setList(it)
                     Log.i(TAG, it.toString())
                 }else if(patientHomeViewModel.error !=null){

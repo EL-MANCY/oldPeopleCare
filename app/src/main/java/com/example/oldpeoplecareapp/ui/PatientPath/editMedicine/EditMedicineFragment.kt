@@ -2,14 +2,12 @@ package com.example.oldpeoplecareapp.ui.PatientPath.editMedicine
 
 import android.Manifest
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.media.MediaRecorder
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -21,7 +19,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -32,12 +29,11 @@ import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditMedicineBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.*
+import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import kotlinx.android.synthetic.main.fragment_edit_medicine.*
-import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -236,9 +232,7 @@ class EditMedicineFragment : Fragment() {
 
         //------------------------------------------------------//
 
-        binding.addpicbtn.setOnClickListener { pickImageGallery()
-            setAlarm()
-        }
+        binding.addpicbtn.setOnClickListener { pickImageGallery() }
 
         //------------------------------------------------------//
 
@@ -533,11 +527,6 @@ class EditMedicineFragment : Fragment() {
         timePickerDialog.show()
     }
 
-    private fun setAlarm() {
-        // Set the alarms using the AlarmHelper
-        val alarmHelper = AlarmHelper()
-        alarmHelper.setAlarm(requireContext(), selectedAlarmTimes)
-    }
 
     private fun pickImageGallery() {
         val intent=Intent(Intent.ACTION_PICK)

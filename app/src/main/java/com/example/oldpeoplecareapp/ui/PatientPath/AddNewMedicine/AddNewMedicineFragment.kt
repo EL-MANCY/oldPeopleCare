@@ -26,11 +26,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewMedicineBinding
+import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
-import kotlinx.android.synthetic.main.fragment_add_newcaregiver_patient.*
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -205,9 +205,7 @@ class AddNewMedicineFragment : Fragment() {
 
         //------------------------------------------------------//
 
-        binding.addpicbtn.setOnClickListener { pickImageGallery()
-            setAlarm()
-        }
+        binding.addpicbtn.setOnClickListener { pickImageGallery() }
 
         //------------------------------------------------------//
 
@@ -457,13 +455,6 @@ class AddNewMedicineFragment : Fragment() {
         )
         timePickerDialog.show()
     }
-
-    private fun setAlarm() {
-        // Set the alarms using the AlarmHelper
-        val alarmHelper = AlarmHelper()
-        alarmHelper.setAlarm(requireContext(), selectedAlarmTimes)
-    }
-
     private fun pickImageGallery() {
         val intent=Intent(Intent.ACTION_PICK)
         intent.type="image/*"

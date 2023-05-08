@@ -266,7 +266,7 @@
     </fragment>
     <fragment
         android:id="@+id/alarmFragment"
-        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AlarmFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmFragment"
         android:label="AlarmFragment" />
     <fragment
         android:id="@+id/splashScreenFragment"

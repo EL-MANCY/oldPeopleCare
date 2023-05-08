@@ -1,6 +1,5 @@
-package com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine
+package com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -12,27 +11,35 @@ import java.util.*
 
 class AlarmHelper {
 
-    fun setAlarm(context: Context, alarmTimes: MutableList<Calendar>) {
+    fun setAlarm(context: Context, medTime: Calendar, medImageUrl: String, medName: String, alarmSoundPath: String) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        Log.i("ALARMHELPER",alarmTimes.toString())
 
-        // Loop through the alarm times and set a unique alarm for each one
-        for ((index, alarmTime) in alarmTimes.withIndex()) {
-            // Create an Intent for the BroadcastReceiver
-            val intent = Intent(context, AlarmReceiver::class.java)
-            // Create a unique request code for the PendingIntent
-            val requestCode = index
-            intent.putExtra("requestCode", index)
-            // Create a PendingIntent to be triggered when the alarm goes off
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-            )
-            // Set the alarm using the AlarmManager
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime.timeInMillis, pendingIntent)
-        }
+        // Create an Intent for the BroadcastReceiver
+        val intent = Intent(context, AlarmReceiver::class.java)
+
+        // Create a unique request code for the PendingIntent
+        val requestCode = medTime.timeInMillis.toInt()
+
+        // Add the medicine information to the Intent as extras
+        intent.putExtra("requestCode", requestCode)
+        intent.putExtra("medImageUrl", medImageUrl)
+        intent.putExtra("medName", medName)
+        intent.putExtra("alarmSoundPath", alarmSoundPath)
+        intent.putExtra("medTime", medTime)
+
+        // Create a PendingIntent to be triggered when the alarm goes off
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+
+        // Cancel any previously set alarms for this time
+        alarmManager.cancel(pendingIntent)
+
+        // Set the alarm using the AlarmManager
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, medTime.timeInMillis, pendingIntent)
     }
 
     fun cancelAlarm(context: Context) {
