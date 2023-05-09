@@ -19,7 +19,6 @@ import com.example.oldpeoplecareapp.model.entity.Medicine
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import kotlinx.android.synthetic.main.fragment_patient_home.*
 import java.util.*
 
@@ -100,7 +99,7 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                             val requestCode = medId.hashCode() + medTimeMillis.hashCode()
 
                             // Set the alarm using the AlarmHelper class
-                            alarmHelper.setAlarm(requireContext(), requestCode, calendar,meds.medicine.imgUrl,  meds.medicine.name,  meds.medicine.name)
+                            alarmHelper.setAlarm(requireContext(), requestCode, calendar,meds.medicine.imgUrl,  meds.medicine.name,  meds.medicine.name,"$hour:$mins",retrivedID,medId)
                         }
                     }
                     medicineRecyclerView.setList(it)

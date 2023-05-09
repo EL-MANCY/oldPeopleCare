@@ -23,6 +23,9 @@ class AlarmReceiver : BroadcastReceiver() {
                 val medImageUrl = intent?.getStringExtra("medImageUrl").toString()
                 val medName = intent?.getStringExtra("medName").toString()
                 val alarmSoundPath = intent?.getStringExtra("alarmSoundPath").toString()
+                val medTime = intent?.getStringExtra("medTime").toString()
+                val retrivedID = intent?.getStringExtra("retrivedID").toString()
+                val medId = intent?.getStringExtra("medId").toString()
 
                 val requestCode = intent.getIntExtra("requestCode", -1)
                 if (requestCode != -1) {
@@ -43,6 +46,9 @@ class AlarmReceiver : BroadcastReceiver() {
                     alarmIntent.putExtra("medImageUrl", medImageUrl)
                     alarmIntent.putExtra("medName", medName)
                     alarmIntent.putExtra("alarmSoundPath", alarmSoundPath)
+                    alarmIntent.putExtra("medTime", medTime)
+                    alarmIntent.putExtra("medId", medId)
+                    alarmIntent.putExtra("retrivedID", retrivedID)
 
                     context.startActivity(alarmIntent)
 
@@ -54,23 +60,9 @@ class AlarmReceiver : BroadcastReceiver() {
 
                     Log.i("nammme", medName)
 
-                    val pendingIntent = PendingIntent.getActivity(
-                        context,
-                        requestCode,
-                        alarmIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                    )
+                    val pendingIntent = PendingIntent.getActivity(context, requestCode, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                    val notificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationChannel(
-                            "alarm_channel_id",
-                            "alarm_channel_id",
-                            NotificationManager.IMPORTANCE_HIGH
-                        )
-                    } else {
-                        TODO("VERSION.SDK_INT < O")
-                    }
-
+                    // Build a notification with a custom sound and the pending intent to open the AlarmActivity
                     val builder = NotificationCompat.Builder(context!!, "alarm_channel_id")
                         .setSmallIcon(R.drawable.med_img)
                         .setContentTitle("Alarm for $medName")
@@ -80,15 +72,11 @@ class AlarmReceiver : BroadcastReceiver() {
                         .setSound(Uri.parse(alarmSoundPath))
                         .setContentIntent(pendingIntent)
 
-
                     // Show the notification using the NotificationManager
-                    val notificationManager =
-                        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notificationManager.createNotificationChannel(notificationChannel)
-
+                    val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notificationManager.notify(requestCode, builder.build())
 
-                }
+                 }
             }
         } catch (e: Exception) {
             Log.i("erroralarm", e.toString())

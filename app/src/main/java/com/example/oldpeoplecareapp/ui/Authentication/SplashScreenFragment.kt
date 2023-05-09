@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentSplashScreenBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import java.util.*
@@ -33,14 +31,22 @@ class SplashScreenFragment : Fragment() {
 
 
         binding.StatBtn.setOnClickListener {
-            val alarmHelper = AlarmHelper()
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, 22)
-            calendar.set(Calendar.MINUTE, 15)
-            calendar.set(Calendar.SECOND, 0)
-            calendar.set(Calendar.MILLISECOND, 0)
-
-            alarmHelper.setAlarm(requireContext(), 7787, calendar,"meds.medicine.imgUrl",  "meds.medicine.name",  "meds.medicine.name")
+//            val alarmHelper = AlarmHelper()
+//            val calendar = Calendar.getInstance()
+//            calendar.set(Calendar.HOUR_OF_DAY, 15)
+//            calendar.set(Calendar.MINUTE, 24)
+//            calendar.set(Calendar.SECOND, 0)
+//            calendar.set(Calendar.MILLISECOND, 0)
+//
+//            alarmHelper.setAlarm(
+//                requireContext(),
+//                7787,
+//                calendar,
+//                "meds.medicine.imgUrl",
+//                "meds.medicine.name",
+//                "meds.medicine.name",
+//                "4444"
+//            )
 
             if (retrivedToken == "null" ) {
                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToLogIn())

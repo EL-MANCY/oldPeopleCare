@@ -5,28 +5,38 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
-import com.example.oldpeoplecareapp.ui.MainActivity
 import java.util.*
 
 class AlarmHelper {
 
-    fun setAlarm(context: Context, medId: Int, medTime: Calendar, medImageUrl: String, medName: String, alarmSoundPath: String) {
+    fun setAlarm(
+        context: Context,
+        reqCode: Int,
+        medTime: Calendar,
+        medImageUrl: String,
+        medName: String,
+        alarmSoundPath: String,
+        time: String,
+        retrivedID: String?,
+        medId: String
+    ) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         // Create an Intent for the BroadcastReceiver
         val intent = Intent(context, AlarmReceiver::class.java)
 
         // Create a unique request code for the PendingIntent
-        val requestCode = (medId.toString() + medTime.timeInMillis).hashCode()
+        val requestCode = (reqCode.toString() + medTime.timeInMillis).hashCode()
 
         // Add the medicine information to the Intent as extras
         intent.putExtra("requestCode", requestCode)
-        intent.putExtra("medId", medId)
+        intent.putExtra("reqCode", reqCode)
         intent.putExtra("medImageUrl", medImageUrl)
         intent.putExtra("medName", medName)
         intent.putExtra("alarmSoundPath", alarmSoundPath)
-        intent.putExtra("medTime", medTime)
+        intent.putExtra("medTime", time)
+        intent.putExtra("medId", medId)
+        intent.putExtra("retrivedID", retrivedID)
 
         // Create a PendingIntent to be triggered when the alarm goes off
         val pendingIntent = PendingIntent.getBroadcast(
