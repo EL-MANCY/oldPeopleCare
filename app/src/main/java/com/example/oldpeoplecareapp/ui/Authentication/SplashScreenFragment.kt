@@ -33,6 +33,15 @@ class SplashScreenFragment : Fragment() {
 
 
         binding.StatBtn.setOnClickListener {
+            val alarmHelper = AlarmHelper()
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, 22)
+            calendar.set(Calendar.MINUTE, 15)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+
+            alarmHelper.setAlarm(requireContext(), 7787, calendar,"meds.medicine.imgUrl",  "meds.medicine.name",  "meds.medicine.name")
+
             if (retrivedToken == "null" ) {
                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToLogIn())
                 Log.i("TOKEN Login",retrivedToken.toString())
@@ -45,11 +54,6 @@ class SplashScreenFragment : Fragment() {
             }
 
         }
-//        val alarmHelper = AlarmHelper()
-//        val calendar = Calendar.getInstance()
-//        calendar.set(Calendar.HOUR_OF_DAY, 19)
-//        calendar.set(Calendar.MINUTE,35)
-//        alarmHelper.setAlarm(requireContext(),calendar,"meds.medicine.imgUrl","meds.medicine.name","meds.medicine.imgUrl")
 
 //        calendar.set(Calendar.HOUR_OF_DAY, 19)
 //        calendar.set(Calendar.MINUTE, 54)

@@ -13,6 +13,7 @@ class AlarmActivity : AppCompatActivity() {
         val medImageUrl = intent?.getStringExtra("medImageUrl").toString()
         val medName = intent?.getStringExtra("medName").toString()
         val alarmSoundPath = intent?.getStringExtra("alarmSoundPath").toString()
+        val medId = intent?.getStringExtra("medId").toString()
 
 
         val fragment: Fragment = AlarmFragment()
@@ -21,6 +22,7 @@ class AlarmActivity : AppCompatActivity() {
         args.putString("medImageUrl", medImageUrl)
         args.putString("medName", medName)
         args.putString("alarmSoundPath", alarmSoundPath)
+        args.putString("requestCode", medId)
         fragment.arguments = args
 
         supportFragmentManager.beginTransaction()

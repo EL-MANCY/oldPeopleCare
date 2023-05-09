@@ -18,6 +18,7 @@ class AlarmFragment : Fragment() {
     var medImageUrl:String =""
     var medName:String=""
     var alarmSoundPath:String=""
+    var medId:Long=0L
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAlarmBinding.inflate(inflater, container, false)
@@ -32,7 +33,7 @@ class AlarmFragment : Fragment() {
 
         binding.medTxtfield.text=medName
         binding.cancelBtn.setOnClickListener {
-            alarmHelper.cancelAlarm(requireContext())
+            alarmHelper.cancelAlarm(requireContext(),medId)
         }
 
     }

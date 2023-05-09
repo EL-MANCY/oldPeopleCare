@@ -75,15 +75,33 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
 
-                    for (meds in it)
-                    for (med in meds.medicine.time){
+                    for (meds in it) {
+                        val medId = meds.medicine._id
+                        for (med in meds.medicine.time) {
+                            val hour = med.substring(0, 2).toInt()
+                            val mins = med.substring(3).toInt()
 
-                        val hour = med.substring(0, 2).toInt()
-                        val mins = med.substring(3).toInt()
-                        val calendar = Calendar.getInstance()
-                        calendar.set(Calendar.HOUR_OF_DAY, hour)
-                        calendar.set(Calendar.MINUTE, mins)
-                        alarmHelper.setAlarm(requireContext(),calendar,meds.medicine.imgUrl,meds.medicine.name,meds.medicine.imgUrl)
+                            Log.i("The Time" , " hour : $hour - min : $mins ")
+                            // Create a Calendar instance and set the time to the specified hour and minute
+                            val calendar = Calendar.getInstance()
+                            calendar.set(Calendar.HOUR_OF_DAY, hour)
+                            calendar.set(Calendar.MINUTE, mins)
+                            calendar.set(Calendar.SECOND, 0)
+                            calendar.set(Calendar.MILLISECOND, 0)
+
+                            // Check if the time has already passed for the day
+                            val currentTimeMillis = System.currentTimeMillis()
+                            val medTimeMillis = calendar.timeInMillis
+                            if (medTimeMillis < currentTimeMillis) {
+                                calendar.add(Calendar.DAY_OF_YEAR, 1)
+                            }
+
+                            // Generate a unique requestCode for each alarm
+                            val requestCode = medId.hashCode() + medTimeMillis.hashCode()
+
+                            // Set the alarm using the AlarmHelper class
+                            alarmHelper.setAlarm(requireContext(), requestCode, calendar,meds.medicine.imgUrl,  meds.medicine.name,  meds.medicine.name)
+                        }
                     }
                     medicineRecyclerView.setList(it)
                     Log.i(TAG, it.toString())

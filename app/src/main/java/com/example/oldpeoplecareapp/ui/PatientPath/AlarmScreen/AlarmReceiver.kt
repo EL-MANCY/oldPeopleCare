@@ -1,11 +1,18 @@
 package com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.PowerManager
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import com.example.oldpeoplecareapp.R
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -45,11 +52,47 @@ class AlarmReceiver : BroadcastReceiver() {
                     wakeLock.release()
 
 
-                    Log.i("nammme",medName)
+                    Log.i("nammme", medName)
+
+                    val pendingIntent = PendingIntent.getActivity(
+                        context,
+                        requestCode,
+                        alarmIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+
+                    val notificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationChannel(
+                            "alarm_channel_id",
+                            "alarm_channel_id",
+                            NotificationManager.IMPORTANCE_HIGH
+                        )
+                    } else {
+                        TODO("VERSION.SDK_INT < O")
+                    }
+
+                    val builder = NotificationCompat.Builder(context!!, "alarm_channel_id")
+                        .setSmallIcon(R.drawable.med_img)
+                        .setContentTitle("Alarm for $medName")
+                        .setContentText("It's time to take your medication")
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setAutoCancel(true)
+                        .setSound(Uri.parse(alarmSoundPath))
+                        .setContentIntent(pendingIntent)
+
+
+                    // Show the notification using the NotificationManager
+                    val notificationManager =
+                        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notificationManager.createNotificationChannel(notificationChannel)
+
+                    notificationManager.notify(requestCode, builder.build())
+
                 }
             }
-            } catch (e: Exception) {
-                Log.i("erroralarm", e.toString())
-            }
+        } catch (e: Exception) {
+            Log.i("erroralarm", e.toString())
+
         }
     }
+}

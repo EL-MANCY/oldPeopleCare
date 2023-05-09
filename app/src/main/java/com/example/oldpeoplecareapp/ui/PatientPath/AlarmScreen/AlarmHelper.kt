@@ -11,17 +11,18 @@ import java.util.*
 
 class AlarmHelper {
 
-    fun setAlarm(context: Context, medTime: Calendar, medImageUrl: String, medName: String, alarmSoundPath: String) {
+    fun setAlarm(context: Context, medId: Int, medTime: Calendar, medImageUrl: String, medName: String, alarmSoundPath: String) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         // Create an Intent for the BroadcastReceiver
         val intent = Intent(context, AlarmReceiver::class.java)
 
         // Create a unique request code for the PendingIntent
-        val requestCode = medTime.timeInMillis.toInt()
+        val requestCode = (medId.toString() + medTime.timeInMillis).hashCode()
 
         // Add the medicine information to the Intent as extras
         intent.putExtra("requestCode", requestCode)
+        intent.putExtra("medId", medId)
         intent.putExtra("medImageUrl", medImageUrl)
         intent.putExtra("medName", medName)
         intent.putExtra("alarmSoundPath", alarmSoundPath)
@@ -32,33 +33,36 @@ class AlarmHelper {
             context,
             requestCode,
             intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
 
-        // Cancel any previously set alarms for this time
+        // Cancel any previously set alarms for this medicine and time
         alarmManager.cancel(pendingIntent)
 
         // Set the alarm using the AlarmManager
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, medTime.timeInMillis, pendingIntent)
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, medTime.timeInMillis, pendingIntent)
     }
 
-    fun cancelAlarm(context: Context) {
+    fun cancelAlarm(context: Context, medId: Long) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         // Create an Intent for the BroadcastReceiver
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, AlarmReceiver::class.java)
+        // Create a unique request code for the PendingIntent
+        val requestCode = medId.toString().hashCode()
         // Create a PendingIntent to be triggered when the alarm goes off
-        Log.i("CANCEL ALARM","CANCEL ALARM")
-        val pendingIntent=PendingIntent.getBroadcast(
-                context,
-                0,
-                intent,
-            PendingIntent.FLAG_MUTABLE  and  PendingIntent.FLAG_UPDATE_CURRENT )
-        // Cancel the alarm using the AlarmManager
-        pendingIntent.cancel()
-
-        alarmManager.cancel(pendingIntent)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_NO_CREATE)
+        if(pendingIntent != null){
+            alarmManager.cancel(pendingIntent)
+            pendingIntent.cancel()
+        }
         // Stop the alarm tone
     }
+
+
 
     fun getNextAlarmTime(context: Context): Long {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
