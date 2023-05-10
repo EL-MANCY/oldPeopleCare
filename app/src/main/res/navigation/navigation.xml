@@ -92,6 +92,9 @@
         <action
             android:id="@+id/action_addNewMedicineFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
+        <action
+            android:id="@+id/action_addNewMedicineFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
 
     </fragment>
     <fragment
@@ -111,6 +114,9 @@
         <action
             android:id="@+id/action_editMedicineFragment_to_allAlarmsFragment"
             app:destination="@id/allAlarmsFragment" />
+        <action
+            android:id="@+id/action_editMedicineFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/caregiversPatientFragment"
@@ -131,6 +137,9 @@
         <action
             android:id="@+id/action_caregiversPatientFragment_to_editRemoveCaregiverRole"
             app:destination="@id/editRemoveCaregiverRole" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
@@ -144,6 +153,11 @@
         <action
             android:id="@+id/action_addNewcaregiverPatientFragment_to_patientNotificationFragment"
             app:destination="@id/patientNotificationFragment" />
+        <action
+            android:id="@+id/action_addNewcaregiverPatientFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment"
+            app:popUpTo="@id/addNewcaregiverPatientFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/patientNotificationFragment"
@@ -161,6 +175,9 @@
         <action
             android:id="@+id/action_patientNotificationFragment_to_addNewcaregiverPatientFragment"
             app:destination="@id/addNewcaregiverPatientFragment" />
+        <action
+            android:id="@+id/action_patientNotificationFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/caregiveHomeFragment"
@@ -218,6 +235,9 @@
         <argument
             android:name="ID"
             app:argType="string" />
+        <action
+            android:id="@+id/action_editRemoveCaregiverRole_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/emergencyFragment"
@@ -239,7 +259,7 @@
         <action
             android:id="@+id/action_basicInformationFragment_to_logIn"
             app:destination="@id/logIn"
-            app:popUpTo="@id/logIn"
+            app:popUpTo="@id/patientHomeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

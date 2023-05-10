@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditRemoveCaregiverRoleBinding
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
@@ -232,6 +233,11 @@ class EditRemoveCaregiverRole : Fragment() {
 //                loading.isDismiss()
 //            }
 //        }
+
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(EditRemoveCaregiverRoleDirections.actionEditRemoveCaregiverRoleToBasicInformationFragment())
+        }
+
 
 
         editRemoveViewModel.updateCaregiverLiveData.observe(viewLifecycleOwner, Observer {

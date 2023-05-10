@@ -30,6 +30,7 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditMedicineBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.*
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -235,6 +236,14 @@ class EditMedicineFragment : Fragment() {
         binding.addpicbtn.setOnClickListener { pickImageGallery() }
 
         //------------------------------------------------------//
+
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(EditMedicineFragmentDirections.actionEditMedicineFragmentToBasicInformationFragment())
+        }
+
+        //------------------------------------------------------//
+
+
 
         binding.backBtn.setOnClickListener {
             findNavController().navigate(

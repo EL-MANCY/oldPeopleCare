@@ -1,6 +1,11 @@
 package com.example.oldpeoplecareapp.model.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "UserData")
 data class SingleUserResponse(
+    @PrimaryKey
     val _id: String,
     val createdAt: String,
     val dateOfBirth: String,

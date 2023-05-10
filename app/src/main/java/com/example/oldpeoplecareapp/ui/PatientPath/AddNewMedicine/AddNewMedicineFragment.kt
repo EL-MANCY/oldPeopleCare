@@ -27,6 +27,7 @@ import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewMedicineBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -123,6 +124,12 @@ class AddNewMedicineFragment : Fragment() {
             }
         }
         MedApapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToBasicInformationFragment())
+        }
 
         //------------------------------------------------------//
 

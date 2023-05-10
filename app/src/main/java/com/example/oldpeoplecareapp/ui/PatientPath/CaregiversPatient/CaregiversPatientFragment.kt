@@ -66,6 +66,9 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
 
         circleRecyclerView.onListItemClick = this
 
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToBasicInformationFragment())
+        }
     }
 
     override fun onItemClick(info: Circles) {

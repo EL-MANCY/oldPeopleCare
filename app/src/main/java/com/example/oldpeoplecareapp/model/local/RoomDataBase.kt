@@ -7,9 +7,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.example.oldpeoplecareapp.model.entity.Reciever
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
+import java.util.*
 
 private val DATABASE_NAME="oldCare"
-@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class], version = 7, exportSchema = false)
+@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 8, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OldCareDB: RoomDatabase() {
     abstract fun dataDao(): DataDao
@@ -146,6 +147,14 @@ class Converters {
         return Gson().fromJson(json, Circles::class.java)
     }
 
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
 
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time?.toLong()
+    }
 }
 

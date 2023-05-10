@@ -67,5 +67,14 @@ interface DataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>)
 
+    ////////////////////////////////////////////////////////
+
+    @Query("select * from UserData")
+    suspend fun getSingleUser():SingleUserResponse
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun postSingleUser(user:SingleUserResponse)
+
+
 }
 

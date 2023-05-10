@@ -1,9 +1,6 @@
 package com.example.oldpeoplecareapp.model.local
 
-import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
-import com.example.oldpeoplecareapp.model.entity.Circles
-import com.example.oldpeoplecareapp.model.entity.Medicine
-import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.model.entity.*
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -84,6 +81,18 @@ class LocalRepositoryImpl(private val db:OldCareDB) : LocalRepository {
     override suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>) {
         return withContext(Dispatchers.IO) {
             db.dataDao().addPatientsCareGiver(medicine)
+        }
+    }
+
+    override suspend fun getSingleUser(): SingleUserResponse {
+        return withContext(Dispatchers.IO) {
+            db.dataDao().getSingleUser()
+        }
+    }
+
+    override suspend fun postSingleUser(user:SingleUserResponse) {
+        return withContext(Dispatchers.IO) {
+            db.dataDao().postSingleUser(user)
         }
     }
 }

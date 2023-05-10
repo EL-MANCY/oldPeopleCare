@@ -11,7 +11,7 @@
         tools:context=".ui.PatientPath.CaregiversPatient.CaregiversPatientFragment">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/userInfo"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginTop="12dp"
@@ -29,7 +29,7 @@
             android:src="@drawable/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/userInfo" />
 
         <TextView
             android:id="@+id/dailyMedicineBtn"
@@ -85,18 +85,6 @@
             app:layout_constraintVertical_bias="0.912"
             app:srcCompat="@drawable/add_care" />
 
-        <TextView
-            android:id="@+id/NoMedicine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="No Medicine Added"
-            android:textColor="#000000"
-            android:textStyle="italic"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/medicineRecyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

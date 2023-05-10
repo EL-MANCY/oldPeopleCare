@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewcaregiverPatientBinding
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_newcaregiver_patient.*
@@ -190,6 +191,11 @@ class AddNewcaregiverPatientFragment : Fragment() {
 
 
         }
+
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(AddNewcaregiverPatientFragmentDirections.actionAddNewcaregiverPatientFragmentToBasicInformationFragment())
+        }
+
 
 
 

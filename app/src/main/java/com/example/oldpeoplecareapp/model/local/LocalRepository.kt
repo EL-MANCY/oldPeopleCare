@@ -4,10 +4,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
-import com.example.oldpeoplecareapp.model.entity.Circles
-import com.example.oldpeoplecareapp.model.entity.Medicine
-import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.model.entity.*
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 
 interface LocalRepository {
@@ -43,5 +40,12 @@ interface LocalRepository {
     suspend fun getPatients():List<MedicineUiModel>
 
     suspend fun addPatientsCareGiver(medicine: List<MedicineUiModel>)
+
+    //////////////////////////////////////////////////////////////////
+
+    suspend fun getSingleUser(): SingleUserResponse
+
+    suspend fun postSingleUser(user:SingleUserResponse)
+
 
 }
