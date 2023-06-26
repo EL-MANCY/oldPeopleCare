@@ -125,14 +125,14 @@ class Converters {
 
     // Convert Image object to JSON string
     @TypeConverter
-    fun fromImage(image: Image): String {
+    fun fromImage(image: chatImage): String {
         return Gson().toJson(image)
     }
 
     // Convert JSON string to Image object
     @TypeConverter
-    fun toImage(json: String): Image {
-        return Gson().fromJson(json, Image::class.java)
+    fun toImage(json: String): chatImage {
+        return Gson().fromJson(json, chatImage::class.java)
     }
 
     // Convert Circles object to JSON string

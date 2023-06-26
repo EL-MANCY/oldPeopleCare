@@ -111,6 +111,8 @@ class MainActivity : AppCompatActivity() {
             || navController.currentDestination?.label == "PatientNotificationFragment"
             || navController.currentDestination?.label == "CaregiveHomeFragment"
             || navController.currentDestination?.label == "SplashScreenFragment"
+            || navController.currentDestination?.label=="fragment_chat"
+
 
 
         ) {
@@ -123,6 +125,8 @@ class MainActivity : AppCompatActivity() {
         if (navController.currentDestination?.label == "fragment_registration"
             || navController.currentDestination?.label == "fragment_log_in"
             || navController.currentDestination?.label == "SplashScreenFragment"
+            || navController.currentDestination?.label=="fragment_chat"
+
 
         ) {
             binding.bottomNavigation2.visibility = View.GONE

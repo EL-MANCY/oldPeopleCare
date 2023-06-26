@@ -40,7 +40,7 @@ interface ServiceAPI {
         @Field("type") type: String,
         @Field("description") description: String,
         @Field("time") time: List<String>,
-        @Field("weakly") weakly:Array<String>
+        @Field("weakly") weakly: Array<String>
     ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
@@ -61,7 +61,7 @@ interface ServiceAPI {
         @Field("type") type: String,
         @Field("description") description: String,
         @Field("time") time: Array<String>,
-        @Field("weakly") weakly:Array<String>
+        @Field("weakly") weakly: Array<String>
     ): Response<MedicineResponseX>
 
     @DELETE("/medicine/{medId}/{userId}")
@@ -82,68 +82,101 @@ interface ServiceAPI {
         @Header("token") token: String,
         @Field("email") email: String,
         @Field("role") role: String
-    ):Response<Any>
+    ): Response<Any>
 
     @GET("/notification")
     suspend fun getAllNotification(
         @Header("token") token: String,
-        ):Response<List<notificationData>>
+    ): Response<List<notificationData>>
 
     @POST("/notification/accept/{notifyId}")
     suspend fun Accept(
         @Path("notifyId") notifyId: String,
         @Header("token") token: String,
-    ):Response<Any>
+    ): Response<Any>
 
     @POST("/notification/refuse/{notifyId}")
     suspend fun Reject(
         @Path("notifyId") notifyId: String,
         @Header("token") token: String,
-    ):Response<Any>
+    ): Response<Any>
 
     @FormUrlEncoded
     @POST("/auth/reset")
-    suspend fun ResetPassword(@Field("email") email: String):Response<Any>
+    suspend fun ResetPassword(@Field("email") email: String): Response<Any>
 
     @PUT("/user/circles/editRole/{caregiverID}")
-    suspend fun updateRole(@Header("token") token: String,
-                           @Path("caregiverID") caregiverID: String,
-                           @Query("role") newRole: String): Response<UpdateResponse>
+    suspend fun updateRole(
+        @Header("token") token: String,
+        @Path("caregiverID") caregiverID: String,
+        @Query("role") newRole: String
+    ): Response<UpdateResponse>
 
     @GET("/user/{userID}")
     suspend fun getSingleUser(
         @Header("token") token: String,
         @Path("userID") userID: String,
-    ):Response<SingleUserResponse>
+    ): Response<SingleUserResponse>
 
     @GET("/upcoming/{userID}")
     suspend fun getUpcoming(
         @Header("token") token: String,
         @Path("userID") userID: String,
-        @Query("state") state:String
-    ):Response<List<Medicine>>
+        @Query("state") state: String
+    ): Response<List<Medicine>>
 
     @POST("/upcoming")
     suspend fun getUpcomingDaily(
         @Header("token") token: String,
-    ):Response<Any>
+    ): Response<Any>
 
     @PUT("/upcoming/{userID}/{medID}")
     suspend fun changeState(
         @Header("token") token: String,
         @Path("userID") userID: String,
         @Path("medID") medID: String,
-        @Query("state") state:String
-    ):Response<Any>
+        @Query("state") state: String
+    ): Response<Any>
 
     @FormUrlEncoded
     @POST("/auth/reset/token")
     suspend fun sendCode(
         @Field("token") token: String,
-    ):Response<CodeResponse>
+    ): Response<CodeResponse>
 
     @GET("/upcoming")
-    suspend fun getPatients(@Header("token") token: String):Response<List<CaregiverHomeResponseItem>>
+    suspend fun getPatients(@Header("token") token: String): Response<List<CaregiverHomeResponseItem>>
+
+    @FormUrlEncoded
+    @POST("/message/{receiverId}")
+    suspend fun sendMessage(
+        @Header("token") token: String,
+        @Path("receiverId") receiverId: String,
+        @Field("content") content: String
+    ): Response<MessageResponse>
+
+    @GET("/message/{receiverId}")
+    suspend fun getConversation(
+        @Header("token") token: String,
+        @Path("receiverId") receiverId: String
+    ): Response<List<ConversationResponseItem>>
+
+    @GET("/conversation")
+    suspend fun getAllConversations(
+        @Header("token") token: String,
+    ): Response<List<AllConversationsResponseItem>>
+
+    @DELETE("/conversation/{conversationId}")
+    suspend fun deleteConversation(
+        @Path("conversationId") conversationId: String,
+        @Header("token") token: String
+    ): Response<DeleteConversationResponse>
+
+    @DELETE("/conversation/{messageId}")
+    suspend fun deleteMessage(
+        @Path("messageId") messageId: String,
+        @Header("token") token: String
+    ): Response<DeleteConversationResponse>
 
 }
 

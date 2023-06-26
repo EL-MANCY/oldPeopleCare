@@ -92,7 +92,7 @@ interface RemoteRepository {
         newRole: String
     ): Response<UpdateResponse>
 
-    suspend fun getSingleUser(token: String, userID: String, ): Response<SingleUserResponse>
+    suspend fun getSingleUser(token: String, userID: String): Response<SingleUserResponse>
 
     suspend fun getUpcoming(
         token: String,
@@ -102,22 +102,49 @@ interface RemoteRepository {
 
     suspend fun getUpcomingDaily(
         token: String,
-    ):Response<Any>
+    ): Response<Any>
 
     suspend fun changeState(
-       token: String,
-       userID: String,
-       medID: String,
-       state:String
-    ):Response<Any>
+        token: String,
+        userID: String,
+        medID: String,
+        state: String
+    ): Response<Any>
 
     suspend fun sendCode(
         token: String,
-    ):Response<CodeResponse>
+    ): Response<CodeResponse>
 
     suspend fun getPatients(
         token: String
-    ):Response<List<CaregiverHomeResponseItem>>
+    ): Response<List<CaregiverHomeResponseItem>>
+
+
+    suspend fun sendMessage(
+        token: String,
+        receiverId: String,
+        content: String
+    ): Response<MessageResponse>
+
+    suspend fun getConversation(
+        token: String,
+        receiverId: String
+    ): Response<List<ConversationResponseItem>>
+
+    suspend fun getAllConversations(
+        token: String,
+    ): Response<List<AllConversationsResponseItem>>
+
+    suspend fun deleteConversation(
+        conversationId: String,
+        token: String
+    ): Response<DeleteConversationResponse>
+
+    suspend fun deleteMessage(
+        messageId: String,
+        token: String
+    ): Response<DeleteConversationResponse>
+
 
 }
 

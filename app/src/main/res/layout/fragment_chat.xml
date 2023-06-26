@@ -58,27 +58,27 @@
         android:id="@+id/editTextTextPersonName"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_35sdp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/et_style"
         android:backgroundTint="#F3F1F1"
         android:ems="10"
         android:hint="  Write Message "
         android:inputType="textPersonName"
+        android:padding="10dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageView21"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactsRecyclerView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView21"
         android:layout_width="38dp"
         android:layout_height="42dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/recchat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/contactsRecyclerView" />
+        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contactsRecyclerView"

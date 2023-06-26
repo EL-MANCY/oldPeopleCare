@@ -194,4 +194,42 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
             api.getPatients(token)
         }
     }
+
+    override suspend fun sendMessage(
+        token: String,
+        receiverId: String,
+        content: String
+    ): Response<MessageResponse> {
+        return withContext((Dispatchers.IO)){
+            api.sendMessage(token,receiverId,content)
+        }    }
+
+    override suspend fun getConversation(
+        token: String,
+        receiverId: String
+    ): Response<List<ConversationResponseItem>> {
+        return withContext((Dispatchers.IO)){
+            api.getConversation(token,receiverId)
+        }    }
+
+    override suspend fun getAllConversations(token: String): Response<List<AllConversationsResponseItem>> {
+        return withContext((Dispatchers.IO)){
+            api.getAllConversations(token)
+        }    }
+
+    override suspend fun deleteConversation(
+        conversationId: String,
+        token: String
+    ): Response<DeleteConversationResponse> {
+        return withContext((Dispatchers.IO)){
+            api.deleteConversation(conversationId,token)
+        }    }
+
+    override suspend fun deleteMessage(
+        messageId: String,
+        token: String
+    ): Response<DeleteConversationResponse> {
+        return withContext((Dispatchers.IO)){
+            api.deleteMessage(messageId,token)
+        }    }
 }
