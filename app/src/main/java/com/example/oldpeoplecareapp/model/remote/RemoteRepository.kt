@@ -146,6 +146,11 @@ interface RemoteRepository {
     ): Response<DeleteConversationResponse>
 
 
+    suspend fun searchUser(
+        token: String,
+        user: String
+    ): Response<List<SearchResponseItem>>
+
 }
 
 

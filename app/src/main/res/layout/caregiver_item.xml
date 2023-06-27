@@ -81,7 +81,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.201"
-        app:srcCompat="@drawable/edit2" />
+        app:srcCompat="@drawable/editpic" />
+
+    <ImageView
+        android:id="@+id/chat"
+        android:layout_width="24dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editButton"
+        app:layout_constraintVertical_bias="0.333"
+        app:srcCompat="@drawable/chat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

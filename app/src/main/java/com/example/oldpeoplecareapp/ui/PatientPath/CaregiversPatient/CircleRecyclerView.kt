@@ -24,6 +24,7 @@ class CircleRecyclerView:RecyclerView.Adapter<CircleRecyclerView.CircleViewHolde
         val fullname:TextView=itemView.findViewById(R.id.fullname_txtfield)
         val role:TextView=itemView.findViewById(R.id.role_txtfield)
         val edit_icon :ImageView = itemView.findViewById(R.id.editButton)
+        val chat_icon :ImageView = itemView.findViewById(R.id.chat)
 
         fun bind(item: Circles) {
 
@@ -40,6 +41,9 @@ class CircleRecyclerView:RecyclerView.Adapter<CircleRecyclerView.CircleViewHolde
 //            }
             Glide.with(itemView).load(imageUrl).into(image)
 
+            chat_icon.setOnClickListener {
+                onListItemClick?.onChatClick(item)
+            }
             edit_icon.setOnClickListener {
                 onListItemClick?.onItemClick(item)
             }

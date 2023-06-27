@@ -178,5 +178,12 @@ interface ServiceAPI {
         @Header("token") token: String
     ): Response<DeleteConversationResponse>
 
+    @FormUrlEncoded
+    @POST("/user/find/more")
+    suspend fun searchUser(
+        @Header("token") token: String,
+        @Field("user") user: String
+    ): Response<List<SearchResponseItem>>
+
 }
 

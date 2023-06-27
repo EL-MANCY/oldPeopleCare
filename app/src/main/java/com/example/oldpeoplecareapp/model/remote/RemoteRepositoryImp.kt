@@ -7,10 +7,10 @@ import kotlinx.coroutines.withContext
 import retrofit2.Response
 import retrofit2.http.Path
 
-class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
+class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     override suspend fun addNewUser(
         fullname: String, email: String, phone: String, dateOfBirth: String,
-        gender: String, registAs: String, password: String,FcmToken: String
+        gender: String, registAs: String, password: String, FcmToken: String
 
     ): Response<UserResponse> {
         return withContext(Dispatchers.IO) {
@@ -35,11 +35,11 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         FcmToken: String
     ): Response<UserLogInInfo> {
         return withContext(Dispatchers.IO) {
-            api.logIn(emailOrPhone, email, password,FcmToken)
+            api.logIn(emailOrPhone, email, password, FcmToken)
         }
     }
 
-    override  suspend fun postMedicine(
+    override suspend fun postMedicine(
         id: String,
         token: String,
         name: String,
@@ -129,31 +129,40 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         }
     }
 
-    override suspend fun Accept(notifyId: String, token: String):Response<Any> {
+    override suspend fun Accept(notifyId: String, token: String): Response<Any> {
         return withContext((Dispatchers.IO)) {
-            api.Accept(notifyId,token)
-        }    }
+            api.Accept(notifyId, token)
+        }
+    }
 
-    override suspend fun Reject(notifyId: String, token: String) :Response<Any>{
+    override suspend fun Reject(notifyId: String, token: String): Response<Any> {
         return withContext((Dispatchers.IO)) {
-            api.Reject(notifyId,token)
-        }    }
+            api.Reject(notifyId, token)
+        }
+    }
 
-    override suspend fun ResetPassword(email: String):Response<Any> {
-        return withContext((Dispatchers.IO)){
+    override suspend fun ResetPassword(email: String): Response<Any> {
+        return withContext((Dispatchers.IO)) {
             api.ResetPassword(email)
         }
     }
 
-    override suspend fun updateRole(token: String, caregiverID: String,newRole: String): Response<UpdateResponse> {
-        return withContext((Dispatchers.IO)){
-            api.updateRole(token,caregiverID,newRole)
+    override suspend fun updateRole(
+        token: String,
+        caregiverID: String,
+        newRole: String
+    ): Response<UpdateResponse> {
+        return withContext((Dispatchers.IO)) {
+            api.updateRole(token, caregiverID, newRole)
         }
     }
 
-    override suspend fun getSingleUser(token: String,userID: String): Response<SingleUserResponse> {
-        return withContext((Dispatchers.IO)){
-            api.getSingleUser(token,userID)
+    override suspend fun getSingleUser(
+        token: String,
+        userID: String
+    ): Response<SingleUserResponse> {
+        return withContext((Dispatchers.IO)) {
+            api.getSingleUser(token, userID)
         }
     }
 
@@ -162,15 +171,16 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         userID: String,
         state: String
     ): Response<List<Medicine>> {
-        return withContext((Dispatchers.IO)){
-            api.getUpcoming(token,userID,state)
+        return withContext((Dispatchers.IO)) {
+            api.getUpcoming(token, userID, state)
         }
     }
 
     override suspend fun getUpcomingDaily(token: String): Response<Any> {
-        return withContext((Dispatchers.IO)){
+        return withContext((Dispatchers.IO)) {
             api.getUpcomingDaily(token)
-        }    }
+        }
+    }
 
     override suspend fun changeState(
         token: String,
@@ -178,19 +188,19 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         medID: String,
         state: String
     ): Response<Any> {
-        return withContext((Dispatchers.IO)){
-            api.changeState(token,userID,medID,state)
+        return withContext((Dispatchers.IO)) {
+            api.changeState(token, userID, medID, state)
         }
     }
 
     override suspend fun sendCode(token: String): Response<CodeResponse> {
-        return withContext((Dispatchers.IO)){
+        return withContext((Dispatchers.IO)) {
             api.sendCode(token)
         }
     }
 
     override suspend fun getPatients(token: String): Response<List<CaregiverHomeResponseItem>> {
-        return withContext((Dispatchers.IO)){
+        return withContext((Dispatchers.IO)) {
             api.getPatients(token)
         }
     }
@@ -200,36 +210,50 @@ class RemoteRepositoryImp(private val api: ServiceAPI):RemoteRepository {
         receiverId: String,
         content: String
     ): Response<MessageResponse> {
-        return withContext((Dispatchers.IO)){
-            api.sendMessage(token,receiverId,content)
-        }    }
+        return withContext((Dispatchers.IO)) {
+            api.sendMessage(token, receiverId, content)
+        }
+    }
 
     override suspend fun getConversation(
         token: String,
         receiverId: String
     ): Response<List<ConversationResponseItem>> {
-        return withContext((Dispatchers.IO)){
-            api.getConversation(token,receiverId)
-        }    }
+        return withContext((Dispatchers.IO)) {
+            api.getConversation(token, receiverId)
+        }
+    }
 
     override suspend fun getAllConversations(token: String): Response<List<AllConversationsResponseItem>> {
-        return withContext((Dispatchers.IO)){
+        return withContext((Dispatchers.IO)) {
             api.getAllConversations(token)
-        }    }
+        }
+    }
 
     override suspend fun deleteConversation(
         conversationId: String,
         token: String
     ): Response<DeleteConversationResponse> {
-        return withContext((Dispatchers.IO)){
-            api.deleteConversation(conversationId,token)
-        }    }
+        return withContext((Dispatchers.IO)) {
+            api.deleteConversation(conversationId, token)
+        }
+    }
 
     override suspend fun deleteMessage(
         messageId: String,
         token: String
     ): Response<DeleteConversationResponse> {
-        return withContext((Dispatchers.IO)){
-            api.deleteMessage(messageId,token)
-        }    }
+        return withContext((Dispatchers.IO)) {
+            api.deleteMessage(messageId, token)
+        }
+    }
+
+    override suspend fun searchUser(
+        token: String,
+        user: String
+    ): Response<List<SearchResponseItem>> {
+        return withContext((Dispatchers.IO)) {
+            api.searchUser(token, user)
+        }
+    }
 }

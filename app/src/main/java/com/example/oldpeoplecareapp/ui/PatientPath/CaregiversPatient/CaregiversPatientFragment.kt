@@ -66,13 +66,17 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
 
         circleRecyclerView.onListItemClick = this
 
-        binding.userInfo.setOnClickListener {
-            findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToBasicInformationFragment())
+        binding.Search.setOnClickListener {
+            findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToSearchFragment())
         }
     }
 
     override fun onItemClick(info: Circles) {
         findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToEditRemoveCaregiverRole(info.id._id))
         Log.i(TAG,"clicked")
+    }
+
+    override fun onChatClick(info: Circles) {
+        findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToChatFragment(info.id._id,info.id.image.url,info.id.fullname))
     }
 }

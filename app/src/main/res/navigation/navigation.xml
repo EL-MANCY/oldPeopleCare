@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/chatFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/registration"
@@ -140,6 +140,12 @@
         <action
             android:id="@+id/action_caregiversPatientFragment_to_basicInformationFragment"
             app:destination="@id/basicInformationFragment" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
@@ -312,5 +318,26 @@
         android:id="@+id/chatFragment"
         android:name="com.example.oldpeoplecareapp.ui.Chat.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_caregiversPatientFragment"
+            app:destination="@id/caregiversPatientFragment" />
+        <argument
+            android:name="Id"
+            app:argType="string" />
+        <argument
+            android:name="image"
+            app:argType="string" />
+        <argument
+            android:name="fullname"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.Search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_caregiversPatientFragment"
+            app:destination="@id/caregiversPatientFragment" />
+    </fragment>
 </navigation>
