@@ -14,7 +14,7 @@ import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.OnCaregiver
 
 class SearchRecyclerView : RecyclerView.Adapter<SearchRecyclerView.SerachViewHolder>() {
     var users: List<SearchResponseItem> = emptyList()
-    var onListItemClick: OnCaregiverClickListener? = null
+    var onListItemClick: OnUserClickListener? = null
 
     fun setList(users: List<SearchResponseItem>) {
         this.users = users
@@ -32,7 +32,9 @@ class SearchRecyclerView : RecyclerView.Adapter<SearchRecyclerView.SerachViewHol
             image.setBackgroundResource(R.drawable.oval)
             Glide.with(itemView).load(imageUrl).into(image)}
             fullname.text = item.fullname
-
+            itemView.setOnClickListener {
+                onListItemClick?.onItemClick(item)
+            }
         }
     }
 

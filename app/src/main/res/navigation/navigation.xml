@@ -339,5 +339,19 @@
         <action
             android:id="@+id/action_searchFragment_to_caregiversPatientFragment"
             app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_careGiverProfileFragment"
+            app:destination="@id/careGiverProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/careGiverProfileFragment"
+        android:name="com.example.oldpeoplecareapp.ui.CaregiverPath.CareGiverProfile.CareGiverProfileFragment"
+        android:label="CareGiverProfileFragment" >
+        <action
+            android:id="@+id/action_careGiverProfileFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>

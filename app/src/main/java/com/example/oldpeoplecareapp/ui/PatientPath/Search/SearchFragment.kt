@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentChatBinding
 import com.example.oldpeoplecareapp.databinding.FragmentSearchBinding
+import com.example.oldpeoplecareapp.model.entity.SearchResponseItem
 import com.example.oldpeoplecareapp.ui.Chat.ChatViewModel
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CircleRecyclerView
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(),OnUserClickListener {
     val TAG = "SearchFragment"
 
     private lateinit var navController: NavController
@@ -97,7 +98,12 @@ class SearchFragment : Fragment() {
 
         }
 
+        searchRecyclerView.onListItemClick = this
 
+    }
+
+    override fun onItemClick(info: SearchResponseItem) {
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToCareGiverProfileFragment(info._id))
     }
 
 }
