@@ -234,7 +234,7 @@
             app:layout_constraintTop_toBottomOf="@+id/pp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/addReq"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
@@ -243,12 +243,12 @@
             android:backgroundTint="#008080"
             android:textColor="@color/white"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintEnd_toStartOf="@+id/chat"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/FullNameTXF" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/chat"
             android:layout_width="150dp"
             android:layout_height="47dp"
             android:layout_marginTop="8dp"
@@ -258,7 +258,7 @@
             android:textStyle="bold"
             android:text="Chat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintStart_toEndOf="@+id/addReq"
             app:layout_constraintTop_toBottomOf="@+id/FullNameTXF" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

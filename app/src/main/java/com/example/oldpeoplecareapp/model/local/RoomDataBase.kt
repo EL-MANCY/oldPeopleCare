@@ -10,7 +10,7 @@ import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.Medic
 import java.util.*
 
 private val DATABASE_NAME="oldCare"
-@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 8, exportSchema = false)
+@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 9, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OldCareDB: RoomDatabase() {
     abstract fun dataDao(): DataDao

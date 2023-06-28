@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "UserData")
 data class SingleUserResponse(
+    val image: Image,
     @PrimaryKey
     val _id: String,
     val createdAt: String,
@@ -15,5 +16,6 @@ data class SingleUserResponse(
     val isAdmin: Boolean,
     val phone: String,
     val registAs: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val isInCircle:Boolean
 )

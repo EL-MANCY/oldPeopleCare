@@ -34,6 +34,38 @@ class CareGiverProfileViewModel(application: Application): AndroidViewModel(appl
     val UserLiveData: LiveData<SingleUserResponse?>
         get() = UserMutableLiveData
 
+    private var sucessMutableLiveData = MutableLiveData<Any>()
+    val sucessLiveData: LiveData<Any>
+        get() = sucessMutableLiveData
+
+    private val snackBarMutableLiveData = MutableLiveData<String>()
+    val snackBarLiveData: LiveData<String>
+        get() = snackBarMutableLiveData
+
+    fun sendReq(
+        token: String,
+        email: String,
+        role: String
+    ) {
+        viewModelScope.launch {
+            if(isNetworkAvailable(getApplication())) {
+                val sucess = remoteRepositoryImp.sendRequest(token, email, role)
+                if (sucess.isSuccessful) {
+                    sucessMutableLiveData.postValue(sucess.body())
+                    Log.i(Tag, sucess.body().toString())
+                } else {
+                    error = sucess.errorBody()?.string()!!.toString()
+                    Log.i(Tag, error.toString())
+                    sucessMutableLiveData.postValue(sucess.body())
+                }
+            }else{
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
+
+            }
+        }
+    }
+
+
     fun getUserInfo(token: String, userID: String) {
         viewModelScope.launch {
             if(isNetworkAvailable(getApplication())) {
