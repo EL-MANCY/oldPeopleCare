@@ -69,6 +69,10 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
         binding.Search.setOnClickListener {
             findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToSearchFragment())
         }
+        binding.chatIcon.setOnClickListener {
+            findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToChatContactsFragments())
+
+        }
     }
 
     override fun onItemClick(info: Circles) {

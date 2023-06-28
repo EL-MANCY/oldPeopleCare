@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.Chat
+package com.example.oldpeoplecareapp.ui.Chat.ChatScreen
 
 import android.app.Application
 import android.content.Context

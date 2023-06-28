@@ -14,15 +14,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
-import com.example.oldpeoplecareapp.databinding.FragmentChatBinding
 import com.example.oldpeoplecareapp.databinding.FragmentSearchBinding
 import com.example.oldpeoplecareapp.model.entity.SearchResponseItem
-import com.example.oldpeoplecareapp.ui.Chat.ChatViewModel
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CircleRecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 

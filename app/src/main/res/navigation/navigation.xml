@@ -146,6 +146,9 @@
         <action
             android:id="@+id/action_caregiversPatientFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_caregiversPatientFragment_to_chatContactsFragments"
+            app:destination="@id/chatContactsFragments" />
     </fragment>
     <fragment
         android:id="@+id/addNewcaregiverPatientFragment"
@@ -316,7 +319,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.oldpeoplecareapp.ui.Chat.ChatFragment"
+        android:name="com.example.oldpeoplecareapp.ui.Chat.ChatScreen.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -355,6 +358,17 @@
             app:argType="string" />
         <action
             android:id="@+id/action_careGiverProfileFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatContactsFragments"
+        android:name="com.example.oldpeoplecareapp.ui.Chat.Conversations.ChatContactsFragments"
+        android:label="ChatContactsFragments" >
+        <action
+            android:id="@+id/action_chatContactsFragments_to_caregiversPatientFragment"
+            app:destination="@id/caregiversPatientFragment" />
+        <action
+            android:id="@+id/action_chatContactsFragments_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
 </navigation>

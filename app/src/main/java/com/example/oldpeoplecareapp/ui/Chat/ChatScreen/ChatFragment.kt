@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.Chat
+package com.example.oldpeoplecareapp.ui.Chat.ChatScreen
 
 import android.content.Context
 import android.os.Bundle
@@ -13,8 +13,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentChatBinding
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientViewModel
-import com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver.EditRemoveCaregiverRoleArgs
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
