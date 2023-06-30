@@ -1,5 +1,6 @@
 package com.example.oldpeoplecareapp.ui.Chat.ChatScreen
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import com.example.oldpeoplecareapp.model.entity.SearchResponseItem
 import com.example.oldpeoplecareapp.ui.PatientPath.Search.OnUserClickListener
 
 class MessagesRecyclerView(private val sharedPreferences: MySharedPreferences) :
-    RecyclerView.Adapter<MessagesRecyclerView.MessageViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var messages: List<MessageResponse> = emptyList()
     var onListItemClick: OnUserClickListener? = null
     var Reciever: Boolean = false
@@ -27,26 +28,16 @@ class MessagesRecyclerView(private val sharedPreferences: MySharedPreferences) :
         notifyDataSetChanged()
     }
 
-    inner class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val msgSend: TextView = itemView.findViewById(R.id.messageSend)
+    companion object {
+        private const val VIEW_TYPE_SENDER = 1
+        private const val VIEW_TYPE_RECEIVER = 2
+    }
 
+    inner class SenderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val msgSend: TextView = itemView.findViewById(R.id.messageSend)
 
         fun bind(item: MessageResponse) {
-
-            if (item.sender == id) {
-                Reciever = false
-                msgSend.text = item.content
-
-            } else {
-                Reciever = true
-                val specialLayout: View =
-                    LayoutInflater.from(itemView.context).inflate(R.layout.reciever_msg, null)
-                val msgRecieve: TextView = specialLayout.findViewById(R.id.messageRecieve)
-
-                msgRecieve.text = item.content
-
-            }
-
+            msgSend.text = item.content
 
 //            itemView.setOnClickListener {
 //                onListItemClick?.onItemClick(item)
@@ -54,24 +45,58 @@ class MessagesRecyclerView(private val sharedPreferences: MySharedPreferences) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        val layoutResId = if (Reciever) {
-            R.layout.reciever_msg
-        } else {
-            R.layout.sender_msg
+    inner class ReceiverViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val msgReceive: TextView = itemView.findViewById(R.id.messageRecieve)
+
+        fun bind(item: MessageResponse) {
+            msgReceive.text = item.content
+
+//            itemView.setOnClickListener {
+//                onListItemClick?.onItemClick(item)
+//            }
         }
-        val view: View = LayoutInflater.from(parent.context).inflate(layoutResId, parent, false)
-        return MessageViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-        var item: MessageResponse = messages.get(position)
-        holder.bind(item)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            VIEW_TYPE_SENDER -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.sender_msg, parent, false)
+                SenderViewHolder(view)
+            }
+            VIEW_TYPE_RECEIVER -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.reciever_msg, parent, false)
+                ReceiverViewHolder(view)
+            }
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item: MessageResponse = messages[position]
+
+        when (holder) {
+            is SenderViewHolder -> holder.bind(item)
+            is ReceiverViewHolder -> holder.bind(item)
+        }
     }
 
     override fun getItemCount(): Int {
         return messages.size
     }
+
+    override fun getItemViewType(position: Int): Int {
+        val item: MessageResponse = messages[position]
+        return if (item.sender == sharedPreferences.getValue("ID", "")) {
+            VIEW_TYPE_SENDER
+        } else {
+            VIEW_TYPE_RECEIVER
+        }
+    }
+
+
 }
+
 
 
