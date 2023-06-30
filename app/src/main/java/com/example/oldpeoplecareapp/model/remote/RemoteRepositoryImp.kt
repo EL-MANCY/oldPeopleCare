@@ -218,7 +218,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     override suspend fun getConversation(
         token: String,
         receiverId: String
-    ): Response<List<ConversationResponseItem>> {
+    ): Response<List<MessageResponse>> {
         return withContext((Dispatchers.IO)) {
             api.getConversation(token, receiverId)
         }

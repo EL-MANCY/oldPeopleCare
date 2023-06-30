@@ -1,27 +1,40 @@
 package com.example.oldpeoplecareapp.ui.Chat.ChatScreen
 
 import android.content.Context
+import android.nfc.Tag
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
+import com.example.oldpeoplecareapp.MySharedPreferences
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentChatBinding
+import com.example.oldpeoplecareapp.databinding.FragmentChatContactsFragmentsBinding
+import com.example.oldpeoplecareapp.model.entity.MessageResponse
+import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsRecyclerView
+import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 
 
 class ChatFragment : Fragment() {
+
 
     private lateinit var navController: NavController
     lateinit var binding: FragmentChatBinding
     lateinit var retrivedToken: String
     lateinit var chatViewModel: ChatViewModel
+    val TAG = "ChatFragment"
+
+    var MsgList :MutableList<MessageResponse> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -31,6 +44,10 @@ class ChatFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val sharedPreferences = MySharedPreferences(requireContext())
+        val messagesRecyclerView by lazy { MessagesRecyclerView(sharedPreferences) }
+
 
         navController = NavHostFragment.findNavController(this)
         val bottomNavigation2: BottomNavigationView =
@@ -64,7 +81,7 @@ class ChatFragment : Fragment() {
 
         chatViewModel = ViewModelProvider(requireActivity()).get(ChatViewModel::class.java)
 
-        chatViewModel.getConversation(retrivedToken,recieverId)
+        chatViewModel.getConversation("barier "+retrivedToken,recieverId)
 
         binding.editTextMessage.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -76,6 +93,39 @@ class ChatFragment : Fragment() {
             }
             false
         }
+
+        chatViewModel.ConversationLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                messagesRecyclerView.setList(it)
+                MsgList=it.toMutableList()
+                Log.i(TAG, it.toString())
+            } else if (chatViewModel.error != null) {
+                Snackbar.make(
+                    view,
+                    chatViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            chatViewModel.error = null
+        })
+
+        chatViewModel.MessageLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                MsgList.add(it)
+                messagesRecyclerView.setList(MsgList)
+                Log.i(TAG, it.toString())
+            } else if (chatViewModel.error != null) {
+                Snackbar.make(
+                    view,
+                    chatViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            chatViewModel.error = null
+        })
+
+        binding.messagesRecyclerView.adapter = messagesRecyclerView
+
     }
 
 }

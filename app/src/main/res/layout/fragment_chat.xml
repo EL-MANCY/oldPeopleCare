@@ -67,10 +67,11 @@
             android:hint="  Write Message "
             android:inputType="textPersonName"
             android:padding="10dp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView21"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
             android:id="@+id/imageView21"
@@ -82,17 +83,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/editTextMessage" />
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/contactsRecyclerView"
-            android:layout_width="@dimen/_309sdp"
-            android:layout_height="@dimen/_450sdp"
+            android:id="@+id/messagesRecyclerView"
+            android:layout_width="402dp"
+            android:layout_height="683dp"
             android:layout_marginStart="2dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginBottom="1dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/editTextMessage"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView20" />
 

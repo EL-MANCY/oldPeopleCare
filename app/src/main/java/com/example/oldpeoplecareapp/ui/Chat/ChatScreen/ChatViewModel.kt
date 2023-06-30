@@ -33,8 +33,8 @@ class ChatViewModel(application: Application) : AndroidViewModel(application) {
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var ConversationMutableLiveData = MutableLiveData<List<ConversationResponseItem>?>()
-    val ConversationLiveData: LiveData<List<ConversationResponseItem>?>
+    private var ConversationMutableLiveData = MutableLiveData<List<MessageResponse>?>()
+    val ConversationLiveData: LiveData<List<MessageResponse>?>
         get() = ConversationMutableLiveData
 
     private var MessageMutableLiveData = MutableLiveData<MessageResponse>()

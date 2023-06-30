@@ -159,7 +159,7 @@ interface ServiceAPI {
     suspend fun getConversation(
         @Header("token") token: String,
         @Path("receiverId") receiverId: String
-    ): Response<List<ConversationResponseItem>>
+    ): Response<List<MessageResponse>>
 
     @GET("/conversation")
     suspend fun getAllConversations(

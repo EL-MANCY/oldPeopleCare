@@ -129,7 +129,7 @@ interface RemoteRepository {
     suspend fun getConversation(
         token: String,
         receiverId: String
-    ): Response<List<ConversationResponseItem>>
+    ): Response<List<MessageResponse>>
 
     suspend fun getAllConversations(
         token: String,
