@@ -25,6 +25,7 @@ import com.example.oldpeoplecareapp.databinding.ActivityMainBinding
 import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotificationsFragmentDirections
+import com.example.oldpeoplecareapp.ui.Chat.ChatScreen.socketHandler
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.example.oldpeoplecareapp.ui.PatientPath.PatientNotification.PatientNotificationFragmentDirections
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 
 

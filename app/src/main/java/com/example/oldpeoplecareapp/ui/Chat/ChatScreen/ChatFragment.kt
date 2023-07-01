@@ -8,6 +8,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -21,10 +22,12 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentChatBinding
 import com.example.oldpeoplecareapp.databinding.FragmentChatContactsFragmentsBinding
 import com.example.oldpeoplecareapp.model.entity.MessageResponse
+import com.example.oldpeoplecareapp.model.entity.MsgSocket
 import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsRecyclerView
 import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -65,6 +68,7 @@ class ChatFragment : Fragment() {
 
         socketHandler.setSocket()
         socketHandler.establishConnection()
+
         val mSocket = socketHandler.getSocket()
 
         mSocket.emit("add-user",retrivedID)
@@ -82,6 +86,7 @@ class ChatFragment : Fragment() {
                     MsgList.add(MessageResponse(0,"",msg,retrivedID,recieverId,
                         SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().time)))
                     messagesRecyclerView.setList(MsgList)
+                    messagesRecyclerView.notifyDataSetChanged()
 
                 }
             }
@@ -118,12 +123,33 @@ class ChatFragment : Fragment() {
 
         chatViewModel.getConversation("barier "+retrivedToken,recieverId)
 
+        binding.editTextMessage.setOnClickListener {
+            binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+
+        }
+
+//        binding.editTextMessage.setOnTouchListener { _, event ->
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                // Touch event occurred
+//                binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+//            }
+//            false
+//        }
+
         binding.editTextMessage.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // Perform your desired action here when the "Done" button is pressed
                 // For example, you can close the keyboard or submit the form
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size)
                 chatViewModel.sendMessage("barier "+retrivedToken,recieverId,binding.editTextMessage.text.toString())
-                mSocket.emit("send-msg",binding.editTextMessage.text.toString())
+
+                val jsonObject = JSONObject()
+                jsonObject.put("to",recieverId )
+                jsonObject.put("from", retrivedID)
+                jsonObject.put("message",binding.editTextMessage.text.toString() )
+
+                mSocket.emit("send-msg",jsonObject)
+
 
                 binding.editTextMessage.setText("")
                 return@setOnEditorActionListener true
@@ -136,6 +162,8 @@ class ChatFragment : Fragment() {
             if (it != null) {
                 messagesRecyclerView.setList(it)
                 MsgList=it.toMutableList()
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+
                 Log.i(TAG, it.toString())
             } else if (chatViewModel.error != null) {
                 Snackbar.make(
@@ -150,8 +178,8 @@ class ChatFragment : Fragment() {
         chatViewModel.MessageLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 MsgList.add(it)
-
                 messagesRecyclerView.setList(MsgList)
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
                 Log.i(TAG, it.toString())
             } else if (chatViewModel.error != null) {
                 Snackbar.make(

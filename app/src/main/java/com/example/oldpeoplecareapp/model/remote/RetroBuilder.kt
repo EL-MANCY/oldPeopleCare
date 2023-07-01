@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 
 object RetroBuilder {
     private const val BaseUrl: String = "https://old-care.onrender.com"
-   // private const val BaseUrl: String = "http://10.0.2.2:8080"
+    //private const val BaseUrl: String = "http://10.0.2.2:8000"
 
     var okHttp = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.MINUTES) // connect timeout

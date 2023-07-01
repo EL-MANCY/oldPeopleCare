@@ -13,6 +13,7 @@ object socketHandler {
     fun setSocket() {
         try {
             mSocket = IO.socket("https://old-care.onrender.com")
+        //    mSocket = IO.socket("http://10.0.2.2:8000")
         } catch (e: URISyntaxException) {
 
             Log.i("SocketConnected",e.toString())
