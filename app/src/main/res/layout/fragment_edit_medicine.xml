@@ -289,11 +289,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timeRecycle"
-            android:background="@drawable/et_style"
             android:layout_width="330dp"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
             android:layout_marginTop="16dp"
+            android:background="@drawable/et_style"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/add_medicine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Time" />
@@ -313,7 +314,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.04"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeRecycle" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.93" />
 
         <Button
             android:id="@+id/remove_med"
@@ -326,11 +328,10 @@
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@+id/add_medicine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.47"
-            app:layout_constraintStart_toEndOf="@+id/add_medicine"
-            app:layout_constraintTop_toBottomOf="@+id/timeRecycle" />
+            app:layout_constraintStart_toEndOf="@+id/add_medicine" />
 
         <ImageButton
             android:id="@+id/addpicbtn"

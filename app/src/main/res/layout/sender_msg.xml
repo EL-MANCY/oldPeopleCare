@@ -11,18 +11,19 @@
         android:id="@+id/messageSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textColor="@color/white"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingRight="@dimen/_15sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingBottom="@dimen/_4sdp"
-
+        android:layout_marginStart="10dp"
         android:background="@drawable/et_style"
         android:backgroundTint="#008080"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingTop="@dimen/_4sdp"
+        android:paddingRight="@dimen/_15sdp"
+
+        android:paddingBottom="@dimen/_4sdp"
+        android:text="Hello"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.13"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
