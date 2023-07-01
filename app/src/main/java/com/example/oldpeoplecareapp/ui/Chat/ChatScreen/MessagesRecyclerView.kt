@@ -1,27 +1,19 @@
 package com.example.oldpeoplecareapp.ui.Chat.ChatScreen
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.MySharedPreferences
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.model.entity.MessageResponse
-import com.example.oldpeoplecareapp.model.entity.Reciever
-import com.example.oldpeoplecareapp.model.entity.SearchResponseItem
 import com.example.oldpeoplecareapp.ui.PatientPath.Search.OnUserClickListener
 
 class MessagesRecyclerView(private val sharedPreferences: MySharedPreferences) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var messages: List<MessageResponse> = emptyList()
     var onListItemClick: OnUserClickListener? = null
-    var Reciever: Boolean = false
-
-    val id = sharedPreferences.getValue("ID", "")
 
     fun setList(msgs: List<MessageResponse>) {
         this.messages = msgs

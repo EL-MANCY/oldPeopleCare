@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.databinding.FragmentSplashScreenBinding
+import com.example.oldpeoplecareapp.ui.Chat.ChatScreen.socketHandler
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import java.util.*
 
@@ -51,7 +52,11 @@ class SplashScreenFragment : Fragment() {
             if (retrivedToken == "null" ) {
                findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToLogIn())
                 Log.i("TOKEN Login",retrivedToken.toString())
-            } else if(REGIST=="patient") {
+            } else if(REGIST=="patient")
+            {
+                socketHandler.setSocket()
+                socketHandler.establishConnection()
+
                 findNavController().navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToPatientHomeFragment("","",""))
                 Log.i("TOKEN Home",retrivedToken.toString())
             }else if(REGIST=="caregiver") {
