@@ -34,7 +34,7 @@ interface RemoteRepository {
         type: String,
         description: String,
         time: List<String>,
-        weakly: Array<String>
+        weakly: MutableList<String>
     ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(
@@ -52,7 +52,7 @@ interface RemoteRepository {
         type: String,
         description: String,
         time: Array<String>,
-        weakly: Array<String>
+        weakly:  MutableList<String>
     ): Response<MedicineResponseX>
 
     suspend fun DeleteMedicine(

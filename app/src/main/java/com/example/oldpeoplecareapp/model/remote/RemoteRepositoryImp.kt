@@ -39,6 +39,8 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         }
     }
 
+
+
     override suspend fun postMedicine(
         id: String,
         token: String,
@@ -48,7 +50,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         type: String,
         description: String,
         time: List<String>,
-        weakly: Array<String>
+        weakly: MutableList<String>
     ): Response<AllMedicineResponseItem> {
         return withContext((Dispatchers.IO)) {
             api.postMedicine(
@@ -83,7 +85,7 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         type: String,
         description: String,
         time: Array<String>,
-        weakly: Array<String>
+        weakly:  MutableList<String>
     ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
             api.updateMedicine(

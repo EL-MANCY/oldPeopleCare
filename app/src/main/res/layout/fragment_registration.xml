@@ -48,6 +48,7 @@
             android:layout_marginTop="25dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="10dp"
+            android:padding="@dimen/_25sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,9 +67,10 @@
                     android:scrollbarAlwaysDrawHorizontalTrack="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0">
+                    app:layout_constraintVertical_bias="1.0">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -91,12 +93,12 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/fullname"
+                                style="@style/MyHintTextStyle"
                                 android:layout_width="330dp"
                                 android:layout_height="47dp"
                                 android:layout_marginTop="31dp"
-                                android:backgroundTint="#5CD9D9D9"
-                                style="@style/MyHintTextStyle"
                                 android:background="@drawable/et_style"
+                                android:backgroundTint="#5CD9D9D9"
                                 android:drawablePadding="10dp"
                                 android:inputType="text"
                                 android:paddingRight="10dp" />
@@ -126,9 +128,9 @@
                                 android:layout_marginTop="31dp"
                                 android:background="@drawable/et_style"
                                 android:backgroundTint="#5CD9D9D9"
+                                android:drawablePadding="10dp"
                                 android:inputType="textEmailAddress"
                                 android:paddingRight="10dp"
-                                android:drawablePadding="10dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="parent" />
@@ -152,13 +154,13 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/phone"
+                                style="@style/MyHintTextStyle"
                                 android:layout_width="330dp"
                                 android:layout_height="47dp"
                                 android:layout_marginTop="31dp"
                                 android:background="@drawable/et_style"
-                                style="@style/MyHintTextStyle"
-                                android:drawablePadding="10dp"
                                 android:backgroundTint="#5CD9D9D9"
+                                android:drawablePadding="10dp"
                                 android:inputType="phone"
                                 android:paddingRight="10dp"
                                 app:hintTextColor="#041A8D"
@@ -169,15 +171,15 @@
 
                         <TextView
                             android:id="@+id/DateOfBirth"
+                            style="@style/MyHintTextStyle"
                             android:layout_width="330dp"
                             android:layout_height="47dp"
                             android:layout_marginTop="13dp"
                             android:background="@drawable/et_style"
-                            android:drawableLeft="@drawable/date"
-                            android:hint="  Date Of Birth"
-                            android:drawablePadding="13dp"
-                            style="@style/MyHintTextStyle"
                             android:backgroundTint="#5CD9D9D9"
+                            android:drawableLeft="@drawable/date"
+                            android:drawablePadding="13dp"
+                            android:hint="  Date Of Birth"
                             android:paddingLeft="10dp"
                             android:paddingTop="10dp"
                             android:paddingRight="10dp"
@@ -192,10 +194,10 @@
                         <androidx.cardview.widget.CardView
                             android:id="@+id/genderX"
                             android:layout_width="322dp"
-                            android:layout_marginTop="16dp"
                             android:layout_height="wrap_content"
-                            app:cardCornerRadius="30dp"
                             android:layout_marginHorizontal="50dp"
+                            android:layout_marginTop="16dp"
+                            app:cardCornerRadius="30dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -286,31 +288,30 @@
                         </androidx.cardview.widget.CardView>
 
 
+                        <!--                        <com.google.android.material.textfield.TextInputLayout-->
+                        <!--                            android:id="@+id/registerAsX"-->
+                        <!--                            style="Widget.MaterialComponents.TextInputLayout.*.ExposedDropdownMenu"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_marginTop="5dp"-->
+                        <!--                            android:hint="Register AS"-->
+                        <!--                            app:endIconMode="clear_text"-->
+                        <!--                            app:errorTextColor="#EF0C0C"-->
+                        <!--                            app:hintTextColor="#00BCD4"-->
+                        <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                        <!--                            app:layout_constraintHorizontal_bias="0.496"-->
+                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                        <!--                            app:layout_constraintTop_toBottomOf="@+id/genderX"-->
+                        <!--                            app:startIconDrawable="@drawable/reg">-->
 
-<!--                        <com.google.android.material.textfield.TextInputLayout-->
-<!--                            android:id="@+id/registerAsX"-->
-<!--                            style="Widget.MaterialComponents.TextInputLayout.*.ExposedDropdownMenu"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_marginTop="5dp"-->
-<!--                            android:hint="Register AS"-->
-<!--                            app:endIconMode="clear_text"-->
-<!--                            app:errorTextColor="#EF0C0C"-->
-<!--                            app:hintTextColor="#00BCD4"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintHorizontal_bias="0.496"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toBottomOf="@+id/genderX"-->
-<!--                            app:startIconDrawable="@drawable/reg">-->
+                        <!--                            <AutoCompleteTextView-->
+                        <!--                                android:layout_width="330dp"-->
+                        <!--                                android:layout_height="47dp"-->
+                        <!--                                android:background="@drawable/et_style"-->
+                        <!--                                android:inputType="none"-->
+                        <!--                                android:maxLines="@integer/material_motion_duration_long_1" />-->
 
-<!--                            <AutoCompleteTextView-->
-<!--                                android:layout_width="330dp"-->
-<!--                                android:layout_height="47dp"-->
-<!--                                android:background="@drawable/et_style"-->
-<!--                                android:inputType="none"-->
-<!--                                android:maxLines="@integer/material_motion_duration_long_1" />-->
-
-<!--                        </com.google.android.material.textfield.TextInputLayout>-->
+                        <!--                        </com.google.android.material.textfield.TextInputLayout>-->
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/passwordX"
@@ -326,20 +327,19 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/registerAsX"
                             app:startIconDrawable="@drawable/pass"
-                            app:startIconTint= "@null"
-                            >
+                            app:startIconTint="@null">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/password"
+                                style="@style/MyHintTextStyle"
                                 android:layout_width="330dp"
                                 android:layout_height="52dp"
                                 android:layout_marginTop="31dp"
                                 android:background="@drawable/et_style"
-                                android:inputType="textPassword"
-                                style="@style/MyHintTextStyle"
                                 android:backgroundTint="#5CD9D9D9"
-                                android:paddingRight="10dp"
                                 android:drawablePadding="10dp"
+                                android:inputType="textPassword"
+                                android:paddingRight="10dp"
                                 app:hintTextColor="#041A8D"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -360,23 +360,23 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/passwordX"
                             app:startIconDrawable="@drawable/pass"
-                            app:startIconTint= "@null">
+                            app:startIconTint="@null">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/confirmpassword"
+                                style="@style/MyHintTextStyle"
                                 android:layout_width="330dp"
                                 android:layout_height="52dp"
                                 android:layout_marginTop="31dp"
                                 android:background="@drawable/et_style"
-                                android:inputType="textPassword"
-                                style="@style/MyHintTextStyle"
                                 android:backgroundTint="#5CD9D9D9"
-                                android:paddingRight="10dp"
                                 android:drawablePadding="10dp"
+                                android:inputType="textPassword"
+                                android:paddingRight="10dp"
                                 app:hintTextColor="#041A8D"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/textView"  />
+                                app:layout_constraintTop_toBottomOf="@+id/textView" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 

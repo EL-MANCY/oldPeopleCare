@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.app.ActivityCompat
@@ -52,6 +53,7 @@ class EditMedicineFragment : Fragment() {
     var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
     val r=0
     var daysList= arrayOf("Sunday","Monday")
+    var days: MutableList<String> = mutableListOf()
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
@@ -153,6 +155,75 @@ class EditMedicineFragment : Fragment() {
         MedApapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
 
         //------------------------------------------------------//
+        //------------------------------------------------------//
+
+        val Repeats = resources.getStringArray(R.array.repeats)
+        //When there is an empty field that adapter will be assigned
+        val ErrorAdapter2 = object :
+            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, Repeats) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle2)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                }
+                return view
+            }
+        }
+        ErrorAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
+        //------------------------------------------------------//
+
+        //if there is no error thats the main adapter
+        val RepeatAdapter = object :
+            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, Repeats) {
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(
+                position: Int,
+                convertView: View?,
+                parent: ViewGroup
+            ): View {
+                val view: TextView =
+                    super.getDropDownView(position, convertView, parent) as TextView
+                //set the color of first item in the drop down list to gray
+                if (position == 0) {
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                    view.setTextAppearance(R.style.MyTextStyle)
+                } else {
+                    //here it is possible to define color for other items by
+                    val color = resources.getColor(R.color.bbbb)
+                    (view as TextView).setTextColor(color)
+                }
+                return view
+            }
+        }
+        RepeatAdapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
+
+        //------------------------------------------------------//
 
         binding.medicineType.adapter = MedApapter
         binding.medicineType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -172,6 +243,72 @@ class EditMedicineFragment : Fragment() {
                     //     (view as TextView).setTextColor(color)
                 }
             }
+        }
+
+        //------------------------------------------------------//
+        //------------------------------------------------------//
+
+        binding.Repeated.adapter = RepeatAdapter
+        binding.Repeated.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                val value = parent!!.selectedItem.toString()
+                if (value == Repeats[0]) {
+                    val color = resources.getColor(android.R.color.holo_red_dark)
+                    (view as TextView).setTextColor(color)
+                }
+            }
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (value == Repeats[0]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    // (view as TextView).setTextColor(color)
+                } else if (value == Repeats[2]) {
+                    val color = resources.getColor(R.color.bbbb)
+                    binding.linearLayout.visibility = View.VISIBLE
+                    days.clear()
+                    //     (view as TextView).setTextColor(color)
+                } else {
+                    val color = resources.getColor(R.color.bbbb)
+                    binding.linearLayout.visibility = View.GONE
+                    days.clear()
+                    days.add("Saturday")
+                    days.add("Sunday")
+                    days.add("Monday")
+                    days.add("Tuesday")
+                    days.add("Wednesday")
+                    days.add("Thursday")
+                    days.add("Friday")
+                    Log.i("days", days.toString())
+                }
+            }
+        }
+
+        binding.SAT.setOnClickListener {
+            handleButtonClick(binding.SAT, "Saturday")
+        }
+        binding.SUN.setOnClickListener {
+            handleButtonClick(binding.SUN, "Sunday")
+        }
+        binding.MON.setOnClickListener {
+            handleButtonClick(binding.MON, "Monday")
+        }
+        binding.TUES.setOnClickListener {
+            handleButtonClick(binding.TUES, "Tuesday")
+        }
+        binding.WED.setOnClickListener {
+            handleButtonClick(binding.WED, "Wednesday")
+        }
+        binding.THU.setOnClickListener {
+            handleButtonClick(binding.THU, "Thursday")
+        }
+        binding.FRI.setOnClickListener {
+            handleButtonClick(binding.FRI, "Friday")
         }
 
         //------------------------------------------------------//
@@ -406,6 +543,39 @@ class EditMedicineFragment : Fragment() {
             }
 
             //------------------------------------------------------//
+            //------------------------------------------------------//
+
+            if (binding.Repeated.selectedItem == Repeats[0]) {
+                binding.Repeated.adapter = ErrorAdapter2
+                binding.Repeated.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onNothingSelected(parent: AdapterView<*>?) {
+                            val value = parent!!.selectedItem.toString()
+                            if (value == Repeats[0]) {
+                                val color = resources.getColor(android.R.color.holo_red_dark)
+                                (view as TextView).setTextColor(color)
+                            }
+                        }
+
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            val value = parent!!.getItemAtPosition(position).toString()
+                            if (value == Repeats[0]) {
+                                val color = resources.getColor(android.R.color.holo_red_dark)
+                                (view as TextView).setTextColor(color)
+                            } else {
+                                val color = resources.getColor(R.color.bbbb)
+                                (view as TextView).setTextColor(color)
+                            }
+                        }
+                    }
+            }
+
+            //------------------------------------------------------//
 
             if (binding.Time.text.toString().isNullOrEmpty()) {
                 binding.Time.setHintTextColor(getResources().getColor(R.color.holo));
@@ -420,12 +590,14 @@ class EditMedicineFragment : Fragment() {
             val record=binding.recordX.editText!!.text.toString()
             val type=binding.medicineType.selectedItem.toString()
             val description=binding.description.text.toString()
+            val repeated = binding.Repeated.selectedItem.toString()
 
             if (!binding.MedicineName.text.toString()
                     .isNullOrEmpty() && !binding.description.text.toString().isNullOrEmpty() &&
                 !binding.UploadPhoto.text.toString()
                     .isNullOrEmpty() && !binding.record.text.toString().isNullOrEmpty() &&
-                !binding.medicineType.selectedItem.toString().isNullOrEmpty()
+                !binding.medicineType.selectedItem.toString().isNullOrEmpty()&&
+                !binding.Repeated.selectedItem.toString().isNullOrEmpty()
             ) {
                 editMedicineViewModel.updateAllMedicine(
                     medId,
@@ -437,7 +609,7 @@ class EditMedicineFragment : Fragment() {
                     type,
                     description,
                     TimeList.toTypedArray(),
-                    daysList,)
+                    days)
 
                 loading.startLoading()
                 //------------------------------------------------------//
@@ -563,6 +735,33 @@ class EditMedicineFragment : Fragment() {
         binding.medicineType.setSelection(0)
         binding.Time.text=null
         binding.description.text=null
+    }
+    // Declare a map to store button click counts
+    val buttonClickCounts = mutableMapOf<Button, Int>()
+
+    // Function to handle button clicks and alternate background colors
+    fun handleButtonClick(button: Button, day: String) {
+        if (!buttonClickCounts.containsKey(button)) {
+            buttonClickCounts[button] = 0
+        }
+
+        val clickCount = buttonClickCounts[button] ?: 0
+        buttonClickCounts[button] = clickCount + 1
+
+        if (clickCount % 2 == 0) {
+            //   button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.active)) // Replace "your_color_resource" with the actual color resource ID
+            button.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.active))
+            button.setBackgroundResource(R.drawable.clickedactive)
+            days.add(day)
+            Log.i("days", days.toString())
+        } else {
+            //   button.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey)) // Replace "your_color_resource" with the actual color resource ID
+            button.setBackgroundColor(ContextCompat.getColor(requireActivity(), R.color.inactive))
+            button.setBackgroundResource(R.drawable.clickedunactive)
+            days.remove(day)
+            Log.i("days", days.toString())
+
+        }
     }
 }
 

@@ -15,6 +15,8 @@ import com.example.oldpeoplecareapp.model.local.LocalRepositoryImpl
 import com.example.oldpeoplecareapp.model.local.OldCareDB
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class AddNewMedicineViewModel(application: Application): AndroidViewModel(application) {
@@ -23,6 +25,8 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
     val Tag = "AddNewMedicineViewModel"
     var error :String?=null
 
+    private val _state = MutableStateFlow(0)
+    val state=_state.asStateFlow()
 
     init {
         val db = OldCareDB.getInstance(application)
@@ -49,7 +53,7 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         type: String,
         description: String,
         time: List<String>,
-        weakly: Array<String>
+        weakly: MutableList<String>
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {

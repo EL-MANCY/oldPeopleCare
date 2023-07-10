@@ -65,7 +65,7 @@
             android:id="@+id/MedicineNameX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:hint="Medicine Name"
             app:endIconMode="clear_text"
             app:errorTextColor="#EF0C0C"
@@ -94,7 +94,7 @@
             android:id="@+id/UploadPhotoX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:clickable="false"
             android:editable="false"
             android:hint="Upload Photo"
@@ -128,7 +128,7 @@
             android:layout_width="322dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +173,7 @@
             android:id="@+id/descriptionX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:hint="Description"
             app:endIconMode="clear_text"
             app:errorTextColor="#EF0C0C"
@@ -203,7 +203,7 @@
             android:id="@+id/recordX"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:clickable="false"
             android:editable="false"
             android:hint="Record"
@@ -235,6 +235,50 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="322dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            app:cardCornerRadius="30dp"
+            android:layout_marginTop="22dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recordX">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="47dp">
+
+                <Spinner
+                    android:id="@+id/Repeated"
+                    style="@style/MyHintTextStyle"
+                    android:layout_width="322dp"
+                    android:layout_height="47dp"
+                    android:background="@drawable/et_style"
+                    android:backgroundTint="#5CD9D9D9"
+                    android:backgroundTintMode="src_in"
+                    android:entries="@array/repeats"
+                    android:outlineProvider="none"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="28dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.02"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/clock" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <ImageButton
             android:id="@+id/cancelbtn"
             android:layout_width="35dp"
@@ -265,12 +309,13 @@
             app:layout_constraintVertical_bias="0.755"
             app:srcCompat="@drawable/add_rec" />
 
+
         <TextView
             android:id="@+id/Time"
             style="@style/MyHintTextStyle"
             android:layout_width="330dp"
             android:layout_height="47dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="22dp"
             android:background="@drawable/et_style"
             android:backgroundTint="#5CD9D9D9"
             android:drawableLeft="@drawable/date"
@@ -284,19 +329,17 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recordX" />
-
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timeRecycle"
             android:layout_width="330dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="41dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/et_style"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/add_medicine"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Time" />
 
@@ -304,6 +347,8 @@
             android:id="@+id/add_medicine"
             android:layout_width="294dp"
             android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="55dp"
             android:background="@drawable/button"
             android:backgroundTint="#008080"
             android:text="Add New Medicine"
@@ -313,10 +358,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintHorizontal_bias="0.367"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.90999997" />
+            app:layout_constraintTop_toBottomOf="@+id/timeRecycle"
+            app:layout_constraintVertical_bias="0.016" />
 
         <ImageButton
             android:id="@+id/addpicbtn"
@@ -331,6 +376,95 @@
             app:layout_constraintStart_toEndOf="@+id/UploadPhotoX"
             app:layout_constraintTop_toBottomOf="@+id/cardview1"
             app:srcCompat="@drawable/add_rec" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+            <Button
+                android:id="@+id/SAT"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="SAT"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/clickedunactive"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/SUN"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:text="SUN"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/MON"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:text="MON"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/TUES"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:text="TUE"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/WED"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:text="WED"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/THU"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:text="THU"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/FRI"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:background="@drawable/clickedunactive"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:text="FRI"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

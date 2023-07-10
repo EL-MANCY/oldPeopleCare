@@ -40,7 +40,7 @@ interface ServiceAPI {
         @Field("type") type: String,
         @Field("description") description: String,
         @Field("time") time: List<String>,
-        @Field("weakly") weakly: Array<String>
+        @Field("weakly") weakly: MutableList<String>
     ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
@@ -61,7 +61,7 @@ interface ServiceAPI {
         @Field("type") type: String,
         @Field("description") description: String,
         @Field("time") time: Array<String>,
-        @Field("weakly") weakly: Array<String>
+        @Field("weakly") weakly:  MutableList<String>
     ): Response<MedicineResponseX>
 
     @DELETE("/medicine/{medId}/{userId}")

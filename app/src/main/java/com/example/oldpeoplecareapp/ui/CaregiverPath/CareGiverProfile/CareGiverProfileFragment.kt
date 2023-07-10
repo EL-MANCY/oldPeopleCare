@@ -78,7 +78,7 @@ class CareGiverProfileFragment : Fragment() {
                     binding.addReq.isEnabled = false
                 }
 
-                if( it.image.equals(null)) {
+                if( !it.image.equals(null)) {
                     imageUrl = it.image.url
                     binding.userpicture.setBackgroundResource(R.drawable.oval)
                     Glide.with(this).load(imageUrl).into(binding.userpicture)
@@ -93,6 +93,8 @@ class CareGiverProfileFragment : Fragment() {
                 Email = it.email
                 Fullname = it.fullname
                 RecieverId = it._id
+                imageUrl = it.image.url
+
 
             } else if (careGiverProfileViewModel.error != null) {
                 loading.isDismiss()

@@ -15,6 +15,12 @@
         <item>other</item>
 
     </string-array>
+    <string-array name="repeats">
+        <item>Repeated When?</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+
+    </string-array>
 
     <string-array name="Repeat">
         <item>Hours:Mins</item>

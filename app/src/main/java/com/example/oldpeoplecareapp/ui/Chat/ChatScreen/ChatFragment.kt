@@ -42,7 +42,7 @@ class ChatFragment : Fragment() {
     lateinit var chatViewModel: ChatViewModel
     val TAG = "ChatFragment"
 
-    var MsgList :MutableList<MessageResponse> = mutableListOf()
+    var MsgList: MutableList<MessageResponse> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -71,23 +71,27 @@ class ChatFragment : Fragment() {
 
         val mSocket = socketHandler.getSocket()
 
-        mSocket.emit("add-user",retrivedID)
+        mSocket.emit("add-user", retrivedID)
 
         val handler = Handler(Looper.getMainLooper())
 
         mSocket.on("msg-recieve") { args ->
             if (args[0] != null) {
                 val msg = args[0] as String
-
-                Log.i("SocketIO",msg)
-
+                Log.i("SocketIO", msg)
                 handler.post {
-
-                    MsgList.add(MessageResponse(0,"",msg,retrivedID,recieverId,
-                        SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().time)))
+                    MsgList.add(
+                        MessageResponse(
+                            0, "", msg, retrivedID, recieverId,
+                            SimpleDateFormat(
+                                "HH:mm:ss",
+                                Locale.getDefault()
+                            ).format(Calendar.getInstance().time)
+                        )
+                    )
                     messagesRecyclerView.setList(MsgList)
                     messagesRecyclerView.notifyDataSetChanged()
-
+                    binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
                 }
             }
         }
@@ -113,7 +117,7 @@ class ChatFragment : Fragment() {
 
 
 
-        binding.RecieverName.text=fullname
+        binding.RecieverName.text = fullname
 
         binding.recieverImage.setBackgroundResource(R.drawable.oval)
 
@@ -121,10 +125,10 @@ class ChatFragment : Fragment() {
 
         chatViewModel = ViewModelProvider(requireActivity()).get(ChatViewModel::class.java)
 
-        chatViewModel.getConversation("barier "+retrivedToken,recieverId)
+        chatViewModel.getConversation("barier " + retrivedToken, recieverId)
 
         binding.editTextMessage.setOnClickListener {
-            binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+            binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
 
         }
 
@@ -138,18 +142,39 @@ class ChatFragment : Fragment() {
 
         binding.editTextMessage.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // Perform your desired action here when the "Done" button is pressed
-                // For example, you can close the keyboard or submit the form
-                binding.messagesRecyclerView.scrollToPosition(MsgList.size)
-                chatViewModel.sendMessage("barier "+retrivedToken,recieverId,binding.editTextMessage.text.toString())
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
+
+                chatViewModel.sendMessage(
+                    "barier " + retrivedToken,
+                    recieverId,
+                    binding.editTextMessage.text.toString()
+                )
 
                 val jsonObject = JSONObject()
-                jsonObject.put("to",recieverId )
+                jsonObject.put("to", recieverId)
                 jsonObject.put("from", retrivedID)
-                jsonObject.put("message",binding.editTextMessage.text.toString() )
+                jsonObject.put("message", binding.editTextMessage.text.toString())
 
-                mSocket.emit("send-msg",jsonObject)
+                var id: String = ""
+                chatViewModel.MessageLiveData.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        id = it._id
+                        MsgList.add(it)
+                        messagesRecyclerView.setList(MsgList)
+                        binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
+                        Log.i(TAG, it.toString())
+                    } else if (chatViewModel.error != null) {
+                        Snackbar.make(
+                            view,
+                            chatViewModel.error.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    chatViewModel.error = null
+                })
+                jsonObject.put("id", id)
 
+                mSocket.emit("send-msg", jsonObject)
 
                 binding.editTextMessage.setText("")
                 return@setOnEditorActionListener true
@@ -161,8 +186,8 @@ class ChatFragment : Fragment() {
         chatViewModel.ConversationLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 messagesRecyclerView.setList(it)
-                MsgList=it.toMutableList()
-                binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+                MsgList = it.toMutableList()
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
 
                 Log.i(TAG, it.toString())
             } else if (chatViewModel.error != null) {
@@ -179,7 +204,7 @@ class ChatFragment : Fragment() {
             if (it != null) {
                 MsgList.add(it)
                 messagesRecyclerView.setList(MsgList)
-                binding.messagesRecyclerView.scrollToPosition(MsgList.size-1)
+                binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
                 Log.i(TAG, it.toString())
             } else if (chatViewModel.error != null) {
                 Snackbar.make(

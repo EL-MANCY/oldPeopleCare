@@ -49,7 +49,7 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         type: String,
         description: String,
         time: Array<String>,
-        weakly: Array<String>
+        weakly: MutableList<String>
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {
