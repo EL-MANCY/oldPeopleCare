@@ -85,11 +85,11 @@
 
         <Button
             android:id="@+id/acceptBtn"
-            android:layout_width="80dp"
-            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginStart="13dp"
             android:background="@drawable/btn_border"
-            android:backgroundTint="#32A316"
+            android:backgroundTint="#008080"
             android:text="Accept"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
@@ -100,8 +100,8 @@
 
         <Button
             android:id="@+id/rejectBtn"
-            android:layout_width="80dp"
-            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/btn_border"
             android:backgroundTint="#CF0A0A"
@@ -110,10 +110,10 @@
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/TimeNotifification"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.838"
+            app:layout_constraintHorizontal_bias="0.789"
             app:layout_constraintStart_toEndOf="@+id/acceptBtn"
             app:layout_constraintTop_toBottomOf="@+id/notify_txt"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.52" />
 
         <TextView
             android:id="@+id/status"
@@ -123,10 +123,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toEndOf="@+id/pp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.84000003" />
+            app:layout_constraintVertical_bias="0.592" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@
 
     <color name="normal">#80000000</color>
     <color name="holo">@android:color/holo_red_dark</color>
+    <color name="darkRed">#CF0A0A</color>
     <color name="bbbb">#99000000</color>
 
 

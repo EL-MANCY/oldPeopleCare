@@ -348,7 +348,7 @@
             android:layout_width="294dp"
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="55dp"
+            android:layout_marginBottom="70dp"
             android:background="@drawable/button"
             android:backgroundTint="#008080"
             android:text="Add New Medicine"
@@ -358,10 +358,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.367"
+            app:layout_constraintHorizontal_bias="0.618"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeRecycle"
-            app:layout_constraintVertical_bias="0.016" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageButton
             android:id="@+id/addpicbtn"
