@@ -17,34 +17,36 @@
         <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/oval.xml" value="0.1595" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/search_editbox.xml" value="0.1555" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/spinner_background.xml" value="0.1555" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/timeBack.xml" value="0.1595" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/drawable/time_back.xml" value="0.1595" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_main.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_open_alarm.xml" value="0.2484375" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_alarms_items.xml" value="0.6" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_alarms_items.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_patients_item.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_item.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_notifiy_item.xml" value="0.4" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiverhome_item.xml" value="0.4" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/contact_item.xml" value="0.536" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiverhome_item.xml" value="0.5074349442379182" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/contact_item.xml" value="0.5027624309392266" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/emergy_item.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/errorspinner_item.xml" value="0.24739583333333334" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_add_new_medicine.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_add_newcaregiver_patient.xml" value="0.264" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_alarm.xml" value="0.136" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_all_alarms.xml" value="0.176" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_all_patients.xml" value="0.2" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_alarm.xml" value="0.264" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_all_alarms.xml" value="0.4" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_all_patients.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_basic_information.xml" value="0.3488824101068999" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_care_giver_profile.xml" value="0.2" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregive_home.xml" value="0.176" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregive_home.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregiver_notifications.xml" value="0.2" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregivers_patient.xml" value="0.72" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregivers_patient.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_chat.xml" value="0.2" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_chat_contacts_fragments.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_code_number.xml" value="0.264" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_medicine.xml" value="0.176" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_medicine.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_remove_caregiver_role.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_emergency.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_forget_password.xml" value="0.264" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_log_in.xml" value="0.1" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_log_in.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_patient_home.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_patient_notification.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_registration.xml" value="0.264" />
@@ -60,7 +62,7 @@
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/spinner_item.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/spinner_items.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/tiem_item.xml" value="0.264" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/time_item.xml" value="0.264" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/time_item.xml" value="0.536" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/menu/bottom_navigation_menu2.xml" value="0.24739583333333334" />
       </map>

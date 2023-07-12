@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:text="New Caregiver"
+            android:text="@string/new_caregiver"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -75,9 +75,10 @@
             android:id="@+id/sendbtn"
             android:layout_width="228dp"
             android:layout_height="55dp"
+            android:layout_marginTop="98dp"
             android:background="@drawable/button"
             android:backgroundTint="#008080"
-            android:text="Send Invitation"
+            android:text="@string/send_invitation"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -87,8 +88,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89" />
+            app:layout_constraintTop_toBottomOf="@+id/p1"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/p2"
@@ -111,7 +112,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Caregiver Email"
+                    android:hint="@string/enter_caregiver_email"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
@@ -135,7 +136,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/p2"
-            app:layout_constraintVertical_bias="0.120000005">
+            app:layout_constraintVertical_bias="0.07999998">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

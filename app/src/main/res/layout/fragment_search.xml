@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Search For Care Givers"
+            android:hint="@string/search_for_care_givers"
             app:endIconMode="clear_text"
             app:errorTextColor="#EF0C0C"
             app:hintTextColor="#008080"

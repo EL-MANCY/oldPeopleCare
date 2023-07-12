@@ -9,7 +9,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.Authentication.CodeNo.CodeNumberFragment"
     android:background="#FFFFFF">
-    >
 
 
     <TextView
@@ -18,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:maxLines="2"
-        android:text="Code has been sent !"
+        android:text="@string/code_has_been_sent"
         android:textAlignment="center"
         android:textColor="#008080"
         android:textSize="34sp"
@@ -41,7 +40,7 @@
         android:layout_width="388dp"
         android:layout_height="48dp"
         android:layout_marginTop="5dp"
-        android:text="Please check your inbox and click  the received code to reset your password"
+        android:text="@string/please_check_your_inbox_and_click_the_received_code_to_reset_your_password"
         android:textAlignment="center"
         android:textColor="#070707"
         android:textSize="16sp"
@@ -54,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="Code-Digit"
+        android:hint="@string/code_digit"
         app:endIconMode="clear_text"
         app:errorTextColor="#EF0C0C"
         app:hintTextColor="#008080"
@@ -88,7 +87,7 @@
         android:layout_height="52dp"
         android:background="@drawable/button"
         android:backgroundTint="#008080"
-        android:text="Reset Password"
+        android:text="@string/reset_password"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -106,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="Didn’t receive the message ? "
+        android:text="@string/didn_t_receive_the_message"
         android:textColor="#070707"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="24dp"
-        android:text="Resend"
+        android:text="@string/resend"
         android:textColor="#008080"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView14"

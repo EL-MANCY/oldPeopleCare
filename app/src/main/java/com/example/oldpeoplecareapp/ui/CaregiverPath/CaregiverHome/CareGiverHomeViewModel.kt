@@ -20,7 +20,7 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
     private var localRepositoryImp: LocalRepositoryImpl
     lateinit var medicineUiModels:List<MedicineUiModel>
 
-    val Tag = "CareGiverHomeViewModel"
+    val Tag = "CareGiverHomeViewModelxxxx"
     var error :String?=null
 
     init {

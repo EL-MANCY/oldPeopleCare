@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-    android:layout_height="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/white"
-    tools:context=".ui.Authentication.SplashScreenFragment">
+        tools:context=".ui.Authentication.SplashScreenFragment">
 
 
         <ImageView
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="MED MATE"
+            android:text="@string/med_mate"
             android:textColor="#008080"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/poppins"
-            android:text="At our core, we are dedicated to ensuring that you have the support and the right time to take your medication"
+            android:text="@string/at_our_core_we_are_dedicated_to_ensuring_that_you_have_the_support_and_the_right_time_to_take_your_medication"
             android:textAlignment="center"
             android:textColor="#A3101011"
             android:textSize="12sp"
@@ -76,7 +76,7 @@
             android:layout_height="52dp"
             android:background="@drawable/button"
             android:backgroundTint="#008080"
-            android:text="GET STARTED "
+            android:text="@string/get_started"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold"
