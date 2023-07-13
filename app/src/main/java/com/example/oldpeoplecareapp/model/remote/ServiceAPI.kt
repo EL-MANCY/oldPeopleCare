@@ -30,6 +30,17 @@ interface ServiceAPI {
         @Field("fcmToken") FcmToken: String
     ): Response<UserLogInInfo>
 
+    @Multipart
+    @PUT("/user/")
+    suspend fun updatetSingleUser(
+        @Header("token") token: String,
+        @Part("fullname") fullname: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("dateOfBirth") dateOfBirth: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Response<SingleUserResponse>
 
     @Multipart
     @POST("/medicine/{id}")
@@ -37,12 +48,12 @@ interface ServiceAPI {
         @Path("id") id: String,
         @Header("token") token: String,
         @Part("name") name: RequestBody,
-        @Part("imgUrl") imgUrl: MultipartBody.Part,
-        @Part("recordUrl") recordUrl: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
+        @Part audio: MultipartBody.Part,
         @Part("type") type: RequestBody,
         @Part("description") description: RequestBody,
-        @Part("time") time: List<RequestBody>,
-        weakly: List<RequestBody>
+        @Part time: MultipartBody.Part,
+        @Part weakly: MultipartBody.Part
     ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
@@ -120,17 +131,6 @@ interface ServiceAPI {
         @Path("userID") userID: String,
     ): Response<SingleUserResponse>
 
-    @Multipart
-    @PUT("/user/")
-    suspend fun updatetSingleUser(
-        @Header("token") token: String,
-        @Part("fullname") fullname: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("phone") phone: RequestBody,
-        @Part("dateOfBirth") dateOfBirth: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part image: MultipartBody.Part
-    ): Response<SingleUserResponse>
 
     @GET("/upcoming/{userID}")
     suspend fun getUpcoming(

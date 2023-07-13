@@ -30,12 +30,12 @@ interface RemoteRepository {
         id: String,
         token: String,
         name: RequestBody,
-        imgUrl: MultipartBody.Part,
-        recordUrl: MultipartBody.Part,
+        image: MultipartBody.Part,
+        audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: List<RequestBody>,
-        weakly: List<RequestBody>
+        time: MultipartBody.Part,
+        weakly:MultipartBody.Part,
     ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(
@@ -48,7 +48,7 @@ interface RemoteRepository {
         userId: String,
         token: String,
         name: RequestBody,
-        imgUrl: MultipartBody.Part,
+        image: MultipartBody.Part,
         recordUrl: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,

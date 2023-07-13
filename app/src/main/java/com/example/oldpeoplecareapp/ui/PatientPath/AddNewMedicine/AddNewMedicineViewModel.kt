@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.MedicineResponse
 import com.example.oldpeoplecareapp.model.entity.MedicineResponseX
+import com.example.oldpeoplecareapp.model.entity.SingleUserResponse
 import com.example.oldpeoplecareapp.model.local.LocalRepositoryImpl
 import com.example.oldpeoplecareapp.model.local.OldCareDB
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
@@ -46,6 +47,43 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
     val snackBarLiveData: LiveData<String>
         get() = snackBarMutableLiveData
 
+    private var UserMutableLiveData = MutableLiveData<SingleUserResponse?>()
+    val UserLiveData: LiveData<SingleUserResponse?>
+        get() = UserMutableLiveData
+
+
+    fun getUserInfo(token: String, userID: String) {
+        viewModelScope.launch {
+            if(isNetworkAvailable(getApplication())) {
+                val result = remoteRepositoryImp.getSingleUser(token, userID)
+
+                if (result.isSuccessful) {
+                    UserMutableLiveData.postValue(result.body())
+
+                    result.body()?.let {
+                        localRepositoryImp.postSingleUser(it)
+                        //  getAllNotificationDao()
+                    }
+                    Log.i(Tag, result.body().toString())
+                } else {
+                    error = result.errorBody()?.string()!!.toString()
+                    UserMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.toString())
+                }
+            }else{
+                getUser()
+            }
+        }
+    }
+    fun getUser() {
+        viewModelScope.launch {
+            val Dao = localRepositoryImp.getSingleUser()
+            UserMutableLiveData.postValue(Dao)
+
+
+        }
+    }
+
     fun addMedicine(
         id: String,
         token: String,
@@ -54,8 +92,8 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         recordUrl: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: List<RequestBody>,
-        weakly: List<RequestBody>
+        time: MultipartBody.Part,
+        weakly: MultipartBody.Part,
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {

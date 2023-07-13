@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientHomeBinding
@@ -57,6 +58,24 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         binding.emergencyBtn.setOnClickListener {
             findNavController().navigate(PatientHomeFragmentDirections.actionPatientHomeFragmentToEmergencyFragment())
         }
+        patientHomeViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+        patientHomeViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                loading.isDismiss()
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(patientHomeViewModel.error!=null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    view,
+                    patientHomeViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                patientHomeViewModel.error =null
+            }
+        })
 
 
         binding.upcommingBtn.setOnClickListener {

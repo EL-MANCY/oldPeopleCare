@@ -3,14 +3,13 @@ package com.example.oldpeoplecareapp.model.local
 import android.content.Context
 import androidx.room.*
 import com.example.oldpeoplecareapp.model.entity.*
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.example.oldpeoplecareapp.model.entity.Reciever
-import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import java.util.*
 
 private val DATABASE_NAME="oldCare"
-@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 9, exportSchema = false)
+@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 10, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OldCareDB: RoomDatabase() {
     abstract fun dataDao(): DataDao
@@ -60,6 +59,8 @@ class Converters {
     fun toJson(medicineX: MedicineX): String {
         return Gson().toJson(medicineX)
     }
+
+
 
 
     ////////
@@ -155,6 +156,16 @@ class Converters {
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
         return date?.time?.toLong()
+    }
+
+    @TypeConverter
+    fun fromJson2(value: String): Audio {
+        return Gson().fromJson(value, object : TypeToken<Audio>() {}.type)
+    }
+
+    @TypeConverter
+    fun toJson(audio: Audio): String {
+        return Gson().toJson(audio)
     }
 }
 

@@ -112,7 +112,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/name_txt"
-                style="@style/MyHintTextStyle"
+                style="@style/MyHintTextStyle2"
                 android:layout_width="345dp"
                 android:layout_height="47dp"
                 android:layout_marginTop="31dp"
@@ -142,7 +142,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/mailtxt"
-                style="@style/MyHintTextStyle"
+                style="@style/MyHintTextStyle2"
                 android:layout_width="345dp"
                 android:layout_height="47dp"
                 android:layout_marginTop="31dp"
@@ -172,7 +172,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/phonetxt"
-                style="@style/MyHintTextStyle"
+                style="@style/MyHintTextStyle2"
                 android:layout_width="345dp"
                 android:layout_height="47dp"
                 android:layout_marginTop="31dp"
@@ -187,7 +187,7 @@
 
         <TextView
             android:id="@+id/datetxtx"
-            style="@style/MyHintTextStyle"
+            style="@style/MyHintTextStyle2"
             android:layout_width="330dp"
             android:layout_height="47dp"
             android:layout_marginTop="18dp"
@@ -200,7 +200,7 @@
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="9dp"
-            android:textColor="#80000000"
+            android:textColor="#000000"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
@@ -224,7 +224,7 @@
 
                 <Spinner
                     android:id="@+id/gender"
-                    style="@style/MyHintTextStyle"
+                    style="@style/MyHintTextStyle2"
                     android:layout_width="345dp"
                     android:layout_height="48dp"
                     android:background="@drawable/et_style"
@@ -254,57 +254,11 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/registerAs"
-            android:layout_width="345dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="55dp"
-            android:layout_marginTop="15dp"
-            app:cardCornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderX">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <Spinner
-                    android:id="@+id/registerAsX"
-                    style="@style/MyHintTextStyle"
-                    android:layout_width="345dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/et_style"
-                    android:backgroundTint="#5CD9D9D9"
-                    android:backgroundTintMode="src_in"
-                    android:entries="@array/regist"
-                    android:outlineProvider="none"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.43" />
-
-                <ImageView
-                    android:id="@+id/imageView11"
-                    android:layout_width="26dp"
-                    android:layout_height="28dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.03"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/registerAsX"
-                    app:layout_constraintVertical_bias="0.55"
-                    app:srcCompat="@drawable/registaspic" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/editbtn"
             android:layout_width="294dp"
             android:layout_height="52dp"
-            android:layout_marginTop="38dp"
             android:background="@drawable/button"
             android:backgroundTint="#008080"
             android:text="@string/edit"
@@ -317,8 +271,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerAs"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/genderX" />
 
         <ImageView
             android:id="@+id/editbutton"

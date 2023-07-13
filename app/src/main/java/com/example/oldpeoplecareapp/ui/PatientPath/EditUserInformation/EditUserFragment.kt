@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,22 +20,20 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
-import com.example.oldpeoplecareapp.databinding.FragmentBasicInformationBinding
 import com.example.oldpeoplecareapp.databinding.FragmentEditUserBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragment
 import com.example.oldpeoplecareapp.ui.PatientPath.UserInformation.BasicInformationFragmentDirections
-import com.example.oldpeoplecareapp.ui.PatientPath.UserInformation.UserInfoViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_basic_information.*
-import kotlinx.android.synthetic.main.fragment_registration.*
-import okhttp3.MediaType
+import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -45,11 +42,13 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull as toMediaTypeOrNull1
 
 
 class EditUserFragment : Fragment() {
+
     lateinit var binding: FragmentEditUserBinding
     lateinit var editUserViewModel: EditUserViewModel
     lateinit var retrivedToken:String
     lateinit var retrivedID:String
     lateinit var imgurl:String
+
     companion object {
         const val IMAGE_REQUEST_CODE = 100
     }
@@ -75,6 +74,7 @@ class EditUserFragment : Fragment() {
         editUserViewModel = ViewModelProvider(requireActivity()).get(EditUserViewModel::class.java)
         editUserViewModel.getUserInfo("barier " + retrivedToken,retrivedID)
         loading.isDismiss()
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
         val genderitems = resources.getStringArray(R.array.gender)
         val spinnerAdapter2 = object :
@@ -84,7 +84,6 @@ class EditUserFragment : Fragment() {
                 // First item will be used for hint
                 return position != 0
             }
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,
@@ -96,10 +95,11 @@ class EditUserFragment : Fragment() {
                 if (position == 0) {
                     val color = resources.getColor(android.R.color.holo_red_dark)
                     (view as TextView).setTextColor(color)
-                    view.setTextAppearance(R.style.MyTextStyle2)
+                    view.setTextAppearance(R.style.MyTextStyle3)
                 } else {
                     //here it is possible to define color for other items by
-                    val color = resources.getColor(R.color.bbbb)
+                    val color = resources.getColor(R.color.black)
+                    view.setTextAppearance(R.style.MyTextStyle3)
                     (view as TextView).setTextColor(color)                }
                 return view
             }
@@ -111,7 +111,6 @@ class EditUserFragment : Fragment() {
                 // First item will be used for hint
                 return position != 0
             }
-            @RequiresApi(Build.VERSION_CODES.M)
             override fun getDropDownView(
                 position: Int,
                 convertView: View?,
@@ -121,12 +120,13 @@ class EditUserFragment : Fragment() {
                     super.getDropDownView(position, convertView, parent) as TextView
                 //set the color of first item in the drop down list to gray
                 if (position == 0) {
-                    val color = resources.getColor(R.color.bbbb)
+                    val color = resources.getColor(R.color.black)
                     (view as TextView).setTextColor(color)
-                    view.setTextAppearance(R.style.MyTextStyle)
+                    view.setTextAppearance(R.style.MyTextStyle3)
                 } else {
                     //here it is possible to define color for other items by
-                    val color = resources.getColor(R.color.bbbb)
+                    val color = resources.getColor(R.color.black)
+                    view.setTextAppearance(R.style.MyTextStyle3)
                     (view as TextView).setTextColor(color)                 }
                 return view
             }
@@ -149,101 +149,16 @@ class EditUserFragment : Fragment() {
             ) {
                 val value = parent!!.getItemAtPosition(position).toString()
                 if (value == genderitems[0]) {
-                    val color = resources.getColor(R.color.bbbb)
+                    val color = resources.getColor(R.color.black)
                     (view as TextView).setTextColor(color)                      }
                 else{
-                    val color = resources.getColor(R.color.bbbb)
+                    val color = resources.getColor(R.color.black)
                     (view as TextView).setTextColor(color)
-
                 }
             }
         }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-        val registitems = resources.getStringArray(R.array.regist)
-        val spinnerAdaptererror = object :
-            ArrayAdapter<String>(requireContext(), R.layout.errorspinner_item, registitems) {
-            override fun isEnabled(position: Int): Boolean {
-                // Disable the first item from Spinner
-                // First item will be used for hint
-                return position != 0
-            }
-            @RequiresApi(Build.VERSION_CODES.M)
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view: TextView =
-                    super.getDropDownView(position, convertView, parent) as TextView
-                //set the color of first item in the drop down list to gray
-                if (position == 0) {
-                    val color = resources.getColor(android.R.color.holo_red_dark)
-                    (view as TextView).setTextColor(color)
-                    view.setTextAppearance(R.style.MyTextStyle2)
-                } else {
-                    //here it is possible to define color for other items by
-                    val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)                }
-                return view
-            }
-        }
-        val spinnerAdaptertrue = object :
-            ArrayAdapter<String>(requireContext(), R.layout.spinner_item, registitems) {
-            override fun isEnabled(position: Int): Boolean {
-                // Disable the first item from Spinner
-                // First item will be used for hint
-                return position != 0
-            }
-            @RequiresApi(Build.VERSION_CODES.M)
-            override fun getDropDownView(
-                position: Int,
-                convertView: View?,
-                parent: ViewGroup
-            ): View {
-                val view: TextView =
-                    super.getDropDownView(position, convertView, parent) as TextView
-                //set the color of first item in the drop down list to gray
-                if (position == 0) {
-                    val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)
-                    view.setTextAppearance(R.style.MyTextStyle)
-                } else {
-                    //here it is possible to define color for other items by
-                    val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)                 }
-                return view
-            }
-        }
-        spinnerAdaptertrue.setDropDownViewResource(android.R.layout.simple_list_item_checked)
-        spinnerAdaptererror.setDropDownViewResource(android.R.layout.simple_list_item_checked)
-        binding.registerAsX.adapter = spinnerAdaptertrue
-        binding.registerAsX.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                val value = parent!!.selectedItem.toString()
-                if (value == registitems[0]) {
-                    val color = resources.getColor(android.R.color.holo_red_dark)
-                    (view as TextView).setTextColor(color)                      }
-            }
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val value = parent!!.getItemAtPosition(position).toString()
-                if (value == registitems[0]) {
-                    val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)                      }
-                else{
-                    val color = resources.getColor(R.color.bbbb)
-                    (view as TextView).setTextColor(color)
-
-                }
-            }
-        }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
         val calendar= Calendar.getInstance()
         val year=calendar.get(Calendar.YEAR)
@@ -262,16 +177,15 @@ class EditUserFragment : Fragment() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
         binding.editbtn.setOnClickListener {
             val fullname = binding.nametxtX.editText!!.text.toString()
             val email = binding.mailtxtx.editText!!.text.toString()
             val phone = binding.phonetxtx.editText!!.text.toString()
             val dateOfBirth = binding.datetxtx.text.toString()
             val gender = binding.gender.selectedItem.toString()
-            val registerAs = binding.registerAsX.selectedItem.toString()
 
             //////////////////////////////////////////////////////////////////
+
 
             if(binding.datetxtx.text.toString().isNullOrEmpty()){
                 binding.datetxtx.setHintTextColor( getResources().getColor(R.color.holo));
@@ -351,62 +265,37 @@ class EditUserFragment : Fragment() {
 
             //////////////////////////////////////////////////////////////////
 
-            if(binding.registerAsX.selectedItem==registitems[0]){
-                binding.registerAsX.adapter = spinnerAdaptererror
-                binding.registerAsX.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                        val value = parent!!.selectedItem.toString()
-                        if (value == registitems[0]) {
-                            val color = resources.getColor(android.R.color.holo_red_dark)
-                            (view as TextView).setTextColor(color)
-                        }
-                    }
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val value = parent!!.getItemAtPosition(position).toString()
-                        if (value == registitems[0]) {
-                            val color = resources.getColor(android.R.color.holo_red_dark)
-                            (view as TextView).setTextColor(color)                        }
-                        else{
-                            val color = resources.getColor(R.color.bbbb)
-                            (view as TextView).setTextColor(color)
+            if (!binding.nameTxt.text.toString().isNullOrEmpty() && !binding.mailtxt.text.toString()
+                    .isNullOrEmpty() &&
+                !binding.phonetxt.text.toString().isNullOrEmpty() && !(binding.gender == null)
+            ) {
 
-                        }
-                    }
-                }
-            }
-
-            //////////////////////////////////////////////////////////////////
+                val file = File(imgurl)
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull1(), file)
+                val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
 
-            //////////////////////////////////////////////////////////////////
-            val file = File(imgurl)
-            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull1(), file)
-            val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+                val fullnameBody = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull1(),
+                    binding.nameTxt.text.toString()
+                )
+                val emailBody = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull1(),
+                    binding.mailtxt.text.toString()
+                )
+                val phoneBody = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull1(),
+                    binding.phonetxt.text.toString()
+                )
+                val dateOfBirthBody =
+                    RequestBody.create("text/plain".toMediaTypeOrNull1(), dateOfBirth)
+                val genderBody = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull1(),
+                    binding.gender.selectedItem.toString()
+                )
 
-
-            //////////////////////////////////////////////////////////////////
-
-            if (!binding.nameTxt.text.toString().isNullOrEmpty() && !binding.mailtxt.text.toString().isNullOrEmpty() &&
-                !binding.phonetxt.text.toString().isNullOrEmpty() && !(binding.gender == null) &&
-                !(binding.registerAsX == null) ) {
-
-                val fullnameBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), binding.nameTxt.text.toString())
-                val emailBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), binding.mailtxt.text.toString())
-                val phoneBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), binding.phonetxt.text.toString())
-                val dateOfBirthBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), dateOfBirth)
-                val genderBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), binding.gender.selectedItem.toString())
-                val registerAsXBody = RequestBody.create("text/plain".toMediaTypeOrNull1(), binding.registerAsX.selectedItem.toString())
-
-
-
-
-            editUserViewModel.udpateUserInfo(
-                    "barier "+retrivedToken,
+                editUserViewModel.udpateUserInfo(
+                    "barier " + retrivedToken,
                     fullnameBody,
                     emailBody,
                     phoneBody,
@@ -416,13 +305,11 @@ class EditUserFragment : Fragment() {
                 )
                 loading.startLoading()
             }
-
         }
 
         binding.editbutton.setOnClickListener {
             pickImageGallery()
         }
-
 
         editUserViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
@@ -435,8 +322,10 @@ class EditUserFragment : Fragment() {
                 binding.datetxtx.setText(it.dateOfBirth)
                 val position = spinnerAdapter.getPosition(it.gender)
                 binding.gender.setSelection(position)
-                val position2 = spinnerAdaptertrue.getPosition(it.registAs)
-                binding.registerAsX.setSelection(position2)
+                binding.userpicture.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userpicture)
+
+
             } else if(editUserViewModel.error!=null) {
                 loading.isDismiss()
                 Snackbar.make(
@@ -446,11 +335,24 @@ class EditUserFragment : Fragment() {
                 ).show()
                 editUserViewModel.error =null
             }
-
         })
-
-
+        editUserViewModel.UpdatLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                loading.isDismiss()
+                findNavController().navigate(EditUserFragmentDirections.actionEditUserFragmentToBasicInformationFragment())
+                findNavController().popBackStack()
+            } else if(editUserViewModel.error!=null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    view,
+                    editUserViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                editUserViewModel.error =null
+            }
+        })
     }
+
     private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {
         textInputLayout.defaultHintTextColor =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
@@ -459,6 +361,7 @@ class EditUserFragment : Fragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, AddNewMedicineFragment.IMAGE_REQUEST_CODE)
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -468,6 +371,7 @@ class EditUserFragment : Fragment() {
             if (selectedImageUri != null) {
                 imgurl = getPathFromUri(selectedImageUri)
                 Log.i("picc", imgurl)
+                Glide.with(this).load(imgurl).into(binding.userpicture)
             }
         }
     }
@@ -481,7 +385,4 @@ class EditUserFragment : Fragment() {
         cursor?.close()
         return path ?: ""
     }
-
-
-
 }

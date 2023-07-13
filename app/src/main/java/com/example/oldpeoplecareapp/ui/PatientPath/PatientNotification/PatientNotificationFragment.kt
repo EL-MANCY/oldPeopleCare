@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentPatientNotificationBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver.EditRemoveCaregiverRoleDirections
@@ -26,7 +27,6 @@ class PatientNotificationFragment : Fragment() {
 
     var TAG = "PatientNotificationFragment"
     lateinit var binding: FragmentPatientNotificationBinding
-    lateinit var retrivedToken: String
     lateinit var notificationViewModel: PatientNotificationViewModel
     val notificationRecyclerView by lazy { NotificationRecyclerView() }
 
@@ -45,8 +45,9 @@ class PatientNotificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
-        retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val preferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        val retrivedToken = preferences.getString("TOKEN", null)
+        val retrivedID = preferences.getString("ID", null)
 
         notificationViewModel =
             ViewModelProvider(requireActivity()).get(PatientNotificationViewModel::class.java)
@@ -54,9 +55,26 @@ class PatientNotificationFragment : Fragment() {
 
         binding.notificationRecyclerView.adapter = notificationRecyclerView
 
+
         binding.userInfo.setOnClickListener {
             findNavController().navigate(PatientNotificationFragmentDirections.actionPatientNotificationFragmentToBasicInformationFragment())
         }
+
+        notificationViewModel.getUserInfo("barier " + retrivedToken,retrivedID.toString())
+        notificationViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(notificationViewModel.error!=null) {
+                Snackbar.make(
+                    view,
+                    notificationViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                notificationViewModel.error =null
+            }
+        })
 
         notificationViewModel.NotificationLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {

@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.oldpeoplecareapp.model.entity.SingleUserResponse
 import com.example.oldpeoplecareapp.model.entity.notificationData
 import com.example.oldpeoplecareapp.model.local.LocalRepositoryImpl
 import com.example.oldpeoplecareapp.model.local.OldCareDB
@@ -34,6 +35,42 @@ class PatientNotificationViewModel(application: Application): AndroidViewModel(a
     private var NotificationMutableLiveData= MutableLiveData<List<notificationData>>()
     val NotificationLiveData: LiveData<List<notificationData>>
         get() =NotificationMutableLiveData
+
+    private var UserMutableLiveData = MutableLiveData<SingleUserResponse?>()
+    val UserLiveData: LiveData<SingleUserResponse?>
+        get() = UserMutableLiveData
+
+    fun getUserInfo(token: String, userID: String) {
+        viewModelScope.launch {
+            if(isNetworkAvailable(getApplication())) {
+                val result = remoteRepositoryImp.getSingleUser(token, userID)
+
+                if (result.isSuccessful) {
+                    UserMutableLiveData.postValue(result.body())
+
+                    result.body()?.let {
+                        localRepositoryImp.postSingleUser(it)
+                        //  getAllNotificationDao()
+                    }
+                    Log.i(Tag, result.body().toString())
+                } else {
+                    error = result.errorBody()?.string()!!.toString()
+                    UserMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.toString())
+                }
+            }else{
+                getUser()
+            }
+        }
+    }
+    fun getUser() {
+        viewModelScope.launch {
+            val Dao = localRepositoryImp.getSingleUser()
+            UserMutableLiveData.postValue(Dao)
+
+
+        }
+    }
 
     fun getAllNotification(token: String){
         viewModelScope.launch {

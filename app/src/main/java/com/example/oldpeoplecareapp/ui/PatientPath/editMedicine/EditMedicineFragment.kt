@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditMedicineBinding
@@ -694,6 +695,25 @@ class EditMedicineFragment : Fragment() {
                 Log.i(TAG, "not")
             }
         }
+        editMedicineViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+
+        editMedicineViewModel.UserLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                loading.isDismiss()
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(editMedicineViewModel.error!=null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    view,
+                    editMedicineViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                editMedicineViewModel.error =null
+            }
+        })
     }
 
     private fun RecordPermissions() {

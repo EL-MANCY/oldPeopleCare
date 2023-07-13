@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewMedicineBinding
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -391,6 +393,7 @@ class AddNewMedicineFragment : Fragment() {
 
         //------------------------------------------------------//
 
+
         binding.backBtn.setOnClickListener {
             findNavController().navigate(
                 AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToPatientHomeFragment(
@@ -570,25 +573,68 @@ class AddNewMedicineFragment : Fragment() {
 
                 val nameRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
                 val typeRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
-                val descriptionRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+                val descriptionRequestBody =
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+///////////////////////////////////////////////////////////////////////////////////////
                 val timeRequestBodyList = TimeList.map { time ->
                     RequestBody.create("text/plain".toMediaTypeOrNull(), time)
                 }
+
+                val builder2 = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val partName2 = "time" // Change this to a suitable name
+                for ((index, timeRequestBody) in timeRequestBodyList.withIndex()) {
+                    builder2.addFormDataPart("$partName2[$index]", "", timeRequestBody)
+                }
+                val multipartTime = builder2.build()
+
+// Convert MultipartBody to MultipartBody.Part
+                val timePart: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("time", "", multipartTime)
+
+                val timeJSONArray = JSONArray()
+                for (time in timeRequestBodyList) {
+                    timeJSONArray.put(time.toString())
+                }
+                val timeArrayRequestBody = RequestBody.create(
+                    "application/json".toMediaTypeOrNull(),
+                    timeJSONArray.toString()
+                )
+                val timePart2: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("time", "", timeArrayRequestBody)
+
+///////////////////////////////////////////////////////////////////////////////////////
+
                 val weeklyRequestBodyList = days.map { day ->
                     RequestBody.create("text/plain".toMediaTypeOrNull(), day)
                 }
 
+                val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val partName = "weakly"
+                for ((index, weeklyRequestBody) in weeklyRequestBodyList.withIndex()) {
+                    builder.addFormDataPart("$partName[$index]", "", weeklyRequestBody)
+                }
+                val multipartWeek = builder.build()
+
+// Convert MultipartBody to MultipartBody.Part
+                val weeklyPart: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("weakly", "", multipartWeek)
+
+///////////////////////////////////////////////////////////////////////////////////////
+
                 val imgUrlPart = MultipartBody.Part.createFormData(
-                    "imgUrl",
+                    "image",
                     "image.jpg",
                     RequestBody.create("image/*".toMediaTypeOrNull(), imgurl)
                 )
 
                 val recordUrlPart = MultipartBody.Part.createFormData(
-                    "recordUrl",
+                    "audio",
                     "record.mp3",
                     RequestBody.create("audio/*".toMediaTypeOrNull(), output)
                 )
+
+
+
                 addNewMedicineViewModel.addMedicine(
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
@@ -597,8 +643,8 @@ class AddNewMedicineFragment : Fragment() {
                     recordUrlPart,
                     typeRequestBody,
                     descriptionRequestBody,
-                    timeRequestBodyList,
-                    weeklyRequestBodyList,
+                    timePart,
+                    weeklyPart,
                 )
                 Log.i(TAG, "THE ARRAY IS ${TimeList} +")
                 Log.i("addDawa","img = $imgurl , output = $output")
@@ -635,6 +681,27 @@ class AddNewMedicineFragment : Fragment() {
 
             }
         }
+        addNewMedicineViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+
+        addNewMedicineViewModel.UserLiveData.observe(
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+                if (it != null) {
+                    loading.isDismiss()
+                    binding.userInfo.setBackgroundResource(R.drawable.oval)
+                    Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+                } else if (addNewMedicineViewModel.error != null) {
+                    loading.isDismiss()
+                    Snackbar.make(
+                        view,
+                        addNewMedicineViewModel.error.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    addNewMedicineViewModel.error = null
+                }
+            })
 
 
         //------------------------------------------------------//

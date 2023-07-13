@@ -36,6 +36,10 @@ class EditUserViewModel(application: Application) : AndroidViewModel(application
     val UserLiveData: LiveData<SingleUserResponse?>
         get() = UserMutableLiveData
 
+    private var UpdatMutableLiveData = MutableLiveData<SingleUserResponse?>()
+    val UpdatLiveData: LiveData<SingleUserResponse?>
+        get() = UpdatMutableLiveData
+
     fun getUserInfo(token: String, userID: String) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {
@@ -82,7 +86,7 @@ class EditUserViewModel(application: Application) : AndroidViewModel(application
                 )
 
                 if (result.isSuccessful) {
-                    UserMutableLiveData.postValue(result.body())
+                    UpdatMutableLiveData.postValue(result.body())
 
 //                    result.body()?.let {
 //                        localRepositoryImp.postSingleUser(it)
@@ -91,7 +95,7 @@ class EditUserViewModel(application: Application) : AndroidViewModel(application
                     Log.i(Tag, result.body().toString())
                 } else {
                     error = result.errorBody()?.string()!!.toString()
-                    UserMutableLiveData.postValue(result.body())
+                    UpdatMutableLiveData.postValue(result.body())
                     Log.i(Tag, result.toString())
                 }
             } else {

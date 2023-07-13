@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditRemoveCaregiverRoleBinding
@@ -26,6 +27,8 @@ class EditRemoveCaregiverRole : Fragment() {
 
     lateinit var binding: FragmentEditRemoveCaregiverRoleBinding
     lateinit var editRemoveViewModel: EditRemoveViewModel
+    lateinit var retrivedToken: String
+
     private lateinit var navController: NavController
 
     override fun onCreateView(
@@ -38,6 +41,10 @@ class EditRemoveCaregiverRole : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
+        retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val retrivedID = getpreferences.getString("ID", null)
 
         val args = EditRemoveCaregiverRoleArgs.fromBundle(requireArguments())
         val caregiverId = args.id
@@ -154,7 +161,25 @@ class EditRemoveCaregiverRole : Fragment() {
                 }
             }
         ///////////////////////////////////////////////////////////////////////////////////////
+        editRemoveViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
 
+
+        editRemoveViewModel.UserLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                loading.isDismiss()
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(editRemoveViewModel.error!=null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    view,
+                    editRemoveViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                editRemoveViewModel.error =null
+            }
+        })
         binding.editbtn.setOnClickListener {
             val role = binding.editCareGiveSpinner.selectedItem.toString()
 

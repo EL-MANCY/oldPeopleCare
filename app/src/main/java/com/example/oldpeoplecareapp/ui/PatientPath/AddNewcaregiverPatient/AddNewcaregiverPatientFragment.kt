@@ -11,10 +11,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewcaregiverPatientBinding
@@ -112,6 +114,7 @@ class AddNewcaregiverPatientFragment : Fragment() {
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val retrivedID = getpreferences.getString("ID", null)
 
         val loading= LoadingDialog(requireActivity())
 
@@ -191,6 +194,25 @@ class AddNewcaregiverPatientFragment : Fragment() {
 
 
         }
+        addNewcaregiverViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+        addNewcaregiverViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                loading.isDismiss()
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(addNewcaregiverViewModel.error!=null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    view,
+                    addNewcaregiverViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                addNewcaregiverViewModel.error =null
+            }
+        })
 
         binding.userInfo.setOnClickListener {
             findNavController().navigate(AddNewcaregiverPatientFragmentDirections.actionAddNewcaregiverPatientFragmentToBasicInformationFragment())

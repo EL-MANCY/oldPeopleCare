@@ -45,25 +45,25 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         id: String,
         token: String,
         name: RequestBody,
-        imgUrl: MultipartBody.Part,
-        recordUrl: MultipartBody.Part,
+        image: MultipartBody.Part,
+        audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: List<RequestBody>,
-        weakly: List<RequestBody>
+        time:MultipartBody.Part,
+        weekly:MultipartBody.Part,
     ): Response<AllMedicineResponseItem> {
 
-        return withContext((Dispatchers.IO)) {
+        return withContext(Dispatchers.IO) {
             api.postMedicine(
                 id,
                 token,
                 name,
-                imgUrl,
-                recordUrl,
+                image,
+                audio,
                 type,
                 description,
                 time,
-                weakly,
+                weekly
             )
         }
     }
