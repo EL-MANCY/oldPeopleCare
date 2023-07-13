@@ -27,6 +27,7 @@ class PatientsRecyclerView: RecyclerView.Adapter<PatientsRecyclerView.PatientVie
         val fullname: TextView =itemView.findViewById(R.id.patientFullname_txtfield)
         val phone: TextView =itemView.findViewById(R.id.phNo_txtfield)
         var phonebtn: ImageView = itemView.findViewById(R.id.phoneBtn)
+        var chat: ImageView = itemView.findViewById(R.id.chatx)
 
 
 
@@ -41,6 +42,9 @@ class PatientsRecyclerView: RecyclerView.Adapter<PatientsRecyclerView.PatientVie
 
             phonebtn.setOnClickListener {
                 onListItemClick2?.onItemClick2(item)
+            }
+            chat.setOnClickListener {
+                onListItemClick2?.onItemClick1(item)
             }
 
         }

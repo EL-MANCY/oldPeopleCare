@@ -14,10 +14,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
 import com.example.oldpeoplecareapp.model.entity.notificationData
+import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
@@ -80,6 +82,13 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
             }
         })
 
+        binding.info.setOnClickListener {
+            findNavController().navigate(CaregiverNotificationsFragmentDirections.actionCaregiverNotificationsFragmentToBasicInformationFragment())
+
+        }
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun createChannel(channelId: String, channelName: String) {

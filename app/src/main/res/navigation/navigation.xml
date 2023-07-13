@@ -198,6 +198,12 @@
         <action
             android:id="@+id/action_caregiveHomeFragment_to_caregiverNotificationsFragment"
             app:destination="@id/caregiverNotificationsFragment" />
+        <action
+            android:id="@+id/action_caregiveHomeFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
+        <action
+            android:id="@+id/action_caregiveHomeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/allPatientsFragment"
@@ -209,6 +215,15 @@
         <action
             android:id="@+id/action_allPatientsFragment_to_caregiverNotificationsFragment"
             app:destination="@id/caregiverNotificationsFragment" />
+        <action
+            android:id="@+id/action_allPatientsFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_allPatientsFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
+        <action
+            android:id="@+id/action_allPatientsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/caregiverNotificationsFragment"
@@ -220,6 +235,9 @@
         <action
             android:id="@+id/action_caregiverNotificationsFragment_to_allPatientsFragment"
             app:destination="@id/allPatientsFragment" />
+        <action
+            android:id="@+id/action_caregiverNotificationsFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"

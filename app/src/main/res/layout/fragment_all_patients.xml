@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="35dp"
             android:layout_marginTop="10dp"
-            android:hint="@string/search_for_medicine"
+            android:hint="@string/search_for_Userss"
 
             app:endIconMode="clear_text"
             app:errorTextColor="#EF0C0C"
@@ -50,7 +50,7 @@
             app:srcCompat="@drawable/greenback" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/info"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:layout_marginTop="12dp"
@@ -69,7 +69,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/info" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/caregiverPatientsRecyclerView"

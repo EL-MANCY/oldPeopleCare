@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiveHomeBinding
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
+import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragmentDirections
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotifyRecyclerview
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotifyViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,7 +60,13 @@ class CaregiveHomeFragment : Fragment() {
                 Log.i(TAG, it.toString())
             }
         })
+        binding.userInfo.setOnClickListener {
+            findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToBasicInformationFragment())
+        }
+        binding.searchIconX.editText!!.setOnClickListener{
+            findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToSearchFragment())
 
+        }
 
     }
 

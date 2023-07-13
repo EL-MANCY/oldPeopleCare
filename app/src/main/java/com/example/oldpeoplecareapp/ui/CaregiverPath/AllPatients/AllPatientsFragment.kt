@@ -12,13 +12,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAllPatientsBinding
 import com.example.oldpeoplecareapp.model.entity.Circles
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
-
 
 class AllPatientsFragment : Fragment(),OnItemClickListener2 {
     val TAG = "AllPatientsFragment"
@@ -26,7 +28,6 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
     lateinit var allPatientViewModel: AllPatientViewModel
     lateinit var  retrivedToken:String
     val patientsRecyclerView by lazy { PatientsRecyclerView() }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentAllPatientsBinding.inflate(inflater, container, false)
@@ -59,13 +60,30 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
                 ).show()
             }
         })
-        patientsRecyclerView.onListItemClick2 = this
 
+        binding.info.setOnClickListener {
+            findNavController().navigate(AllPatientsFragmentDirections.actionAllPatientsFragmentToBasicInformationFragment())
+
+        }
+
+        binding.searchIconX.editText!!.setOnClickListener{
+            findNavController().navigate(AllPatientsFragmentDirections.actionAllPatientsFragmentToSearchFragment())
+
+        }
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        patientsRecyclerView.onListItemClick2 = this
     }
     override fun onItemClick2(info: Circles) {
         val phoneNumber = info.id.phone // Replace with the phone number you want to call
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phoneNumber"))
         view?.context?.startActivity(intent)
+    }
+
+    override fun onItemClick1(info: Circles) {
+        findNavController().navigate(AllPatientsFragmentDirections.actionAllPatientsFragmentToChatFragment(info.id._id,info.id.image.url,info.id.fullname))
     }
 
 
