@@ -178,6 +178,12 @@ interface ServiceAPI {
         @Header("token") token: String
     ): Response<DeleteConversationResponse>
 
+ @DELETE("/user/user/circles/{Id}")
+    suspend fun deleteCareGiver(
+        @Path("Id") caregiverId: String,
+        @Header("token") token: String
+    ): Response<DeleteConversationResponse>
+
     @FormUrlEncoded
     @POST("/user/find/more")
     suspend fun searchUser(

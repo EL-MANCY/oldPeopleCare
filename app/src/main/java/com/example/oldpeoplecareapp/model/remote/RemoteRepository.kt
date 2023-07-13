@@ -2,7 +2,6 @@ package com.example.oldpeoplecareapp.model.remote
 
 import com.example.oldpeoplecareapp.model.entity.*
 import retrofit2.Response
-import retrofit2.http.*
 
 interface RemoteRepository {
     suspend fun addNewUser(
@@ -150,6 +149,11 @@ interface RemoteRepository {
         token: String,
         user: String
     ): Response<List<SearchResponseItem>>
+
+    suspend fun deleteCareGiver(
+        caregiverId: String,
+        token: String
+    ): Response<DeleteConversationResponse>
 
 }
 

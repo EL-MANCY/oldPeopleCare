@@ -8,18 +8,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.oldpeoplecareapp.model.entity.AllMedicineRespone
+import com.example.oldpeoplecareapp.model.entity.DeleteConversationResponse
 import com.example.oldpeoplecareapp.model.entity.UpdateResponse
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
-import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
-import retrofit2.http.Path
 
 class EditRemoveViewModel(application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     val Tag = "EditRemoveViewModel"
-    var error :String?=null
+    var error: String? = null
 
     init {
         val serviceInstant = RetroBuilder.builder
@@ -30,14 +28,20 @@ class EditRemoveViewModel(application: Application): AndroidViewModel(applicatio
     val updateCaregiverLiveData: LiveData<UpdateResponse?>
         get() = updateCaregiverMutableLiveData
 
+    private var deleteCaregiverMutableLiveData = MutableLiveData<DeleteConversationResponse?>()
+    val deleteCaregiverLiveData: LiveData<DeleteConversationResponse?>
+        get() = deleteCaregiverMutableLiveData
+
     private val snackBarMutableLiveData = MutableLiveData<String>()
     val snackBarLiveData: LiveData<String>
         get() = snackBarMutableLiveData
 
 
-    fun updateRole(token: String,
-                   caregiverID: String,
-                   newRole: String) {
+    fun updateRole(
+        token: String,
+        caregiverID: String,
+        newRole: String
+    ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {
                 val result = remoteRepositoryImp.updateRole(
@@ -53,7 +57,31 @@ class EditRemoveViewModel(application: Application): AndroidViewModel(applicatio
                     updateCaregiverMutableLiveData.postValue(result.body())
                     Log.i(Tag, result.toString())
                 }
-            }else{
+            } else {
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
+            }
+        }
+    }
+
+    fun deleteCaregiver(
+        token: String,
+        caregiverID: String,
+    ) {
+        viewModelScope.launch {
+            if (isNetworkAvailable(getApplication())) {
+                val result = remoteRepositoryImp.deleteCareGiver(
+                    caregiverID,
+                    token,
+                    )
+                if (result.isSuccessful) {
+                    deleteCaregiverMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.body().toString())
+                } else {
+                    error = result.errorBody()?.string()!!.toString()
+                    deleteCaregiverMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.toString())
+                }
+            } else {
                 snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
@@ -62,11 +90,12 @@ class EditRemoveViewModel(application: Application): AndroidViewModel(applicatio
 
     fun Empty() {
         viewModelScope.launch {
-            updateCaregiverMutableLiveData.value=null
-            error=null
+            updateCaregiverMutableLiveData.value = null
+            error = null
         }
     }
-    fun clear(){
+
+    fun clear() {
         snackBarMutableLiveData.value=""
     }
     fun isNetworkAvailable(context: Context): Boolean {

@@ -5,7 +5,6 @@ import com.example.oldpeoplecareapp.model.entity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
-import retrofit2.http.Path
 
 class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     override suspend fun addNewUser(
@@ -256,6 +255,15 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     ): Response<List<SearchResponseItem>> {
         return withContext((Dispatchers.IO)) {
             api.searchUser(token, user)
+        }
+    }
+
+    override suspend fun deleteCareGiver(
+        caregiverId: String,
+        token: String
+    ): Response<DeleteConversationResponse> {
+        return withContext((Dispatchers.IO)) {
+            api.deleteCareGiver(caregiverId, token)
         }
     }
 }

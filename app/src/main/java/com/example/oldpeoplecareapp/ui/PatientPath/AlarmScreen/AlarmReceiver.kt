@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -13,19 +15,20 @@ import android.os.PowerManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.oldpeoplecareapp.R
+import java.io.IOException
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
 
         try {
-            context?.let {
+            context.let {
 
-                val medImageUrl = intent?.getStringExtra("medImageUrl").toString()
-                val medName = intent?.getStringExtra("medName").toString()
-                val alarmSoundPath = intent?.getStringExtra("alarmSoundPath").toString()
-                val medTime = intent?.getStringExtra("medTime").toString()
-                val retrivedID = intent?.getStringExtra("retrivedID").toString()
-                val medId = intent?.getStringExtra("medId").toString()
+                val medImageUrl = intent.getStringExtra("medImageUrl").toString()
+                val medName = intent.getStringExtra("medName").toString()
+                val alarmSoundPath = intent.getStringExtra("alarmSoundPath").toString()
+                val medTime = intent.getStringExtra("medTime").toString()
+                val retrivedID = intent.getStringExtra("retrivedID").toString()
+                val medId = intent.getStringExtra("medId").toString()
 
                 val requestCode = intent.getIntExtra("requestCode", -1)
                 if (requestCode != -1) {
@@ -52,9 +55,26 @@ class AlarmReceiver : BroadcastReceiver() {
 
                     context.startActivity(alarmIntent)
 
-                    val ringtoneUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                    val ringtone = RingtoneManager.getRingtone(context, ringtoneUri)
-                    ringtone.play()
+                    val mediaPlayer = MediaPlayer()
+
+                    try {
+                        // Set the data source for the MediaPlayer
+                        mediaPlayer.setDataSource(context, Uri.parse(alarmSoundPath))
+
+                        // Set the audio stream type
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM)
+
+                        // Prepare the MediaPlayer
+                        mediaPlayer.prepare()
+
+                        // Start playing the alarm sound
+                        mediaPlayer.start()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                  //  val ringtoneUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                   // val ringtone = RingtoneManager.getRingtone(context, ringtoneUri)
+                   // ringtone.play()
                     wakeLock.release()
 
 

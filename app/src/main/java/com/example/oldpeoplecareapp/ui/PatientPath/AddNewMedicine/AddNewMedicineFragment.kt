@@ -19,9 +19,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.ReturnThis
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.graphics.Color
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,8 +30,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAddNewMedicineBinding
-import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -43,19 +38,21 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class AddNewMedicineFragment : Fragment() {
 
     var TAG = "AddNewMedicineFragxxx"
+
     lateinit var binding: FragmentAddNewMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var addNewMedicineViewModel: AddNewMedicineViewModel
     val timeRecyclerView by lazy { TimeRecyclerView() }
     var TimeList: MutableList<String> = mutableListOf()
     var selectedAlarmTimes: MutableList<Calendar> = mutableListOf()
-    val r = 0
     var days: MutableList<String> = mutableListOf()
+    lateinit var imgurl:String
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
@@ -74,10 +71,13 @@ class AddNewMedicineFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         RecordPermissions()
+
         binding.timeRecycle.adapter = timeRecyclerView
         addNewMedicineViewModel =
             ViewModelProvider(requireActivity()).get(AddNewMedicineViewModel::class.java)
+
         val loading = LoadingDialog(requireActivity())
 
         //------------------------------------------------------//
@@ -154,7 +154,6 @@ class AddNewMedicineFragment : Fragment() {
         }
         MedApapter.setDropDownViewResource(android.R.layout.simple_list_item_checked)
 
-        //------------------------------------------------------//
         //------------------------------------------------------//
 
         val Repeats = resources.getStringArray(R.array.repeats)
@@ -326,17 +325,20 @@ class AddNewMedicineFragment : Fragment() {
 
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val uniqueFileName = "${timeStamp}_${UUID.randomUUID()}_$fileName"
         var output: String
+
         val appDir =
             File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
-            output = appDir.path + "/" + fileName
+            output = appDir.path + "/" + uniqueFileName
         } else {
             Log.d(TAG, "startRecording: dir is not exist")
             appDir.mkdirs()
-            output = appDir.path + "/" + fileName
+            output = appDir.path + "/" + uniqueFileName
         }
         var isRecording = false
 
@@ -369,7 +371,7 @@ class AddNewMedicineFragment : Fragment() {
             if (isRecording) {
                 mediaRecorder.stop()
             }
-            binding.recordX.editText!!.setText(output)
+            binding.recordX.editText!!.setText("Record Saved")
             isRecording = false
             binding.cancelbtn.visibility = View.GONE
             binding.addrec.visibility = View.VISIBLE
@@ -566,14 +568,15 @@ class AddNewMedicineFragment : Fragment() {
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
                     name,
-                    "https://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1356&h=668&fit=crop",
-                    record,
+                    imgurl,
+                    output,
                     type,
                     description,
                     TimeList,
                     days,
                 )
                 Log.i(TAG, "THE ARRAY IS ${TimeList} +")
+                Log.i("addDawa","img = $imgurl , output = $output")
                 loading.startLoading()
 
                 //------------------------------------------------------//
@@ -703,7 +706,9 @@ class AddNewMedicineFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK) {
-            binding.UploadPhoto.setText(data?.data?.path)
+//            binding.UploadPhoto.setText(data?.data?.path)
+            binding.UploadPhoto.setText("Picture Uploaded")
+            imgurl = data?.data?.path.toString()
         }
     }
 

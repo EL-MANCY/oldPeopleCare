@@ -2,13 +2,13 @@ package com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditRemoveCaregiverRoleBinding
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
@@ -237,8 +236,64 @@ class EditRemoveCaregiverRole : Fragment() {
         binding.userInfo.setOnClickListener {
             findNavController().navigate(EditRemoveCaregiverRoleDirections.actionEditRemoveCaregiverRoleToBasicInformationFragment())
         }
+        binding.delbtn.setOnClickListener {
+            editRemoveViewModel.deleteCaregiver("barier ${retrivedToken}",caregiverId )
+            loading.startLoading()
 
+            editRemoveViewModel.snackBarLiveData.observe(viewLifecycleOwner) {
+                it.let {
+                    Snackbar.make(view, it.toString(), Snackbar.LENGTH_SHORT).show()
+                    loading.isDismiss()
+                }
 
+                editRemoveViewModel.deleteCaregiverLiveData.observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        editRemoveViewModel.Empty()
+                        loading.isDismiss()
+                        Snackbar.make(
+                            Role,
+                            "CareGiver Deleted",
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+
+                        findNavController().navigate(EditRemoveCaregiverRoleDirections.actionEditRemoveCaregiverRoleToCaregiversPatientFragment())
+                    } else if (editRemoveViewModel.error != null) {
+                        loading.isDismiss()
+                        Snackbar.make(
+                            Role,
+                            editRemoveViewModel.error.toString(),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    editRemoveViewModel.error = null
+
+                })
+
+            }
+        }
+
+        editRemoveViewModel.deleteCaregiverLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                editRemoveViewModel.Empty()
+                loading.isDismiss()
+                Snackbar.make(
+                    Role,
+                    "CareGiver Deleted",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+
+                findNavController().navigate(EditRemoveCaregiverRoleDirections.actionEditRemoveCaregiverRoleToCaregiversPatientFragment())
+            } else if (editRemoveViewModel.error != null) {
+                loading.isDismiss()
+                Snackbar.make(
+                    Role,
+                    editRemoveViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            editRemoveViewModel.error = null
+
+        })
 
         editRemoveViewModel.updateCaregiverLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
