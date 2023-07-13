@@ -1,6 +1,8 @@
 package com.example.oldpeoplecareapp.model.remote
 
 import com.example.oldpeoplecareapp.model.entity.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 
 interface RemoteRepository {
@@ -27,13 +29,13 @@ interface RemoteRepository {
     suspend fun postMedicine(
         id: String,
         token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: List<String>,
-        weakly: MutableList<String>
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(
@@ -45,13 +47,13 @@ interface RemoteRepository {
         medId: String,
         userId: String,
         token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: Array<String>,
-        weakly:  MutableList<String>
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<MedicineResponseX>
 
     suspend fun DeleteMedicine(
@@ -155,6 +157,15 @@ interface RemoteRepository {
         token: String
     ): Response<DeleteConversationResponse>
 
+    suspend fun updatetSingleUser(
+        token: String,
+        fullname: RequestBody,
+        email: RequestBody,
+        phone: RequestBody,
+        dateOfBirth: RequestBody,
+        gender: RequestBody,
+        image: MultipartBody.Part
+    ): Response<SingleUserResponse>
 }
 
 

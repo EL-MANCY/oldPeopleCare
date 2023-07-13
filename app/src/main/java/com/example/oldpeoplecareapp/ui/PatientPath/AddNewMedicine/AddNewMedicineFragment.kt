@@ -36,6 +36,9 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -564,16 +567,38 @@ class AddNewMedicineFragment : Fragment() {
                     "data", retrivedID.toString() + "/" + "barier ${retrivedToken}" + "/"
                             + name + "/" + photo + "/" + record + "/" + type + "/" + description + "/" + TimeList
                 )
+
+                val nameRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
+                val typeRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
+                val descriptionRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+                val timeRequestBodyList = TimeList.map { time ->
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), time)
+                }
+                val weeklyRequestBodyList = days.map { day ->
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), day)
+                }
+
+                val imgUrlPart = MultipartBody.Part.createFormData(
+                    "imgUrl",
+                    "image.jpg",
+                    RequestBody.create("image/*".toMediaTypeOrNull(), imgurl)
+                )
+
+                val recordUrlPart = MultipartBody.Part.createFormData(
+                    "recordUrl",
+                    "record.mp3",
+                    RequestBody.create("audio/*".toMediaTypeOrNull(), output)
+                )
                 addNewMedicineViewModel.addMedicine(
                     retrivedID.toString(),
                     "barier ${retrivedToken}",
-                    name,
-                    imgurl,
-                    output,
-                    type,
-                    description,
-                    TimeList,
-                    days,
+                    nameRequestBody,
+                    imgUrlPart,
+                    recordUrlPart,
+                    typeRequestBody,
+                    descriptionRequestBody,
+                    timeRequestBodyList,
+                    weeklyRequestBodyList,
                 )
                 Log.i(TAG, "THE ARRAY IS ${TimeList} +")
                 Log.i("addDawa","img = $imgurl , output = $output")

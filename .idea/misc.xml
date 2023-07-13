@@ -22,7 +22,7 @@
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_main.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/activity_open_alarm.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_alarms_items.xml" value="0.4" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_patients_item.xml" value="0.264" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/all_patients_item.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_item.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiver_notifiy_item.xml" value="0.4" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/caregiverhome_item.xml" value="0.5074349442379182" />
@@ -37,13 +37,14 @@
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_basic_information.xml" value="0.3488824101068999" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_care_giver_profile.xml" value="0.2" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregive_home.xml" value="0.4" />
-        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregiver_notifications.xml" value="0.2" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregiver_notifications.xml" value="0.8" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_caregivers_patient.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_chat.xml" value="0.2" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_chat_contacts_fragments.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_code_number.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_medicine.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_remove_caregiver_role.xml" value="0.2484375" />
+        <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_edit_user.xml" value="0.2484375" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_emergency.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_forget_password.xml" value="0.264" />
         <entry key="..\:/oldPeopleCare/app/src/main/res/layout/fragment_log_in.xml" value="0.264" />

@@ -4,6 +4,8 @@ import android.util.Log
 import com.example.oldpeoplecareapp.model.entity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
@@ -39,18 +41,18 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     }
 
 
-
     override suspend fun postMedicine(
         id: String,
         token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: List<String>,
-        weakly: MutableList<String>
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<AllMedicineResponseItem> {
+
         return withContext((Dispatchers.IO)) {
             api.postMedicine(
                 id,
@@ -77,14 +79,15 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
 
     override suspend fun updateMedicine(
         medId: String,
-        userId: String, token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: Array<String>,
-        weakly:  MutableList<String>
+        userId: String,
+        token: String,
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
             api.updateMedicine(
@@ -264,6 +267,20 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
     ): Response<DeleteConversationResponse> {
         return withContext((Dispatchers.IO)) {
             api.deleteCareGiver(caregiverId, token)
+        }
+    }
+
+    override suspend fun updatetSingleUser(
+        token: String,
+        fullname: RequestBody,
+        email: RequestBody,
+        phone: RequestBody,
+        dateOfBirth: RequestBody,
+        gender: RequestBody,
+        image: MultipartBody.Part
+    ): Response<SingleUserResponse> {
+        return withContext((Dispatchers.IO)) {
+            api.updatetSingleUser(token, fullname, email, phone, dateOfBirth, gender, image)
         }
     }
 }

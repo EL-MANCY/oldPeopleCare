@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="110dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
@@ -27,7 +27,7 @@
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19999999">
+            app:layout_constraintVertical_bias="0.42000002">
 
             <ImageView
                 android:id="@+id/senderPic"
@@ -45,6 +45,7 @@
 
         <TextView
             android:id="@+id/notify_txt"
+            android:paddingHorizontal="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="85dp"
@@ -80,7 +81,7 @@
             app:layout_constraintHorizontal_bias="0.919"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintVertical_bias="0.96" />
 
         <Button
             android:id="@+id/acceptBtn"
@@ -112,7 +113,7 @@
             app:layout_constraintHorizontal_bias="0.789"
             app:layout_constraintStart_toEndOf="@+id/acceptBtn"
             app:layout_constraintTop_toBottomOf="@+id/notify_txt"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.97" />
 
         <TextView
             android:id="@+id/status"
@@ -125,7 +126,7 @@
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toEndOf="@+id/pp"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.592" />
+            app:layout_constraintVertical_bias="0.65999997" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

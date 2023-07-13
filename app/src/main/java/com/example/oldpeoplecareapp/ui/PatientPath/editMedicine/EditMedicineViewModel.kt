@@ -14,6 +14,8 @@ import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import com.google.gson.JsonIOException
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class EditMedicineViewModel (application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
@@ -43,16 +45,18 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         medId: String,
         userId: String,
         token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: Array<String>,
-        weakly: MutableList<String>
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time:List<RequestBody>,
+        weakly: List<RequestBody>
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {
+                Log.i(Tag, "entered")
+
                 val MedicineList = remoteRepositoryImp.updateMedicine(
                     medId,
                     userId,

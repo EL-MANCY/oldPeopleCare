@@ -18,6 +18,8 @@ import com.example.oldpeoplecareapp.model.remote.RetroBuilder
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class AddNewMedicineViewModel(application: Application): AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
@@ -47,13 +49,13 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
     fun addMedicine(
         id: String,
         token: String,
-        name: String,
-        imgUrl: String,
-        recordUrl: String,
-        type: String,
-        description: String,
-        time: List<String>,
-        weakly: MutableList<String>
+        name: RequestBody,
+        imgUrl: MultipartBody.Part,
+        recordUrl: MultipartBody.Part,
+        type: RequestBody,
+        description: RequestBody,
+        time: List<RequestBody>,
+        weakly: List<RequestBody>
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {

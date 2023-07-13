@@ -288,6 +288,9 @@
             app:destination="@id/logIn"
             app:popUpTo="@id/patientHomeFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicInformationFragment_to_editUserFragment"
+            app:destination="@id/editUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/allAlarmsFragment"
@@ -388,5 +391,13 @@
         <action
             android:id="@+id/action_chatContactsFragments_to_chatFragment"
             app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editUserFragment"
+        android:name="com.example.oldpeoplecareapp.ui.PatientPath.EditUserInformation.EditUserFragment"
+        android:label="EditUserFragment" >
+        <action
+            android:id="@+id/action_editUserFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
 </navigation>

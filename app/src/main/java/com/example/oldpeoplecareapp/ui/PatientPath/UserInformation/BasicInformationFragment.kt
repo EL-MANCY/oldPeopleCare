@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentBasicInformationBinding
@@ -49,6 +50,10 @@ class BasicInformationFragment : Fragment() {
         userInfoViewModel.getUserInfo("barier " + retrivedToken,retrivedID)
         loading.isDismiss()
 
+        binding.editbutton.setOnClickListener {
+            findNavController().navigate(BasicInformationFragmentDirections.actionBasicInformationFragmentToEditUserFragment())
+
+        }
         binding.logoutBtn.setOnClickListener {
             val navController = findNavController()
             navController.navigate(BasicInformationFragmentDirections.actionBasicInformationFragmentToLogIn())
@@ -70,6 +75,8 @@ class BasicInformationFragment : Fragment() {
                 binding.datetxtx.editText!!.setText(it.dateOfBirth)
                 binding.gendertxtx.editText!!.setText(it.gender)
                 binding.regtextx.editText!!.setText(it.registAs)
+                Glide.with(this).load(it.image.url).into(binding.userpicture)
+
             } else if(userInfoViewModel.error!=null) {
                 loading.isDismiss()
                 Snackbar.make(

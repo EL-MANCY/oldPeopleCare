@@ -11,7 +11,6 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,37 +29,45 @@ import androidx.navigation.fragment.findNavController
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditMedicineBinding
-import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.*
-import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
-import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragment
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragmentDirections
+import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.TimeRecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_edit_medicine.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 class EditMedicineFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    val TAG="EditMedicineFragmentTAG"
+    val TAG = "EditMedicineFragmentTAG"
     lateinit var binding: FragmentEditMedicineBinding
     lateinit var mediaRecorder: MediaRecorder
     lateinit var editMedicineViewModel: EditMedicineViewModel
     val timeRecyclerView by lazy { TimeRecyclerView() }
-    var  TimeList: MutableList<String> = mutableListOf()
-    var selectedAlarmTimes:MutableList<Calendar> = mutableListOf()
-    val r=0
-    var daysList= arrayOf("Sunday","Monday")
+    var TimeList: MutableList<String> = mutableListOf()
+    var selectedAlarmTimes: MutableList<Calendar> = mutableListOf()
     var days: MutableList<String> = mutableListOf()
+    lateinit var imgurl: String
+
 
     companion object {
         const val IMAGE_REQUEST_CODE = 100
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditMedicineBinding.inflate(inflater, container, false)
         return binding.root
@@ -315,16 +323,20 @@ class EditMedicineFragment : Fragment() {
 
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.3gp"
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val uniqueFileName = "${timeStamp}_${UUID.randomUUID()}_$fileName"
         var output: String
-        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
+
+        val appDir =
+            File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
-            output = appDir.path + "/" + fileName
+            output = appDir.path + "/" + uniqueFileName
         } else {
             Log.d(TAG, "startRecording: dir is not exist")
             appDir.mkdirs()
-            output = appDir.path + "/" + fileName
+            output = appDir.path + "/" + uniqueFileName
         }
         var isRecording = false
 
@@ -357,7 +369,7 @@ class EditMedicineFragment : Fragment() {
             if (isRecording) {
                 mediaRecorder.stop()
             }
-            binding.recordX.editText!!.setText(output)
+            binding.recordX.editText!!.setText("Record Saved")
             isRecording = false
             binding.cancelbtn.visibility = View.GONE
             binding.addrec.visibility=View.VISIBLE
@@ -599,17 +611,41 @@ class EditMedicineFragment : Fragment() {
                 !binding.medicineType.selectedItem.toString().isNullOrEmpty()&&
                 !binding.Repeated.selectedItem.toString().isNullOrEmpty()
             ) {
+                val nameRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), name)
+                val typeRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
+                val descriptionRequestBody =
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+                val timeRequestBodyList = TimeList.map { time ->
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), time)
+                }
+                val weeklyRequestBodyList = days.map { day ->
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), day)
+                }
+
+                val imgUrlPart = MultipartBody.Part.createFormData(
+                    "imgUrl",
+                    "image.jpg",
+                    RequestBody.create("image/*".toMediaTypeOrNull(), imgurl)
+                )
+
+                val recordUrlPart = MultipartBody.Part.createFormData(
+                    "recordUrl",
+                    "record.mp3",
+                    RequestBody.create("audio/*".toMediaTypeOrNull(), output)
+                )
+
                 editMedicineViewModel.updateAllMedicine(
                     medId,
                     userId,
                     "barier ${retrivedToken}",
-                    name,
-                    "https://th.bing.com/th/id/R.f536c7f2f88aab7047dd18f34245ac96?rik=%2bIszp%2bhbl5%2bDKQ&pid=ImgRaw&r=0",
-                    record,
-                    type,
-                    description,
-                    TimeList.toTypedArray(),
-                    days)
+                    nameRequestBody,
+                    imgUrlPart,
+                    recordUrlPart,
+                    typeRequestBody,
+                    descriptionRequestBody,
+                    timeRequestBodyList,
+                    weeklyRequestBodyList
+                )
 
                 loading.startLoading()
                 //------------------------------------------------------//
@@ -659,10 +695,6 @@ class EditMedicineFragment : Fragment() {
             }
         }
     }
-
-
-
-
 
     private fun RecordPermissions() {
         if (ActivityCompat.checkSelfPermission(requireContext(),
@@ -717,8 +749,9 @@ class EditMedicineFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== AddNewMedicineFragment.IMAGE_REQUEST_CODE &&resultCode == Activity.RESULT_OK){
-            binding.UploadPhoto.setText(data?.data?.path)
+        if(requestCode== AddNewMedicineFragment.IMAGE_REQUEST_CODE &&resultCode == Activity.RESULT_OK) {
+            binding.UploadPhoto.setText("Picture Uploaded")
+            imgurl = data?.data?.path.toString()
         }
     }
 

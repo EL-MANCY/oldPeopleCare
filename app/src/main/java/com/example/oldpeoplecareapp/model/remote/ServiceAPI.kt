@@ -1,9 +1,10 @@
 package com.example.oldpeoplecareapp.model.remote
 
 import com.example.oldpeoplecareapp.model.entity.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
-import java.util.*
 
 interface ServiceAPI {
 
@@ -29,18 +30,19 @@ interface ServiceAPI {
         @Field("fcmToken") FcmToken: String
     ): Response<UserLogInInfo>
 
-    @FormUrlEncoded
+
+    @Multipart
     @POST("/medicine/{id}")
     suspend fun postMedicine(
         @Path("id") id: String,
         @Header("token") token: String,
-        @Field("name") name: String,
-        @Field("imgUrl") imgUrl: String,
-        @Field("recordUrl") recordUrl: String,
-        @Field("type") type: String,
-        @Field("description") description: String,
-        @Field("time") time: List<String>,
-        @Field("weakly") weakly: MutableList<String>
+        @Part("name") name: RequestBody,
+        @Part("imgUrl") imgUrl: MultipartBody.Part,
+        @Part("recordUrl") recordUrl: MultipartBody.Part,
+        @Part("type") type: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("time") time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
@@ -55,13 +57,13 @@ interface ServiceAPI {
         @Path("medId") medId: String,
         @Path("userId") userId: String,
         @Header("token") token: String,
-        @Field("name") name: String,
-        @Field("imgUrl") imgUrl: String,
-        @Field("recordUrl") recordUrl: String,
-        @Field("type") type: String,
-        @Field("description") description: String,
-        @Field("time") time: Array<String>,
-        @Field("weakly") weakly:  MutableList<String>
+        @Part("name") name: RequestBody,
+        @Part("imgUrl") imgUrl: MultipartBody.Part,
+        @Part("recordUrl") recordUrl: MultipartBody.Part,
+        @Part("type") type: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("time") time: List<RequestBody>,
+        weakly: List<RequestBody>
     ): Response<MedicineResponseX>
 
     @DELETE("/medicine/{medId}/{userId}")
@@ -116,6 +118,18 @@ interface ServiceAPI {
     suspend fun getSingleUser(
         @Header("token") token: String,
         @Path("userID") userID: String,
+    ): Response<SingleUserResponse>
+
+    @Multipart
+    @PUT("/user/")
+    suspend fun updatetSingleUser(
+        @Header("token") token: String,
+        @Part("fullname") fullname: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("dateOfBirth") dateOfBirth: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part image: MultipartBody.Part
     ): Response<SingleUserResponse>
 
     @GET("/upcoming/{userID}")
