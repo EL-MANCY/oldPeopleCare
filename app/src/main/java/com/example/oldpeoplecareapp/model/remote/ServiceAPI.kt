@@ -62,6 +62,13 @@ interface ServiceAPI {
         @Header("token") token: String
     ): Response<List<AllMedicineResponseItem>>
 
+    @GET("/medicine/{medicineId}/{userid}")
+    suspend fun getSingleMedicine(
+        @Path("medicineId") medId: String,
+        @Path("userId") userId: String,
+        @Header("token") token: String
+    ): Response<AllMedicineResponseItem>
+
     @Multipart
     @PUT("/medicine/{medId}/{userId}")
     suspend fun updateMedicine(

@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
+import com.example.oldpeoplecareapp.ui.PatientPath.Emergency.OnEmergyClickListener
 
 class CaregiverHomeRecyclerView(val mActivity: Activity): RecyclerView.Adapter<CaregiverHomeRecyclerView.CaregiverHomeViewHolder>() {
+
+    var onListItemClick: OnMedClickListener?=null
 
     var PaientList: List<MedicineUiModel> = emptyList()
 
@@ -29,6 +32,7 @@ class CaregiverHomeRecyclerView(val mActivity: Activity): RecyclerView.Adapter<C
         val time: TextView = itemView.findViewById(R.id.Time_txtView)
         val medName: TextView = itemView.findViewById(R.id.med_nametxtview)
         val patientName: TextView = itemView.findViewById(R.id.patient_name_txtview)
+        val Viewx: TextView = itemView.findViewById(R.id.View_btn)
 
         fun bind(medicineInfo: MedicineUiModel) {
             time.text = medicineInfo.time
@@ -47,7 +51,14 @@ class CaregiverHomeRecyclerView(val mActivity: Activity): RecyclerView.Adapter<C
             } else if (medicineInfo.state == "Waiting") {
                 medComp.setImageResource(R.drawable.no_compe_24)
             }
+
+            Viewx.setOnClickListener {
+                onListItemClick?.onItemClick(medicineInfo)
+            }
         }
+
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaregiverHomeViewHolder {

@@ -77,6 +77,16 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         }
     }
 
+    override suspend fun getSingleMedicine(
+        medId: String,
+        userId: String,
+        token: String
+    ): Response<AllMedicineResponseItem> {
+        return withContext((Dispatchers.IO)) {
+            api.getSingleMedicine(medId, userId, token)
+        }
+    }
+
     override suspend fun updateMedicine(
         medId: String,
         userId: String,

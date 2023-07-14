@@ -35,13 +35,19 @@ interface RemoteRepository {
         type: RequestBody,
         description: RequestBody,
         time: MultipartBody.Part,
-        weakly:MultipartBody.Part,
+        weakly: MultipartBody.Part,
     ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(
         id: String,
         token: String
     ): Response<List<AllMedicineResponseItem>>
+
+    suspend fun getSingleMedicine(
+        medId: String,
+        userId: String,
+        token: String
+    ): Response<AllMedicineResponseItem>
 
     suspend fun updateMedicine(
         medId: String,

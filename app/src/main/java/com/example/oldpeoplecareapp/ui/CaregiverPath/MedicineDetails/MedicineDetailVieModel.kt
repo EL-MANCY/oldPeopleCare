@@ -1,4 +1,4 @@
-package com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome
+package com.example.oldpeoplecareapp.ui.CaregiverPath.MedicineDetails
 
 import android.app.Application
 import android.content.Context
@@ -8,43 +8,44 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.model.entity.SingleUserResponse
 import com.example.oldpeoplecareapp.model.local.LocalRepositoryImpl
 import com.example.oldpeoplecareapp.model.local.OldCareDB
 import com.example.oldpeoplecareapp.model.remote.RemoteRepositoryImp
 import com.example.oldpeoplecareapp.model.remote.RetroBuilder
-import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import kotlinx.coroutines.launch
 
-class CareGiverHomeViewModel(application: Application): AndroidViewModel(application) {
+class MedicineDetailVieModel(application: Application) : AndroidViewModel(application) {
     private var remoteRepositoryImp: RemoteRepositoryImp
     private var localRepositoryImp: LocalRepositoryImpl
-    lateinit var medicineUiModels:List<MedicineUiModel>
+    val Tag = "MedicineDetailVieModel"
+    var error: String? = null
 
-    val Tag = "CareGiverHomeViewModelxxxx"
-    var error :String?=null
 
     init {
         val db = OldCareDB.getInstance(application)
-        localRepositoryImp= LocalRepositoryImpl(db)
+        localRepositoryImp = LocalRepositoryImpl(db)
 
         val serviceInstant = RetroBuilder.builder
         remoteRepositoryImp = RemoteRepositoryImp(serviceInstant)
     }
 
-    private var MedItemMutableLiveData = MutableLiveData<List<MedicineUiModel>>()
-    val MedItemLiveData: LiveData<List<MedicineUiModel>>
-        get() = MedItemMutableLiveData
+    private var SingleMedMutableLiveData = MutableLiveData<AllMedicineResponseItem>()
+    val SingleMedLiveData: LiveData<AllMedicineResponseItem>
+        get() = SingleMedMutableLiveData
 
+    private val snackBarMutableLiveData = MutableLiveData<String>()
+    val snackBarLiveData: LiveData<String>
+        get() = snackBarMutableLiveData
 
     private var UserMutableLiveData = MutableLiveData<SingleUserResponse?>()
     val UserLiveData: LiveData<SingleUserResponse?>
         get() = UserMutableLiveData
 
-
     fun getUserInfo(token: String, userID: String) {
         viewModelScope.launch {
-            if(isNetworkAvailable(getApplication())) {
+            if (isNetworkAvailable(getApplication())) {
                 val result = remoteRepositoryImp.getSingleUser(token, userID)
 
                 if (result.isSuccessful) {
@@ -60,11 +61,12 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
                     UserMutableLiveData.postValue(result.body())
                     Log.i(Tag, result.toString())
                 }
-            }else{
+            } else {
                 getUser()
             }
         }
     }
+
     fun getUser() {
         viewModelScope.launch {
             val Dao = localRepositoryImp.getSingleUser()
@@ -74,59 +76,41 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
         }
     }
 
-    fun getPatients(token: String) {
+    fun getSingleMed(
+        medId: String,
+        userId: String,
+        token: String,
+
+    ) {
         viewModelScope.launch {
-
-            if(isNetworkAvailable(getApplication())) {
-                val result = remoteRepositoryImp.getPatients(token)
-
+            if (isNetworkAvailable(getApplication())) {
+                val result = remoteRepositoryImp.getSingleMedicine(
+                    medId,
+                    userId,
+                    token
+                )
                 if (result.isSuccessful) {
-                    val patients = result.body()
-
-
-
-                     medicineUiModels = patients!!.flatMap { CareGiverResponse ->
-                        CareGiverResponse.medicines.map {
-                            MedicineUiModel(
-                                name = CareGiverResponse.user.fullname,
-                                med = it.medicine.name,
-                                medId = it.medicine._id,
-                                time = it.medicine.time.firstOrNull() ?: "",
-                                imgUrlMed = it.medicine.imgUrl,
-                                imgUrlUser = CareGiverResponse.user.image.url,
-                                state = it.state,
-                            )
-                        }
-                    }
-
-                    result.body()?.let {
-                        localRepositoryImp.addPatientsCareGiver(medicineUiModels)
-                    }
-
-                    MedItemMutableLiveData.postValue(medicineUiModels)
+                    SingleMedMutableLiveData.postValue(result.body())
                     Log.i(Tag, result.body().toString())
                 } else {
                     error = result.errorBody()?.string()!!.toString()
-                    MedItemMutableLiveData.postValue(medicineUiModels)
-                    Log.i(Tag, result.errorBody()?.string()!!.toString())
+                    SingleMedMutableLiveData.postValue(result.body())
+                    Log.i(Tag, result.errorBody()?.string().toString())
                 }
-            }else{
-                getPatientsDao()
+            } else {
+                snackBarMutableLiveData.value = "Check Your Internet Connection"
             }
         }
     }
 
-    fun getPatientsDao() {
-        viewModelScope.launch {
-            val Dao = localRepositoryImp.getPatients()
-            MedItemMutableLiveData.postValue(Dao)
-        }
+    fun clear() {
+        snackBarMutableLiveData.value = ""
     }
 
     fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
 }
-

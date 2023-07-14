@@ -83,6 +83,12 @@
     <string name="get_started">GET STARTED</string>
     <string name="loading">Loading....</string>
     <string name="time3">Time:</string>
+    <string name="medicine_details">Medicine Details</string>
+    <string name="repeated">Repeated:</string>
+    <string name="description2">Description:</string>
+    <string name="type">Type:</string>
+    <string name="time4">Time:</string>
+    <string name="record2">Record:</string>
 
     <string-array name="medicines">
         <item>Select Medicine Type</item>

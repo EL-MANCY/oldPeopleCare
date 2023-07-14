@@ -15,13 +15,14 @@ import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiveHomeBinding
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
 import com.example.oldpeoplecareapp.ui.CaregiverPath.AllPatients.AllPatientsFragmentDirections
+import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.UiModel.MedicineUiModel
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotifyRecyclerview
 import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.CaregiverNotifyViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
 
-class CaregiveHomeFragment : Fragment() {
+class CaregiveHomeFragment : Fragment() , OnMedClickListener {
     lateinit var binding: FragmentCaregiveHomeBinding
     private val TAG = "CaregiveHomeFragment"
     lateinit var caregiverHomeViewModel: CareGiverHomeViewModel
@@ -88,6 +89,10 @@ class CaregiveHomeFragment : Fragment() {
 
         }
 
+    }
+
+    override fun onItemClick(info: MedicineUiModel) {
+        findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToMedicineDetailsFragment(info.medId))
     }
 
 

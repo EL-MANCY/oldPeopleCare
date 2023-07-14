@@ -204,6 +204,9 @@
         <action
             android:id="@+id/action_caregiveHomeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_caregiveHomeFragment_to_medicineDetailsFragment"
+            app:destination="@id/medicineDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/allPatientsFragment"
@@ -399,5 +402,13 @@
         <action
             android:id="@+id/action_editUserFragment_to_basicInformationFragment"
             app:destination="@id/basicInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicineDetailsFragment"
+        android:name="com.example.oldpeoplecareapp.ui.CaregiverPath.MedicineDetails.MedicineDetailsFragment"
+        android:label="MedicineDetailsFragment" >
+        <argument
+            android:name="medId"
+            app:argType="string" />
     </fragment>
 </navigation>
