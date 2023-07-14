@@ -334,24 +334,7 @@ class AddNewMedicineFragment : Fragment() {
 
         //------------------------------------------------------//
 
-//        mediaRecorder = MediaRecorder()
-//        val fileName = "medicine.mp4"
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-//        val uniqueFileName = "${timeStamp}_${UUID.randomUUID()}_$fileName"
-//        var output: String
-//
-//        val appDir =
-//            File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
-//        appDir.mkdirs()
-//        if (appDir.exists()) {
-//            Log.d(TAG, "startRecording: dir is exist")
-//            output = appDir.path + "/" + uniqueFileName
-//        } else {
-//            Log.d(TAG, "startRecording: dir is not exist")
-//            appDir.mkdirs()
-//            output = appDir.path + "/" + uniqueFileName
-//        }
-//        var isRecording = false
+
         mediaRecorder = MediaRecorder()
         val fileName = "medicine.mp4"
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
@@ -613,16 +596,6 @@ class AddNewMedicineFragment : Fragment() {
                 val timePart: MultipartBody.Part =
                     MultipartBody.Part.createFormData("time", "", multipartTime)
 
-//                val timeJSONArray = JSONArray()
-//                for (time in timeRequestBodyList) {
-//                    timeJSONArray.put(time.toString())
-//                }
-//                val timeArrayRequestBody = RequestBody.create(
-//                    "application/json".toMediaTypeOrNull(),
-//                    timeJSONArray.toString()
-//                )
-//                val timePart2: MultipartBody.Part =
-//                    MultipartBody.Part.createFormData("time", "", timeArrayRequestBody)
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -643,21 +616,11 @@ class AddNewMedicineFragment : Fragment() {
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-                val imgUrlPart = MultipartBody.Part.createFormData(
-                    "image",
-                    "image.jpg",
-                    RequestBody.create("image/*".toMediaTypeOrNull(), imgurl)
-                )
 
                 val file = File(imgurl)
                 val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
                 val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
 
-                val recordUrlPart = MultipartBody.Part.createFormData(
-                    "audio",
-                    "record.mp4",
-                    RequestBody.create("audio/*".toMediaTypeOrNull(), output)
-                )
 
                 val audioFile = File(output)
                 val audioRequestBody = audioFile.asRequestBody("audio/mp4".toMediaTypeOrNull())

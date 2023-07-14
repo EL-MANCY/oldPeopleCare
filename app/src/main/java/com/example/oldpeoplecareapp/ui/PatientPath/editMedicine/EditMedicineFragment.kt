@@ -7,9 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.database.Cursor
 import android.media.MediaRecorder
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,6 +43,7 @@ import kotlinx.android.synthetic.main.fragment_edit_medicine.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -323,13 +327,12 @@ class EditMedicineFragment : Fragment() {
         //------------------------------------------------------//
 
         mediaRecorder = MediaRecorder()
-        val fileName = "medicine.3gp"
+        val fileName = "medicine.mp4"
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val uniqueFileName = "${timeStamp}_${UUID.randomUUID()}_$fileName"
         var output: String
 
-        val appDir =
-            File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
+        val appDir = File("${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path}/MyRecording/")
         appDir.mkdirs()
         if (appDir.exists()) {
             Log.d(TAG, "startRecording: dir is exist")
@@ -342,13 +345,12 @@ class EditMedicineFragment : Fragment() {
         var isRecording = false
 
         //------------------------------------------------------//
-
         //Add rec btn listener
         binding.addrec.setOnClickListener {
             try {
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 mediaRecorder.setOutputFile(output)
                 mediaRecorder.prepare()
                 mediaRecorder.start()
@@ -360,7 +362,7 @@ class EditMedicineFragment : Fragment() {
             }
             binding.recordX.editText!!.setText("Recording!")
             binding.cancelbtn.visibility = View.VISIBLE
-            binding.addrec.visibility=View.GONE
+            binding.addrec.visibility = View.GONE
         }
 
         //------------------------------------------------------//
@@ -373,9 +375,10 @@ class EditMedicineFragment : Fragment() {
             binding.recordX.editText!!.setText("Record Saved")
             isRecording = false
             binding.cancelbtn.visibility = View.GONE
-            binding.addrec.visibility=View.VISIBLE
+            binding.addrec.visibility = View.VISIBLE
 
         }
+
 
         //------------------------------------------------------//
 
@@ -556,7 +559,6 @@ class EditMedicineFragment : Fragment() {
             }
 
             //------------------------------------------------------//
-            //------------------------------------------------------//
 
             if (binding.Repeated.selectedItem == Repeats[0]) {
                 binding.Repeated.adapter = ErrorAdapter2
@@ -616,36 +618,64 @@ class EditMedicineFragment : Fragment() {
                 val typeRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), type)
                 val descriptionRequestBody =
                     RequestBody.create("text/plain".toMediaTypeOrNull(), description)
+///////////////////////////////////////////////////////////////////////////////////////
                 val timeRequestBodyList = TimeList.map { time ->
                     RequestBody.create("text/plain".toMediaTypeOrNull(), time)
                 }
+
+                val builder2 = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val partName2 = "time" // Change this to a suitable name
+                for ((index, timeRequestBody) in timeRequestBodyList.withIndex()) {
+                    builder2.addFormDataPart("$partName2[$index]", "", timeRequestBody)
+                }
+                val multipartTime = builder2.build()
+
+// Convert MultipartBody to MultipartBody.Part
+                val timePart: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("time", "", multipartTime)
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
                 val weeklyRequestBodyList = days.map { day ->
                     RequestBody.create("text/plain".toMediaTypeOrNull(), day)
                 }
 
-                val imgUrlPart = MultipartBody.Part.createFormData(
-                    "imgUrl",
-                    "image.jpg",
-                    RequestBody.create("image/*".toMediaTypeOrNull(), imgurl)
-                )
+                val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+                val partName = "weakly"
+                for ((index, weeklyRequestBody) in weeklyRequestBodyList.withIndex()) {
+                    builder.addFormDataPart("$partName[$index]", "", weeklyRequestBody)
+                }
+                val multipartWeek = builder.build()
 
-                val recordUrlPart = MultipartBody.Part.createFormData(
-                    "recordUrl",
-                    "record.mp3",
-                    RequestBody.create("audio/*".toMediaTypeOrNull(), output)
-                )
+// Convert MultipartBody to MultipartBody.Part
+                val weeklyPart: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("weakly", "", multipartWeek)
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+                val file = File(imgurl)
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+                val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+
+                val audioFile = File(output)
+                val audioRequestBody = audioFile.asRequestBody("audio/mp4".toMediaTypeOrNull())
+                val recordUrlPart2 = MultipartBody.Part.createFormData("audio", audioFile.name, audioRequestBody)
+
 
                 editMedicineViewModel.updateAllMedicine(
                     medId,
                     userId,
                     "barier ${retrivedToken}",
                     nameRequestBody,
-                    imgUrlPart,
-                    recordUrlPart,
+                    imagePart,
+                    recordUrlPart2,
                     typeRequestBody,
                     descriptionRequestBody,
-                    timeRequestBodyList,
-                    weeklyRequestBodyList
+                    timePart,
+                    weeklyPart
                 )
 
                 loading.startLoading()
@@ -762,17 +792,31 @@ class EditMedicineFragment : Fragment() {
 
 
     private fun pickImageGallery() {
-        val intent=Intent(Intent.ACTION_PICK)
-        intent.type="image/*"
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
         startActivityForResult(intent, AddNewMedicineFragment.IMAGE_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== AddNewMedicineFragment.IMAGE_REQUEST_CODE &&resultCode == Activity.RESULT_OK) {
-            binding.UploadPhoto.setText("Picture Uploaded")
-            imgurl = data?.data?.path.toString()
+        if (requestCode == AddNewMedicineFragment.IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val selectedImageUri: Uri? = data?.data
+            if (selectedImageUri != null) {
+                imgurl = getPathFromUri(selectedImageUri)
+                Log.i("picc", imgurl)
+                binding.UploadPhoto.setText("Picture Uploaded")
+            }
         }
+    }
+
+    private fun getPathFromUri(uri: Uri): String {
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor? = requireContext().contentResolver.query(uri, projection, null, null, null)
+        val columnIndex: Int? = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor?.moveToFirst()
+        val path: String? = columnIndex?.let { cursor?.getString(it) }
+        cursor?.close()
+        return path ?: ""
     }
 
     private fun setTextInputLayoutHintColor(textInputLayout: TextInputLayout, context: Context, @ColorRes colorIdRes: Int) {

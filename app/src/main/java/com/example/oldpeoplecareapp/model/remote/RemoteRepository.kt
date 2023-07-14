@@ -49,11 +49,11 @@ interface RemoteRepository {
         token: String,
         name: RequestBody,
         image: MultipartBody.Part,
-        recordUrl: MultipartBody.Part,
+        audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: List<RequestBody>,
-        weakly: List<RequestBody>
+        time: MultipartBody.Part,
+        weakly:MultipartBody.Part
     ): Response<MedicineResponseX>
 
     suspend fun DeleteMedicine(

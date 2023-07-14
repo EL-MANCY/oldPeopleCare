@@ -82,12 +82,12 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         userId: String,
         token: String,
         name: RequestBody,
-        imgUrl: MultipartBody.Part,
-        recordUrl: MultipartBody.Part,
+        image: MultipartBody.Part,
+        audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: List<RequestBody>,
-        weakly: List<RequestBody>
+        time: MultipartBody.Part,
+        weakly: MultipartBody.Part,
     ): Response<MedicineResponseX> {
         return withContext((Dispatchers.IO)) {
             api.updateMedicine(
@@ -95,8 +95,8 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
                 userId,
                 token,
                 name,
-                imgUrl,
-                recordUrl,
+                image,
+                audio,
                 type,
                 description,
                 time,

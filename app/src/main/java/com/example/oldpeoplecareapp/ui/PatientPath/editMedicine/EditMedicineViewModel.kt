@@ -95,8 +95,8 @@ class EditMedicineViewModel (application: Application): AndroidViewModel(applica
         recordUrl: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time:List<RequestBody>,
-        weakly: List<RequestBody>
+        time:MultipartBody.Part,
+        weakly: MultipartBody.Part
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {

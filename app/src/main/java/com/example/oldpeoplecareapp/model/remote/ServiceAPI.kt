@@ -62,19 +62,19 @@ interface ServiceAPI {
         @Header("token") token: String
     ): Response<List<AllMedicineResponseItem>>
 
-    @FormUrlEncoded
+    @Multipart
     @PUT("/medicine/{medId}/{userId}")
     suspend fun updateMedicine(
         @Path("medId") medId: String,
         @Path("userId") userId: String,
         @Header("token") token: String,
         @Part("name") name: RequestBody,
-        @Part("imgUrl") imgUrl: MultipartBody.Part,
-        @Part("recordUrl") recordUrl: MultipartBody.Part,
+        @Part image: MultipartBody.Part,
+        @Part audio: MultipartBody.Part,
         @Part("type") type: RequestBody,
         @Part("description") description: RequestBody,
-        @Part("time") time: List<RequestBody>,
-        weakly: List<RequestBody>
+        @Part time: MultipartBody.Part,
+        @Part weakly: MultipartBody.Part
     ): Response<MedicineResponseX>
 
     @DELETE("/medicine/{medId}/{userId}")
