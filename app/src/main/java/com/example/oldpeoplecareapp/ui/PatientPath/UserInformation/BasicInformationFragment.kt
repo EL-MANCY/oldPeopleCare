@@ -46,6 +46,10 @@ class BasicInformationFragment : Fragment() {
 
         val loading = LoadingDialog(requireActivity())
 
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         userInfoViewModel = ViewModelProvider(requireActivity()).get(UserInfoViewModel::class.java)
         userInfoViewModel.getUserInfo("barier " + retrivedToken,retrivedID)
         loading.isDismiss()

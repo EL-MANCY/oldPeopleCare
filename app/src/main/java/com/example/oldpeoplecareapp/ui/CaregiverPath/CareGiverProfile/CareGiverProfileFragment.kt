@@ -69,7 +69,9 @@ class CareGiverProfileFragment : Fragment() {
         careGiverProfileViewModel.getUserInfo("barier " + retrivedToken, caregiverId)
         loading.isDismiss()
 
-
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
         careGiverProfileViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 loading.isDismiss()

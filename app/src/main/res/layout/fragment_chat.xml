@@ -10,9 +10,9 @@
 
 
         <ImageView
-            android:id="@+id/imageView14"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_15sdp"
+            android:id="@+id/backBtn"
+            android:layout_width="22dp"
+            android:layout_height="12dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/greenback"
             app:layout_constraintEnd_toEndOf="parent"
@@ -20,17 +20,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/recieverImage"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/pp"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/user_img"
             app:layout_constraintBottom_toTopOf="@+id/imageView20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.04"
-            app:layout_constraintStart_toEndOf="@+id/imageView14"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/backBtn"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/recieverImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/user_img" />
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/RecieverName"
@@ -43,18 +55,19 @@
             app:layout_constraintBottom_toTopOf="@+id/imageView20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.04"
-            app:layout_constraintStart_toEndOf="@+id/recieverImage"
+            app:layout_constraintStart_toEndOf="@+id/pp"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/line2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recieverImage" />
+            app:layout_constraintTop_toBottomOf="@+id/pp" />
 
         <EditText
             android:id="@+id/editTextMessage"
@@ -89,7 +102,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="2dp"
-            android:layout_marginTop="1dp"
             android:layout_marginEnd="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/editTextMessage"

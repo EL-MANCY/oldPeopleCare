@@ -70,6 +70,10 @@ class EditUserFragment : Fragment() {
         editUserViewModel = ViewModelProvider(requireActivity()).get(EditUserViewModel::class.java)
         editUserViewModel.getUserInfo("barier " + retrivedToken,retrivedID)
         loading.isDismiss()
+
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
         val genderitems = resources.getStringArray(R.array.gender)

@@ -55,7 +55,9 @@ class PatientNotificationFragment : Fragment() {
 
         binding.notificationRecyclerView.adapter = notificationRecyclerView
 
-
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.userInfo.setOnClickListener {
             findNavController().navigate(PatientNotificationFragmentDirections.actionPatientNotificationFragmentToBasicInformationFragment())
         }

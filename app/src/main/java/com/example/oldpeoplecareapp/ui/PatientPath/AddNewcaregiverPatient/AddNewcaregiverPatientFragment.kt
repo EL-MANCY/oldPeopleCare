@@ -119,8 +119,9 @@ class AddNewcaregiverPatientFragment : Fragment() {
         val loading= LoadingDialog(requireActivity())
 
         binding.backBtn.setOnClickListener {
-            findNavController()
-                .navigate(AddNewcaregiverPatientFragmentDirections.actionAddNewcaregiverPatientFragmentToCaregiversPatientFragment())
+//            findNavController()
+//                .navigate(AddNewcaregiverPatientFragmentDirections.actionAddNewcaregiverPatientFragmentToCaregiversPatientFragment())
+            findNavController().navigateUp()
         }
 
         binding.sendbtn.setOnClickListener {

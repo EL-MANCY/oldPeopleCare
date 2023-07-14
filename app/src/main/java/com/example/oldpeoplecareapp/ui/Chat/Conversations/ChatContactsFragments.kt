@@ -90,8 +90,8 @@ class ChatContactsFragments : Fragment(), OnContactClickListener {
         })
 
         binding.backBtn.setOnClickListener {
-            findNavController().navigate(ChatContactsFragmentsDirections.actionChatContactsFragmentsToCaregiversPatientFragment())
-
+//            findNavController().navigate(ChatContactsFragmentsDirections.actionChatContactsFragmentsToCaregiversPatientFragment())
+            findNavController().navigateUp()
         }
         conversationRecyclerView.onListItemClick = this
 

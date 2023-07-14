@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -63,8 +64,9 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         patientHomeViewModel.UserLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 loading.isDismiss()
-                binding.userInfo.setBackgroundResource(R.drawable.oval)
                 Glide.with(this).load(it.image.url).into(binding.userInfo)
+                binding.userInfo.setBackgroundResource(R.drawable.circular)
+
 
             } else if(patientHomeViewModel.error!=null) {
                 loading.isDismiss()

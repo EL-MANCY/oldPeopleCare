@@ -400,13 +400,14 @@ class AddNewMedicineFragment : Fragment() {
 
 
         binding.backBtn.setOnClickListener {
-            findNavController().navigate(
-                AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToPatientHomeFragment(
-                    "",
-                    "",
-                    ""
-                )
-            )
+//            findNavController().navigate(
+//                AddNewMedicineFragmentDirections.actionAddNewMedicineFragmentToPatientHomeFragment(
+//                    "",
+//                    "",
+//                    ""
+//                )
+//            )
+            findNavController().navigateUp()
         }
 
         //------------------------------------------------------//
@@ -765,7 +766,7 @@ class AddNewMedicineFragment : Fragment() {
                 c.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 c.set(Calendar.MINUTE, minuteOfHour)
                 val timeText = String.format("%02d:%02d", hourOfDay, minuteOfHour)
-                binding.Time.text = timeText
+              //  binding.Time.text = timeText
                 TimeList.add(timeText)
                 timeRecyclerView.setList(TimeList)
                 val calendar = Calendar.getInstance()

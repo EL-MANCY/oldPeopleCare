@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentAllPatientsBinding
 import com.example.oldpeoplecareapp.model.entity.Circles
@@ -41,6 +42,7 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val retrivedID = getpreferences.getString("ID", null)
 
         allPatientViewModel =
             ViewModelProvider(requireActivity()).get(AllPatientViewModel::class.java)
@@ -61,7 +63,25 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
             }
         })
 
-        binding.info.setOnClickListener {
+        allPatientViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+
+        allPatientViewModel.UserLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(allPatientViewModel.error!=null) {
+                Snackbar.make(
+                    view,
+                    allPatientViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                allPatientViewModel.error =null
+            }
+        })
+
+        binding.userInfo.setOnClickListener {
             findNavController().navigate(AllPatientsFragmentDirections.actionAllPatientsFragmentToBasicInformationFragment())
 
         }

@@ -42,7 +42,8 @@ class EmergencyFragment : Fragment(),OnEmergyClickListener {
         emergencyViewModel.getCircles("barier " + retrivedToken)
 
         binding.BackBtn.setOnClickListener {
-            findNavController().navigate(EmergencyFragmentDirections.actionEmergencyFragmentToPatientHomeFragment("","",""))
+//            findNavController().navigate(EmergencyFragmentDirections.actionEmergencyFragmentToPatientHomeFragment("","",""))
+            findNavController().navigateUp()
         }
 
         binding.EmergyRecyclerView.adapter = emergencyRecyclerview

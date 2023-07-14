@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiveHomeBinding
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
@@ -46,14 +47,33 @@ class CaregiveHomeFragment : Fragment() {
         }
 
 
+
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val retrivedID = getpreferences.getString("ID", null)
 
         caregiverHomeViewModel = ViewModelProvider(requireActivity()).get(CareGiverHomeViewModel::class.java)
         caregiverHomeViewModel.getPatients("barier " + retrivedToken)
 
         binding.medicineRecyclerView.adapter = caregiverHomeRecyclerview
 
+        caregiverHomeViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+
+        caregiverHomeViewModel.UserLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(caregiverHomeViewModel.error!=null) {
+                Snackbar.make(
+                    view,
+                    caregiverHomeViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                caregiverHomeViewModel.error =null
+            }
+        })
         caregiverHomeViewModel.MedItemLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 caregiverHomeRecyclerview.setList(it)

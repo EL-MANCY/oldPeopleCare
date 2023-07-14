@@ -15,6 +15,7 @@ import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentCaregiverNotificationsBinding
@@ -51,6 +52,7 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
+        val retrivedID = getpreferences.getString("ID", null)
 
         caregiverNotifyViewModel = ViewModelProvider(requireActivity()).get(
             CaregiverNotifyViewModel::class.java
@@ -82,7 +84,25 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
             }
         })
 
-        binding.info.setOnClickListener {
+        caregiverNotifyViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
+
+
+        caregiverNotifyViewModel.UserLiveData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.userInfo.setBackgroundResource(R.drawable.oval)
+                Glide.with(this).load(it.image.url).into(binding.userInfo)
+
+            } else if(caregiverNotifyViewModel.error!=null) {
+                Snackbar.make(
+                    view,
+                    caregiverNotifyViewModel.error.toString(),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                caregiverNotifyViewModel.error =null
+            }
+        })
+
+        binding.userInfo.setOnClickListener {
             findNavController().navigate(CaregiverNotificationsFragmentDirections.actionCaregiverNotificationsFragmentToBasicInformationFragment())
 
         }

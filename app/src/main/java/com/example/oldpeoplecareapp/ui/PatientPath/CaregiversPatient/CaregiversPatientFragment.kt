@@ -49,6 +49,9 @@ class CaregiversPatientFragment : Fragment(),OnCaregiverClickListener {
         binding.addCaregiverBtn.setOnClickListener {
             findNavController().navigate(CaregiversPatientFragmentDirections.actionCaregiversPatientFragmentToAddNewcaregiverPatientFragment())
         }
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         caregiversPatientViewModel.CircleLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {

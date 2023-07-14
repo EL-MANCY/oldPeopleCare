@@ -89,8 +89,8 @@ class SearchFragment : Fragment(),OnUserClickListener {
 
 
         binding.backBtn.setOnClickListener {
-            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToCaregiversPatientFragment())
-
+//            findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToCaregiversPatientFragment())
+            findNavController().navigateUp()
         }
 
         searchRecyclerView.onListItemClick = this

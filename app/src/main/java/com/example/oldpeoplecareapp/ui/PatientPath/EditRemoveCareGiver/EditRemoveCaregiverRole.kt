@@ -56,6 +56,9 @@ class EditRemoveCaregiverRole : Fragment() {
         val loading = LoadingDialog(requireActivity())
 
         ////////////////////////////////////////////////////////////////////////////////////
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
         navController = NavHostFragment.findNavController(this)
 
         val bottomNavigation: BottomNavigationView =requireActivity().findViewById(R.id.bottom_navigation)
@@ -69,6 +72,7 @@ class EditRemoveCaregiverRole : Fragment() {
         } else {
             bottomNavigation.visibility = View.VISIBLE
         }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////
         val roles = resources.getStringArray(R.array.caregivers)

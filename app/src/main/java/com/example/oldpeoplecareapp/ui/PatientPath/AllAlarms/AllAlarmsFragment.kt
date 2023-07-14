@@ -53,7 +53,9 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
         } else {
             bottomNavigation.visibility = View.VISIBLE
         }
-
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)

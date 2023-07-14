@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.MySharedPreferences
 import com.example.oldpeoplecareapp.R
@@ -64,6 +65,7 @@ class ChatFragment : Fragment() {
 
         val sharedPreferences = MySharedPreferences(requireContext())
         val messagesRecyclerView by lazy { MessagesRecyclerView(sharedPreferences) }
+
 
 
         socketHandler.setSocket()
@@ -115,6 +117,9 @@ class ChatFragment : Fragment() {
         }
 
 
+        binding.backBtn.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
 
         binding.RecieverName.text = fullname
