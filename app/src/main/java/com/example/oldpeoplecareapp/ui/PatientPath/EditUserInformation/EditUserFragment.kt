@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -18,7 +17,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.ColorRes
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,11 +27,9 @@ import com.example.oldpeoplecareapp.LoadingDialog
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.databinding.FragmentEditUserBinding
 import com.example.oldpeoplecareapp.ui.PatientPath.AddNewMedicine.AddNewMedicineFragment
-import com.example.oldpeoplecareapp.ui.PatientPath.UserInformation.BasicInformationFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.delay
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -336,6 +332,7 @@ class EditUserFragment : Fragment() {
                 editUserViewModel.error =null
             }
         })
+
         editUserViewModel.UpdatLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 loading.isDismiss()
@@ -357,11 +354,11 @@ class EditUserFragment : Fragment() {
         textInputLayout.defaultHintTextColor =
             ColorStateList.valueOf(ContextCompat.getColor(context, colorIdRes))
     }
+
     private fun pickImageGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, AddNewMedicineFragment.IMAGE_REQUEST_CODE)
-
+        startActivityForResult(intent, IMAGE_REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
