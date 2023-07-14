@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 import java.util.*
 
 private val DATABASE_NAME="oldCare"
-@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 13, exportSchema = false)
+@Database(entities = [AllMedicineResponseItem::class , Medicine::class, notificationData::class , Circles::class, MedicineUiModel::class,SingleUserResponse::class], version = 18, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class OldCareDB: RoomDatabase() {
     abstract fun dataDao(): DataDao

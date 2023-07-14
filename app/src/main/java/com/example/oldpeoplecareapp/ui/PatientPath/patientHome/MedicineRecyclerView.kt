@@ -23,7 +23,7 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
     }
 
     inner class MedicineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var medicineImage: ImageView = itemView.findViewById(R.id.medicineImage)
+        var medicineImage: ImageView = itemView.findViewById(R.id.medddImg)
         var time_txtView: TextView = itemView.findViewById(R.id.time_txtView)
         var medicineNameTxtView: TextView = itemView.findViewById(R.id.fullname_txtfield)
         var edit_icon: ImageView = itemView.findViewById(R.id.edit_btnx)
@@ -35,7 +35,7 @@ class MedicineRecyclerView: RecyclerView.Adapter<MedicineRecyclerView.MedicineVi
 
             medicineNameTxtView.text = medicineInfo.medicine.name
 
-            val imageUrl = medicineInfo.medicine.imgUrl
+            val imageUrl = medicineInfo.medicine.image.url
             medicineImage.setBackgroundResource(R.drawable.oval)
             Glide.with(itemView).load(imageUrl).into(medicineImage)
 

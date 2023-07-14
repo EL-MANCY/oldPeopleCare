@@ -49,8 +49,8 @@ class RemoteRepositoryImp(private val api: ServiceAPI) : RemoteRepository {
         audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time:MultipartBody.Part,
-        weekly:MultipartBody.Part,
+        time:List<MultipartBody.Part>,
+        weekly:List<MultipartBody.Part>,
     ): Response<AllMedicineResponseItem> {
 
         return withContext(Dispatchers.IO) {

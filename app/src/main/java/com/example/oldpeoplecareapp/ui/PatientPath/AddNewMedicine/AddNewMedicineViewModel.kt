@@ -92,8 +92,8 @@ class AddNewMedicineViewModel(application: Application): AndroidViewModel(applic
         recordUrl: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: MultipartBody.Part,
-        weakly: MultipartBody.Part,
+        time: List<MultipartBody.Part>,
+        weakly: List<MultipartBody.Part>,
     ) {
         viewModelScope.launch {
             if (isNetworkAvailable(getApplication())) {

@@ -410,5 +410,11 @@
         <argument
             android:name="medId"
             app:argType="string" />
+        <argument
+            android:name="userId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_medicineDetailsFragment_to_basicInformationFragment"
+            app:destination="@id/basicInformationFragment" />
     </fragment>
 </navigation>

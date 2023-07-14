@@ -89,10 +89,12 @@ class CaregiveHomeFragment : Fragment() , OnMedClickListener {
 
         }
 
+        caregiverHomeRecyclerview.onListItemClick = this
+
     }
 
     override fun onItemClick(info: MedicineUiModel) {
-        findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToMedicineDetailsFragment(info.medId))
+        findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToMedicineDetailsFragment(info.medId,info.userId))
     }
 
 

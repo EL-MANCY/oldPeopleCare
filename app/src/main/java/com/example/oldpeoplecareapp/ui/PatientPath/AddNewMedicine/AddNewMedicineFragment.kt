@@ -594,9 +594,9 @@ class AddNewMedicineFragment : Fragment() {
                 val multipartTime = builder2.build()
 
 // Convert MultipartBody to MultipartBody.Part
-                val timePart: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("time", "", multipartTime)
-
+                val timePart: List<MultipartBody.Part> = timeRequestBodyList.mapIndexed { index, requestBody ->
+                    MultipartBody.Part.createFormData("time[$index]", "", requestBody)
+                }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -612,9 +612,9 @@ class AddNewMedicineFragment : Fragment() {
                 val multipartWeek = builder.build()
 
 // Convert MultipartBody to MultipartBody.Part
-                val weeklyPart: MultipartBody.Part =
-                    MultipartBody.Part.createFormData("weakly", "", multipartWeek)
-
+                val weeklyPart: List<MultipartBody.Part> = weeklyRequestBodyList.mapIndexed { index, requestBody ->
+                    MultipartBody.Part.createFormData("weakly[$index]", "", requestBody)
+                }
 ///////////////////////////////////////////////////////////////////////////////////////
 
 

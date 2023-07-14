@@ -91,8 +91,9 @@ class CareGiverHomeViewModel(application: Application): AndroidViewModel(applica
                                 name = CareGiverResponse.user.fullname,
                                 med = it.medicine.name,
                                 medId = it.medicine._id,
+                                userId = CareGiverResponse.user._id,
                                 time = it.medicine.time.firstOrNull() ?: "",
-                                imgUrlMed = it.medicine.imgUrl,
+                                imgUrlMed = it.medicine.image.url,
                                 imgUrlUser = CareGiverResponse.user.image.url,
                                 state = it.state,
                             )

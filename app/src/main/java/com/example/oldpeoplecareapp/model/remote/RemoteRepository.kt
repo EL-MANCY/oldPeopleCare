@@ -34,8 +34,8 @@ interface RemoteRepository {
         audio: MultipartBody.Part,
         type: RequestBody,
         description: RequestBody,
-        time: MultipartBody.Part,
-        weakly: MultipartBody.Part,
+        time: List<MultipartBody.Part>,
+        weakly: List<MultipartBody.Part>,
     ): Response<AllMedicineResponseItem>
 
     suspend fun getAllMedicine(

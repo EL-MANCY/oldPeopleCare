@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.oldpeoplecareapp.R
 import com.example.oldpeoplecareapp.model.entity.AllMedicineResponseItem
 import com.example.oldpeoplecareapp.ui.PatientPath.patientHome.OnItemClickListener
@@ -30,6 +31,10 @@ class AllMedicineRV: RecyclerView.Adapter<AllMedicineRV.MedicineViewHolder>() {
         var edit_icon: ImageView = itemView.findViewById(R.id.edit_btnxx)
 
         fun bind(medicineInfo: AllMedicineResponseItem) {
+
+            val imageUrl = medicineInfo.image?.url
+            medicineImage.setBackgroundResource(R.drawable.oval)
+            Glide.with(itemView).load(imageUrl).into(medicineImage)
 
             time_txtView.text = medicineInfo.time[0]
             date_txtView.text = medicineInfo.createdAt.subSequence(11,16).toString()

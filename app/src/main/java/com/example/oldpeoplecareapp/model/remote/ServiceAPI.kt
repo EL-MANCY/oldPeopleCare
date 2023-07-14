@@ -52,8 +52,8 @@ interface ServiceAPI {
         @Part audio: MultipartBody.Part,
         @Part("type") type: RequestBody,
         @Part("description") description: RequestBody,
-        @Part time: MultipartBody.Part,
-        @Part weakly: MultipartBody.Part
+        @Part time: List<MultipartBody.Part>,
+        @Part weakly: List<MultipartBody.Part>
     ): Response<AllMedicineResponseItem>
 
     @GET("/medicine/{id}")
@@ -62,7 +62,7 @@ interface ServiceAPI {
         @Header("token") token: String
     ): Response<List<AllMedicineResponseItem>>
 
-    @GET("/medicine/{medicineId}/{userid}")
+    @GET("/medicine/{medicineId}/{userId}")
     suspend fun getSingleMedicine(
         @Path("medicineId") medId: String,
         @Path("userId") userId: String,

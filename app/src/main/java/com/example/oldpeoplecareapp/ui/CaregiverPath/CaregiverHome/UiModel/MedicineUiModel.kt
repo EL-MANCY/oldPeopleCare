@@ -9,6 +9,7 @@ data class MedicineUiModel(
     @PrimaryKey
     val med:String,
     val medId:String,
+    val userId:String,
     val time:String,
     val imgUrlMed: String,
     val imgUrlUser:String,
