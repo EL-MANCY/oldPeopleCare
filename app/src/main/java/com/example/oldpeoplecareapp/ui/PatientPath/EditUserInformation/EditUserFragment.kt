@@ -319,7 +319,9 @@ class EditUserFragment : Fragment() {
                 binding.nametxtX.editText!!.setText(it.fullname)
                 binding.phonetxtx.editText!!.setText(it.phone)
                 binding.mailtxtx.editText!!.setText(it.email)
-                binding.datetxtx.setText(it.dateOfBirth)
+                val d = it.dateOfBirth.subSequence(0,10)
+
+                binding.datetxtx.setText(d)
                 val position = spinnerAdapter.getPosition(it.gender)
                 binding.gender.setSelection(position)
                 binding.userpicture.setBackgroundResource(R.drawable.oval)

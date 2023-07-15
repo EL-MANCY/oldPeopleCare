@@ -27,9 +27,12 @@ class MessagesRecyclerView(private val sharedPreferences: MySharedPreferences) :
 
     inner class SenderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val msgSend: TextView = itemView.findViewById(R.id.messageSend)
+        private val time: TextView = itemView.findViewById(R.id.ttime)
 
         fun bind(item: MessageResponse) {
             msgSend.text = item.content
+            val d = item.timestamp.subSequence(11,16)
+            time.text=d
 
 //            itemView.setOnClickListener {
 //                onListItemClick?.onItemClick(item)

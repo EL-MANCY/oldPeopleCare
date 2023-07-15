@@ -27,11 +27,15 @@ class ConversationsRecyclerView(private val sharedPreferences: MySharedPreferenc
     inner class ConversationsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image: ImageView = itemView.findViewById(R.id.contactImg)
         val fullname: TextView = itemView.findViewById(R.id.NameTxt)
+        val msg: TextView = itemView.findViewById(R.id.msg)
+        val date: TextView = itemView.findViewById(R.id.date)
 
         fun bind(item: AllConversationsResponseItem) {
 
             val id=sharedPreferences.getValue("ID", "")
-
+            msg.text=item.messages[0].content
+            val d = item.messages[0].timestamp.subSequence(11,16)
+            date.text=d
             if(item.participants[0].user._id ==id ) {
                 fullname.text = item.participants[1].user.fullname
                 val imageUrl = item.participants[1].user.image.url

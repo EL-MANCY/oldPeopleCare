@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="@dimen/_200sdp"
-    android:layout_height="@dimen/_40sdp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_marginEnd="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp">
 
 
     <TextView
@@ -10,18 +13,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:background="@drawable/et_style"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/msgrounded"
         android:backgroundTint="#008080"
-        android:paddingLeft="@dimen/_15sdp"
-        android:paddingTop="@dimen/_4sdp"
-        android:paddingRight="@dimen/_15sdp"
-
-        android:paddingBottom="@dimen/_4sdp"
+        android:paddingLeft="8dp"
+        android:paddingTop="5dp"
+        android:paddingRight="70dp"
+        android:paddingBottom="20dp"
         android:text="Hello"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:maxWidth="350dp"
+        android:singleLine="false"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/messageSend"
+        app:layout_constraintEnd_toEndOf="@+id/messageSend"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/messageSend"
+        app:layout_constraintTop_toTopOf="@+id/messageSend"
+        app:layout_constraintVertical_bias="0.9" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,7 +88,7 @@ class MedicineDetailsFragment : Fragment() {
         medicineDetailVieModel.SingleMedLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 binding.typeTxt.text = it.type
-
+                binding.medNaame.text=it.name
                 var time = ""
                 for (i in it.time) {
                     time += i + " "

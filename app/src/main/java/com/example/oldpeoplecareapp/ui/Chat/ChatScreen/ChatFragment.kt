@@ -164,9 +164,7 @@ class ChatFragment : Fragment() {
                 chatViewModel.MessageLiveData.observe(viewLifecycleOwner, Observer {
                     if (it != null) {
                         id = it._id
-                        MsgList.add(it)
-                        messagesRecyclerView.setList(MsgList)
-                        binding.messagesRecyclerView.scrollToPosition(MsgList.size - 1)
+
                         Log.i(TAG, it.toString())
                     } else if (chatViewModel.error != null) {
                         Snackbar.make(
