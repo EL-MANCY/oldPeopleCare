@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isEmpty
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -69,6 +70,14 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
         allAlarmsViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 allMedicineRV.setList(it)
+
+                if(allMedicinRV.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
                 Log.i(TAG, it.toString())
             }else if(allAlarmsViewModel.error !=null){
                 Snackbar.make(
@@ -80,6 +89,12 @@ class AllAlarmsFragment : Fragment(),OnAlarmClickListener {
             }
         })
 
+        if(allMedicinRV.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
         allMedicineRV.onListItemClick = this
 
     }

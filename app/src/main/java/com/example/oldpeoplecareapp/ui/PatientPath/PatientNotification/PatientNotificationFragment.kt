@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isEmpty
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ import com.example.oldpeoplecareapp.databinding.FragmentPatientNotificationBindi
 import com.example.oldpeoplecareapp.ui.PatientPath.EditRemoveCareGiver.EditRemoveCaregiverRoleDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_all_alarms.*
 import kotlinx.android.synthetic.main.fragment_edit_remove_caregiver_role.*
 import kotlinx.android.synthetic.main.fragment_patient_notification.*
 
@@ -78,9 +80,17 @@ class PatientNotificationFragment : Fragment() {
             }
         })
 
+
         notificationViewModel.NotificationLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 notificationRecyclerView.setList(it)
+                if(notificationRecyclerView.NotificationList.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
                 Log.i(TAG, it.toString())
             } else if (notificationViewModel.error != null) {
                 Snackbar.make(
@@ -95,6 +105,14 @@ class PatientNotificationFragment : Fragment() {
             getString(R.string.FCM_CHANNEL_ID),
             getString(R.string.FCM_CHANNEL_STRING)
         )
+
+        if(notificationRecyclerView.NotificationList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
+
 
     }
 

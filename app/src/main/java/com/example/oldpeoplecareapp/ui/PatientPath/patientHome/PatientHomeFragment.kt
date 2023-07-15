@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ import com.example.oldpeoplecareapp.model.entity.Medicine
 import com.example.oldpeoplecareapp.ui.PatientPath.AlarmScreen.AlarmHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_all_alarms.*
 import kotlinx.android.synthetic.main.fragment_patient_home.*
 import java.util.*
 
@@ -46,6 +48,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
          loading = LoadingDialog(requireActivity())
+
+        if(medicineRecyclerView.medicineList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
 
         val getpreferences = requireActivity().getSharedPreferences("MY_APP", Context.MODE_PRIVATE)
         retrivedToken = getpreferences.getString("TOKEN", null).toString()
@@ -124,6 +133,17 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                         }
                     }
                     medicineRecyclerView.setList(it)
+
+
+                    if(medicineRecyclerView.medicineList.isEmpty()){
+                        binding.base.visibility=View.VISIBLE
+                    }else{
+                        binding.base.visibility=View.GONE
+
+                    }
+
+
+
                     Log.i(TAG, it.toString())
                 }else if(patientHomeViewModel.error !=null){
                     Snackbar.make(
@@ -151,7 +171,15 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     medicineRecyclerView.setList(it)
+                    if(medicineRecyclerView.medicineList.isEmpty()){
+                        binding.base.visibility=View.VISIBLE
+                    }else{
+                        binding.base.visibility=View.GONE
+
+                    }
+
                     Log.i("tttttt","it is ${it}")
+
                 }else if(patientHomeViewModel.error !=null){
                     Snackbar.make(
                         PATIENTHOME,
@@ -162,6 +190,8 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                 }
             })
         }
+
+
         binding.MissedAlarms.setOnClickListener {
             STATE = "Missed"
             binding.Completed.setBackgroundResource(R.drawable.cornersinactive)
@@ -175,6 +205,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
             patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
                 if (it != null) {
                     medicineRecyclerView.setList(it)
+                    if(medicineRecyclerView.medicineList.isEmpty()){
+                        binding.base.visibility=View.VISIBLE
+                    }else{
+                        binding.base.visibility=View.GONE
+
+                    }
+
                     Log.i(TAG, it.toString())
                 }else if(patientHomeViewModel.error !=null){
                     Snackbar.make(
@@ -197,6 +234,13 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
         patientHomeViewModel.allMedicinLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 medicineRecyclerView.setList(it)
+                if(medicineRecyclerView.medicineList.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
                 Log.i(TAG, it.toString())
             }else if(patientHomeViewModel.error !=null){
                 Snackbar.make(
@@ -207,6 +251,12 @@ class PatientHomeFragment : Fragment(),OnItemClickListener {
                 patientHomeViewModel.error=null
             }
         })
+        if(medicineRecyclerView.medicineList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
 
         medicineRecyclerView.onListItemClick = this
 

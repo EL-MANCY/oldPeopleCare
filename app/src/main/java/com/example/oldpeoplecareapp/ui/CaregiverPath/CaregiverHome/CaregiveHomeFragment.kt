@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverNotifications.Care
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_add_new_medicine.*
+import kotlinx.android.synthetic.main.fragment_all_alarms.*
 
 class CaregiveHomeFragment : Fragment() , OnMedClickListener {
     lateinit var binding: FragmentCaregiveHomeBinding
@@ -79,8 +81,23 @@ class CaregiveHomeFragment : Fragment() , OnMedClickListener {
             if (it != null) {
                 caregiverHomeRecyclerview.setList(it)
                 Log.i(TAG, it.toString())
+                if(caregiverHomeRecyclerview.PaientList.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
             }
         })
+
+        if(caregiverHomeRecyclerview.PaientList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
+
         binding.userInfo.setOnClickListener {
             findNavController().navigate(CaregiveHomeFragmentDirections.actionCaregiveHomeFragmentToBasicInformationFragment())
         }

@@ -65,8 +65,21 @@ class CaregiverNotificationsFragment : Fragment(), OnItemClickListner3 {
             if (it != null) {
                 caregiverNotifyRecyclerview.setList(it)
                 Log.i(TAG, it.toString())
+                if(caregiverNotifyRecyclerview.NotificationList.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
             }
         })
+        if(caregiverNotifyRecyclerview.NotificationList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
 
         createChannel(
             getString(R.string.FCM_CHANNEL_ID),

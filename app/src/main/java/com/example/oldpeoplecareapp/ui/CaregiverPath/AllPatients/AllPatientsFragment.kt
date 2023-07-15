@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isEmpty
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,6 +22,7 @@ import com.example.oldpeoplecareapp.ui.CaregiverPath.CaregiverHome.CaregiveHomeF
 import com.example.oldpeoplecareapp.ui.PatientPath.CaregiversPatient.CaregiversPatientFragmentDirections
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_all_alarms.*
 import kotlinx.android.synthetic.main.fragment_caregivers_patient.*
 
 class AllPatientsFragment : Fragment(),OnItemClickListener2 {
@@ -53,6 +55,13 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
         allPatientViewModel.CircleLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 patientsRecyclerView.setList(it)
+                if(patientsRecyclerView.CircleList.isEmpty()){
+                    binding.base.visibility=View.VISIBLE
+                }else{
+                    binding.base.visibility=View.GONE
+
+                }
+
                 Log.i(TAG, it.toString())
             }else if(allPatientViewModel.error != null){
                 Snackbar.make(
@@ -62,6 +71,12 @@ class AllPatientsFragment : Fragment(),OnItemClickListener2 {
                 ).show()
             }
         })
+        if(patientsRecyclerView.CircleList.isEmpty()){
+            binding.base.visibility=View.VISIBLE
+        }else{
+            binding.base.visibility=View.GONE
+
+        }
 
         allPatientViewModel.getUserInfo("barier " + retrivedToken, retrivedID.toString())
 

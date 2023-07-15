@@ -766,7 +766,7 @@ class AddNewMedicineFragment : Fragment() {
                 c.set(Calendar.HOUR_OF_DAY, hourOfDay)
                 c.set(Calendar.MINUTE, minuteOfHour)
                 val timeText = String.format("%02d:%02d", hourOfDay, minuteOfHour)
-              //  binding.Time.text = timeText
+                binding.Time.text = "Time"
                 TimeList.add(timeText)
                 timeRecyclerView.setList(TimeList)
                 val calendar = Calendar.getInstance()

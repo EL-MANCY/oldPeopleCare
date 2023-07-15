@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isEmpty
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -28,6 +29,7 @@ import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsRecyclerV
 import com.example.oldpeoplecareapp.ui.Chat.Conversations.ConversationsViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_all_alarms.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -202,6 +204,8 @@ class ChatFragment : Fragment() {
             }
             chatViewModel.error = null
         })
+
+
 
         chatViewModel.MessageLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
