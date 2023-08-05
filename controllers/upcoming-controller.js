@@ -48,7 +48,7 @@ exports.getUpcoming =  async (req, res, next) => {
     const upcoming = await Upcomings.findOne({
       user: req.params.patientId, 
       createdAt: new Date().toISOString().split('T')[0]
-    }).populate('medicines.medicine', '_id name imgUrl time')
+    }).populate('medicines.medicine', '_id name image audio time')
     if(!upcoming)
       return res.status(404).send('User not found !');
     
@@ -88,7 +88,7 @@ exports.getUpcomingCregiver = async (req, res, next) => {
       return Upcomings.find({
         user: circle.id,
         createdAt: new Date().toISOString().split('T')[0]
-      }).populate("user", "_id image fullname").populate('medicines.medicine', '_id name imgUrl time')
+      }).populate("user", "_id image audio fullname").populate('medicines.medicine', '_id name image audio time')
     });
 
     Promise.all(promises).then(results => {

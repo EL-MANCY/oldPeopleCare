@@ -12,16 +12,24 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// multer config to allow upload images (files)
+// multer config to allow upload images and records (files)
 const fileFilter = (req,file, cb) => {
-  file.mimetype.startsWith("image")
-    ? cb(null, true)
-    : cb(new Error('Only images are allowed !'))
+  const allowedMimeTypes = ["image", "audio"];
+  if (allowedMimeTypes.some(type => file.mimetype.startsWith(type))) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only images and records are allowed!'));
+  }
 };
+
 app.use(
-  multer({ storage: multer.diskStorage({}), fileFilter: fileFilter }).single(
-    "image"
-  )
+  multer({
+    storage: multer.diskStorage({}),
+    fileFilter: fileFilter
+  }).fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'audio', maxCount: 1 }
+  ])
 );
 
 // old-care APIs

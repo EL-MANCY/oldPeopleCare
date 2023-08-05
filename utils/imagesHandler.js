@@ -1,9 +1,18 @@
 const cloudinary = require('../helpers/image-uploader');
 
-exports.UploadImage = async (imagePath, folderPath) => {
-    const uploadResult = await cloudinary.uploader.upload(imagePath, {
-        folder: `old-care/${folderPath}`
-    });
+exports.UploadImage = async (imagePath, folderPath, type) => {
+    let uploadResult
+    if(type == "audio"){
+        uploadResult = await cloudinary.uploader.upload(imagePath, {
+            folder: `old-care/${folderPath}`,
+            resource_type: "video",
+        });
+    } else {
+        uploadResult = await cloudinary.uploader.upload(imagePath, {
+            folder: `old-care/${folderPath}`,
+        });
+    }
+    
     return uploadResult;
 }
 

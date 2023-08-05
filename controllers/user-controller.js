@@ -163,9 +163,9 @@ exports.updateUser = async (req, res, next) => {
       return res.status(400).send(error.details[0].message);
     }
     const user = await User.findById(req.user.id);
-    if(req.file){
+    if(req.files.image){
       await imageHandler.DeleteOneImage(user.image.public_id);
-      const uploadedImage = await imageHandler.UploadImage(req.file.path, req.user.id);
+      const uploadedImage = await imageHandler.UploadImage(req.files.image[0].path, req.user.id, "image");
       req.body.image = {
         public_id: uploadedImage.public_id,
         url: uploadedImage.url

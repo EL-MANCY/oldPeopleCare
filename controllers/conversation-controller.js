@@ -34,13 +34,21 @@ exports.postConversation = async (req, res, next) => {
 };
 
 exports.getAllConversations = async (req, res, next) => {
-  const conversation = await Conversation.find({
+  let conversation = await Conversation.find({
     "participants.user": {
       $all: [           
           req.user.id 
       ]
     }       
-  }).populate('participants.user', 'image fullname').select('-messages -__v');
+  }).populate('participants.user', 'image fullname').select('-__v')
+  .populate({
+    path: "messages",
+    options: {
+      sort: {timestamp: -1},
+      limit: 1
+    }
+  });
+
   res.json(conversation);
 }
 

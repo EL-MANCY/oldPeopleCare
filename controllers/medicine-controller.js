@@ -1,6 +1,7 @@
 const { User } = require("../models/user-model");
 const { Medicine, validate } = require("../models/medicine-model");
 const { Upcomings } = require('../models/upcoming-model');
+const imageHandler = require('../utils/imagesHandler');
 const _ = require("lodash");
 
 exports.postMedicines = async (req, res, next) => {
@@ -9,16 +10,37 @@ exports.postMedicines = async (req, res, next) => {
     if (error) {
       return res.status(400).send(error.details[0].message);
     }
+
+    if(!req.files.image){
+      return res.status(400).send('"image" is required');
+    }
+    if(!req.files.audio){
+      return res.status(400).send('"audio" is required');
+    }
+
     let user = await User.findById(req.params.patientId);
     if(user.registAs != 'patient' || !user){
       return res.status(404).send('No patients with that Id !');
     }
+
+    const uploadedAudio = await imageHandler.UploadImage(req.files.audio[0].path, req.user.id, "audio");
+    req.body.audio = {
+      public_id: uploadedAudio.public_id,
+      url: uploadedAudio.url
+    }
+
+    const uploadedImage = await imageHandler.UploadImage(req.files.image[0].path, req.user.id, "image");
+    req.body.image = {
+      public_id: uploadedImage.public_id,
+      url: uploadedImage.url
+    }
+
     let medicine = new Medicine(
       _.pick(req.body, [
         "name",
-        "imgUrl",
-        "recordUrl",
         "type",
+        "image",
+        "audio",
         "description",
         "time",
         "weakly",
@@ -84,6 +106,25 @@ exports.updateMedicines = async (req,res,next) => {
             return res.status(404).send("Medicine not found !");
         }
         req.body.lastUpdatedUserID = req.user.id;
+
+        if(req.files.image){
+          await imageHandler.DeleteOneImage(medicine.image.public_id);
+          const uploadedImage = await imageHandler.UploadImage(req.files.image[0].path, user._id, "image");
+          req.body.image = {
+            public_id: uploadedImage.public_id,
+            url: uploadedImage.url
+          }
+        }
+
+        if(req.files.audio){
+          await imageHandler.DeleteOneImage(medicine.audio.public_id);
+          const uploadedAudio = await imageHandler.UploadImage(req.files.audio[0].path, user._id, "audio");
+          req.body.audio = {
+            public_id: uploadedAudio.public_id,
+            url: uploadedAudio.url
+          }
+        }
+
         const updatedMedicines = await Medicine.findByIdAndUpdate(req.params.id,req.body,{ new: true });
         res.status(200).send(updatedMedicines);
         next();
@@ -112,6 +153,7 @@ exports.deleteMedicines = async (req,res,next) => {
         })
         user.medicines = medicines;
         await user.save()
+        await Medicine.findByIdAndDelete(medicine._id);
         res.status(200).send({
           success: true,
           message: "Medicine deleted !"
